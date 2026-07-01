@@ -8,6 +8,7 @@ import AnimatedBackground from "@/components/AnimatedBackground";
 import { HiArrowLeft } from "react-icons/hi2";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
+import ViewCounter from "@/components/ViewCounter";
 
 export const revalidate = 1800; // Revalidate at most every 30 minutes (ISR)
 
@@ -48,13 +49,17 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
           {/* Article Header */}
           <article>
             <header className="mb-8">
-              <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest">
-                {new Date(post.created_at).toLocaleDateString("tr-TR", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </span>
+              <div className="flex items-center gap-4">
+                <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest">
+                  {new Date(post.created_at).toLocaleDateString("tr-TR", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </span>
+                <span className="text-zinc-700 select-none">•</span>
+                <ViewCounter slug={post.slug} initialViews={post.views || 0} />
+              </div>
               <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl mt-3">
                 {post.title}
               </h1>
