@@ -9,14 +9,21 @@ export default function Footer() {
           saklıdır.
         </p>
         <div className="flex items-center gap-6">
-          <a href={siteConfig.social.github} className="transition hover:text-white">
+          <a
+            href={siteConfig.social.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition hover:text-white"
+          >
             GitHub
           </a>
-          <a href={siteConfig.social.linkedin} className="transition hover:text-white">
+          <a
+            href={siteConfig.social.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition hover:text-white"
+          >
             LinkedIn
-          </a>
-          <a href={siteConfig.social.x} className="transition hover:text-white">
-            X
           </a>
         </div>
       </div>

@@ -7,10 +7,9 @@ export const siteConfig = {
   role: "Bilgisayar Mühendisi & .NET Full Stack Developer",
   location: "Türkiye",
   social: {
-    github: "https://github.com/",
-    linkedin: "https://linkedin.com/in/",
-    x: "https://x.com/",
-    email: "mailto:merhaba@berkayyalcin.dev",
+    github: "https://github.com/berkayyalcin7",
+    linkedin: "https://tr.linkedin.com/in/berkay-yalçın-59289b145",
+    email: "mailto:berkayyalcin7@gmail.com",
   },
   nav: [
     { label: "Hakkımda", href: "#hakkimda" },
