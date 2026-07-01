@@ -13,9 +13,9 @@ export const siteConfig = {
     email: "mailto:berkayyalcin7@gmail.com",
   },
   nav: [
-    { label: "Hakkımda", href: "#hakkimda" },
-    { label: "Yetenekler", href: "#yetenekler" },
-    { label: "Blog", href: "#blog" },
-    { label: "İletişim", href: "#iletisim" },
+    { label: "Hakkımda", href: "/#hakkimda" },
+    { label: "Yetenekler", href: "/#yetenekler" },
+    { label: "Blog", href: "/#blog" },
+    { label: "İletişim", href: "/#iletisim" },
   ],
 } as const;

@@ -10,10 +10,10 @@ import { siteConfig } from "@/lib/site-config";
 import ContactButton from "@/components/ContactButton";
 
 const navIcons: Record<string, IconType> = {
-  "#hakkimda": HiUser,
-  "#yetenekler": HiSparkles,
-  "#blog": HiNewspaper,
-  "#iletisim": HiChatBubbleLeftRight,
+  "/#hakkimda": HiUser,
+  "/#yetenekler": HiSparkles,
+  "/#blog": HiNewspaper,
+  "/#iletisim": HiChatBubbleLeftRight,
 };
 
 export default function Header() {
@@ -31,14 +31,14 @@ export default function Header() {
           {siteConfig.nav.map((item) => {
             const Icon = navIcons[item.href];
             return (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="flex items-center gap-1.5 text-sm text-zinc-400 transition hover:text-white"
               >
                 {Icon && <Icon className="h-4 w-4" />}
                 {item.label}
-              </a>
+              </Link>
             );
           })}
         </nav>
