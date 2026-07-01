@@ -3,6 +3,7 @@ import type { IconType } from "react-icons";
 import {
   HiUser,
   HiSparkles,
+  HiFolder,
   HiNewspaper,
   HiChatBubbleLeftRight,
 } from "react-icons/hi2";
@@ -12,6 +13,7 @@ import ContactButton from "@/components/ContactButton";
 const navIcons: Record<string, IconType> = {
   "/#hakkimda": HiUser,
   "/#yetenekler": HiSparkles,
+  "/#projeler": HiFolder,
   "/#blog": HiNewspaper,
   "/#iletisim": HiChatBubbleLeftRight,
 };

@@ -15,6 +15,7 @@ export const siteConfig = {
   nav: [
     { label: "Hakkımda", href: "/#hakkimda" },
     { label: "Yetenekler", href: "/#yetenekler" },
+    { label: "Projeler", href: "/#projeler" },
     { label: "Blog", href: "/#blog" },
     { label: "İletişim", href: "/#iletisim" },
   ],
