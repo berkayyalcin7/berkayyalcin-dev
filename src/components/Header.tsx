@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { IconType } from "react-icons";
 import {
   HiUser,
+  HiBriefcase,
   HiSparkles,
   HiFolder,
   HiNewspaper,
@@ -12,6 +13,7 @@ import ContactButton from "@/components/ContactButton";
 
 const navIcons: Record<string, IconType> = {
   "/#hakkimda": HiUser,
+  "/#deneyim": HiBriefcase,
   "/#yetenekler": HiSparkles,
   "/#projeler": HiFolder,
   "/#blog": HiNewspaper,

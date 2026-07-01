@@ -9,12 +9,27 @@ import { HiArrowLeft } from "react-icons/hi2";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import ViewCounter from "@/components/ViewCounter";
+import type { Metadata } from "next";
 
 export const revalidate = 1800; // Revalidate at most every 30 minutes (ISR)
 
 type BlogPageProps = {
   params: Promise<{ slug: string }>;
 };
+
+export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+  if (!post) {
+    return {
+      title: "Yazı Bulunamadı | Berkay Yalçın - Blog",
+    };
+  }
+  return {
+    title: `${post.title} | Berkay Yalçın - Blog`,
+    description: post.excerpt,
+  };
+}
 
 export async function generateStaticParams() {
   const posts = await getPublishedPosts();
