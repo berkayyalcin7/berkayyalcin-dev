@@ -4,7 +4,7 @@ export const siteConfig = {
   description:
     "Yazılım geliştirici Berkay Yalçın'ın kişisel portfolyo ve blog sitesi. Projeler, yazılar ve deneyimler.",
   url: "https://berkayyalcin.dev",
-  role: "Full Stack Developer",
+  role: "Bilgisayar Mühendisi & .NET Full Stack Developer",
   location: "Türkiye",
   social: {
     github: "https://github.com/",

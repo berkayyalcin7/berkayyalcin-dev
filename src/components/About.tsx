@@ -10,8 +10,11 @@ export default function About() {
           üretme yolculuğu olarak görüyorum.
         </p>
         <p className="mt-6 max-w-2xl text-base leading-relaxed text-zinc-400">
-          Bu alanda içerik güncellenecek — kısa biyografi, deneyim ve
-          ilgi alanların buraya eklenecek.
+          Bilgisayar Mühendisiyim ve modern web teknolojilerinin yanı sıra
+          .NET ekosisteminde de uçtan uca çözümler geliştiriyorum. Entity
+          Framework Core, Microsoft SQL Server, Azure DevOps ve Microsoft
+          SharePoint Management gibi kurumsal araçlarla çalışma deneyimim
+          var.
         </p>
       </div>
     </section>

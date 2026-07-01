@@ -22,8 +22,9 @@ export default function Hero() {
           Merhaba, ben {siteConfig.name}.
         </h1>
         <p className="mt-4 max-w-xl text-lg text-zinc-400 sm:text-xl">
-          {siteConfig.role} — {siteConfig.location}. Modern web teknolojileri
-          ile ürünler geliştiriyor, öğrendiklerimi bu blogda paylaşıyorum.
+          {siteConfig.role} — {siteConfig.location}. Modern web ve .NET
+          ekosistemiyle uçtan uca ürünler geliştiriyor, öğrendiklerimi bu
+          blogda paylaşıyorum.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
