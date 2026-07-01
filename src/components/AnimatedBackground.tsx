@@ -78,23 +78,81 @@ export default function AnimatedBackground() {
       const linkDistance = MAX_LINK_DISTANCE * dpr;
       time += 1;
 
-      const parallaxX = pointer.active ? (pointer.x - 0.5) * 24 * dpr : 0;
-      const parallaxY = pointer.active ? (pointer.y - 0.5) * 24 * dpr : 0;
+      // Parallax values based on cursor position
+      const normX = pointer.active ? pointer.x / width : 0.5;
+      const normY = pointer.active ? pointer.y / height : 0.5;
+      const parallaxX = pointer.active ? (normX - 0.5) * 16 * dpr : 0;
+      const parallaxY = pointer.active ? (normY - 0.5) * 16 * dpr : 0;
+
+      // Cursor position within the translated context
+      const cursorX = pointer.x - parallaxX;
+      const cursorY = pointer.y - parallaxY;
 
       ctx!.save();
       ctx!.translate(parallaxX, parallaxY);
 
+      // 1. Draw glowing aura under the cursor
+      if (pointer.active) {
+        const glowGrad = ctx!.createRadialGradient(
+          cursorX,
+          cursorY,
+          0,
+          cursorX,
+          cursorY,
+          150 * dpr
+        );
+        glowGrad.addColorStop(0, "rgba(16, 185, 129, 0.18)"); // Emerald glow at center
+        glowGrad.addColorStop(0.5, "rgba(59, 130, 246, 0.06)"); // Soft blue transition
+        glowGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
+        ctx!.fillStyle = glowGrad;
+        ctx!.beginPath();
+        ctx!.arc(cursorX, cursorY, 150 * dpr, 0, Math.PI * 2);
+        ctx!.fill();
+      }
+
+      // 2. Update and draw particles and their inter-connections
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
+
+        // Apply velocities
         p.x += p.vx;
         p.y += p.vy;
 
-        if (p.x <= 0 || p.x >= width) p.vx *= -1;
-        if (p.y <= 0 || p.y >= height) p.vy *= -1;
+        // Interactive mouse repulsion/push force
+        if (pointer.active) {
+          const dx = p.x - cursorX;
+          const dy = p.y - cursorY;
+          const dist = Math.hypot(dx, dy);
+          const activeRadius = 140 * dpr;
+          if (dist < activeRadius) {
+            const force = (activeRadius - dist) / activeRadius;
+            // Gently nudge particles away from the cursor
+            p.x += (dx / dist) * force * 1.6 * dpr;
+            p.y += (dy / dist) * force * 1.6 * dpr;
+          }
+        }
+
+        // Keep within canvas bounds
+        if (p.x <= 0) {
+          p.x = 0;
+          p.vx *= -1;
+        } else if (p.x >= width) {
+          p.x = width;
+          p.vx *= -1;
+        }
+        if (p.y <= 0) {
+          p.y = 0;
+          p.vy *= -1;
+        } else if (p.y >= height) {
+          p.y = height;
+          p.vy *= -1;
+        }
 
         p.radius =
-          p.baseRadius + Math.sin(time * 0.02 + p.twinkleSeed) * p.baseRadius * 0.4;
+          p.baseRadius +
+          Math.sin(time * 0.02 + p.twinkleSeed) * p.baseRadius * 0.4;
 
+        // Draw links between nearby particles
         for (let j = i + 1; j < particles.length; j++) {
           const q = particles[j];
           const dx = p.x - q.x;
@@ -113,6 +171,28 @@ export default function AnimatedBackground() {
         }
       }
 
+      // 3. Draw links from cursor to nearest particles
+      if (pointer.active) {
+        const linkDistance = MAX_LINK_DISTANCE * 1.1 * dpr;
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          const dx = p.x - cursorX;
+          const dy = p.y - cursorY;
+          const dist = Math.hypot(dx, dy);
+
+          if (dist < linkDistance) {
+            const opacity = 0.35 * (1 - dist / linkDistance);
+            ctx!.strokeStyle = `rgba(${p.color}, ${opacity})`;
+            ctx!.lineWidth = dpr * 1.0;
+            ctx!.beginPath();
+            ctx!.moveTo(cursorX, cursorY);
+            ctx!.lineTo(p.x, p.y);
+            ctx!.stroke();
+          }
+        }
+      }
+
+      // 4. Draw actual particles
       for (const p of particles) {
         ctx!.beginPath();
         ctx!.fillStyle = `rgba(${p.color}, 0.9)`;
@@ -137,11 +217,17 @@ export default function AnimatedBackground() {
     }
 
     function handlePointerMove(event: PointerEvent) {
+      if (!canvas) return;
+      const rect = canvas.getBoundingClientRect();
       pointer = {
-        x: event.clientX / window.innerWidth,
-        y: event.clientY / window.innerHeight,
+        x: (event.clientX - rect.left) * dpr,
+        y: (event.clientY - rect.top) * dpr,
         active: true,
       };
+    }
+
+    function handlePointerLeave() {
+      pointer.active = false;
     }
 
     function handleVisibilityChange() {
@@ -161,11 +247,13 @@ export default function AnimatedBackground() {
 
     window.addEventListener("resize", handleResize);
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerleave", handlePointerLeave, { passive: true });
     document.addEventListener("visibilitychange", handleVisibilityChange);
 
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", handlePointerLeave);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
       cancelAnimationFrame(animationFrameId);
     };
