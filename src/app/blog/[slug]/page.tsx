@@ -6,6 +6,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AnimatedBackground from "@/components/AnimatedBackground";
 import { HiArrowLeft } from "react-icons/hi2";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 export const revalidate = 3600; // Revalidate at most every hour (ISR)
 
@@ -95,15 +97,42 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                     </blockquote>
                   ),
                   code: ({ className, children }) => {
+                    const match = /language-(\w+)/.exec(className || "");
                     const isInline = !className;
                     return isInline ? (
                       <code className="bg-white/10 rounded px-1.5 py-0.5 text-xs text-emerald-400 font-mono">
                         {children}
                       </code>
                     ) : (
-                      <pre className="bg-black/40 border border-white/10 rounded-2xl p-4 overflow-x-auto my-6 text-xs text-zinc-300 font-mono leading-relaxed">
-                        <code className={className}>{children}</code>
-                      </pre>
+                      <div className="my-6 overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-zinc-950/40">
+                        {/* Mock Code Editor Header Bar */}
+                        <div className="flex items-center justify-between bg-zinc-900/80 px-4 py-2.5 text-xs text-zinc-400 select-none border-b border-white/5">
+                          <div className="flex items-center gap-1.5">
+                            <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
+                            <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
+                            <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
+                          </div>
+                          <span className="font-mono text-[10px] tracking-wider uppercase">
+                            {match ? match[1] : "code"}
+                          </span>
+                        </div>
+                        {/* Syntax Highlighter */}
+                        <SyntaxHighlighter
+                          language={match ? match[1] : "javascript"}
+                          style={vscDarkPlus}
+                          PreTag="div"
+                          customStyle={{
+                            margin: 0,
+                            padding: "1.25rem",
+                            background: "transparent",
+                            fontSize: "0.8rem",
+                            lineHeight: "1.6",
+                            fontFamily: "var(--font-geist-mono), monospace",
+                          }}
+                        >
+                          {String(children).replace(/\n$/, "")}
+                        </SyntaxHighlighter>
+                      </div>
                     );
                   },
                 }}

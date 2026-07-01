@@ -19,6 +19,11 @@ export type Post = {
 };
 
 export async function getPublishedPosts(): Promise<Post[]> {
+  console.log("Supabase Connection Check:", {
+    urlExists: !!supabaseUrl,
+    keyExists: !!supabaseAnonKey,
+  });
+
   const { data, error } = await supabase
     .from("posts")
     .select("*")
@@ -26,7 +31,12 @@ export async function getPublishedPosts(): Promise<Post[]> {
     .order("created_at", { ascending: false });
 
   if (error) {
-    console.error("Error fetching posts:", error);
+    console.error("Error fetching posts:", {
+      message: error.message,
+      code: error.code,
+      details: error.details,
+      hint: error.hint,
+    });
     return [];
   }
 
