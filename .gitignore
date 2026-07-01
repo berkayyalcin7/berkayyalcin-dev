@@ -39,6 +39,7 @@ yarn-error.log*
 
 # kişisel notlar / repoya girmemesi gereken dosyalar
 BLOG PROJE YAYIN.txt
+GITHUB_OPERATIONS.md
 
 # typescript
 *.tsbuildinfo
