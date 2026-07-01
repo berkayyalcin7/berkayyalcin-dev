@@ -9,6 +9,7 @@ export const siteConfig = {
   social: {
     github: "https://github.com/berkayyalcin7",
     linkedin: "https://tr.linkedin.com/in/berkay-yalçın-59289b145",
+    emailAddress: "berkayyalcin7@gmail.com",
     email: "mailto:berkayyalcin7@gmail.com",
   },
   nav: [

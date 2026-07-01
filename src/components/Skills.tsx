@@ -73,7 +73,7 @@ export default function Skills() {
         <div className="mt-8 grid gap-8 sm:grid-cols-2">
           {skillCategories.map((category) => (
             <div key={category.title}>
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-400">
                 {category.title}
               </h3>
               <div className="mt-4 flex flex-wrap gap-3">

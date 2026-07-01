@@ -1,4 +1,4 @@
-import { siteConfig } from "@/lib/site-config";
+import ContactButton from "@/components/ContactButton";
 
 export default function Contact() {
   return (
@@ -10,12 +10,9 @@ export default function Contact() {
         <p className="mx-auto mt-4 max-w-xl text-2xl font-medium text-white sm:text-3xl">
           Birlikte bir şeyler geliştirmek ister misin?
         </p>
-        <a
-          href={siteConfig.social.email}
-          className="mt-8 inline-block rounded-full bg-emerald-500 px-8 py-3 text-sm font-semibold text-black transition hover:bg-emerald-400"
-        >
+        <ContactButton className="mt-8 inline-block rounded-full bg-emerald-500 px-8 py-3 text-sm font-semibold text-black transition hover:bg-emerald-400">
           Bana Ulaş
-        </a>
+        </ContactButton>
       </div>
     </section>
   );

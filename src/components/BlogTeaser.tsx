@@ -22,7 +22,7 @@ export default function BlogTeaser() {
               <div className="h-3 w-2/3 rounded bg-white/10" />
               <div className="mt-3 h-2 w-full rounded bg-white/5" />
               <div className="mt-2 h-2 w-4/5 rounded bg-white/5" />
-              <span className="mt-6 inline-block text-xs font-medium text-zinc-500">
+              <span className="mt-6 inline-block text-xs font-medium text-zinc-400">
                 Yakında
               </span>
             </div>
