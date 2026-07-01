@@ -9,7 +9,7 @@ import { HiArrowLeft } from "react-icons/hi2";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
-export const revalidate = 3600; // Revalidate at most every hour (ISR)
+export const revalidate = 1800; // Revalidate at most every 30 minutes (ISR)
 
 type BlogPageProps = {
   params: Promise<{ slug: string }>;
