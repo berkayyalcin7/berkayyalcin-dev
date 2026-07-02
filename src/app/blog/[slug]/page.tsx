@@ -74,6 +74,15 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
 
           {/* Article Header */}
           <article>
+            {post.cover_image && (
+              <div className="relative w-full aspect-video md:aspect-[21/9] mb-8 overflow-hidden rounded-2xl border border-white/10 shadow-2xl bg-zinc-900">
+                <img
+                  src={post.cover_image}
+                  alt={post.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
             <header className="mb-8">
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                 {post.category && (
