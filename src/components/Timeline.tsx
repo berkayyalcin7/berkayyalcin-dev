@@ -1,5 +1,4 @@
 import { siteConfig } from "@/lib/site-config";
-import { HiBriefcase } from "react-icons/hi2";
 
 export default function Timeline() {
   // Chronological order from left to right (oldest to newest)

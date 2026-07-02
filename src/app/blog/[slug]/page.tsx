@@ -1,11 +1,16 @@
-import { getPostBySlug, getPublishedPosts } from "@/lib/blog";
+import {
+  getPostBySlug,
+  getPublishedPosts,
+  getReadingTime,
+  getRelatedPosts,
+} from "@/lib/blog";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import AnimatedBackground from "@/components/AnimatedBackground";
-import { HiArrowLeft } from "react-icons/hi2";
+import BlogCard from "@/components/BlogCard";
+import { HiArrowLeft, HiClock } from "react-icons/hi2";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import ViewCounter from "@/components/ViewCounter";
@@ -28,6 +33,7 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
   return {
     title: `${post.title} | Berkay Yalçın - Blog`,
     description: post.excerpt,
+    keywords: post.tags ?? undefined,
   };
 }
 
@@ -40,37 +46,52 @@ export async function generateStaticParams() {
 
 export default async function BlogPostPage({ params }: BlogPageProps) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const [post, allPosts] = await Promise.all([
+    getPostBySlug(slug),
+    getPublishedPosts(),
+  ]);
 
   if (!post) {
     notFound();
   }
 
+  const relatedPosts = getRelatedPosts(post, allPosts);
+  const readingTime = getReadingTime(post.content);
+
   return (
     <>
-      <AnimatedBackground />
       <Header />
       <main className="flex-1 px-6 py-28 relative z-10">
         <div className="mx-auto max-w-3xl">
           {/* Back button */}
           <Link
-            href="/#blog"
+            href="/blog"
             className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-emerald-400 transition mb-8"
           >
             <HiArrowLeft className="h-4 w-4" />
-            Geri Dön
+            Tüm Yazılar
           </Link>
 
           {/* Article Header */}
           <article>
             <header className="mb-8">
-              <div className="flex items-center gap-4">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                {post.category && (
+                  <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-400 border border-emerald-500/20">
+                    {post.category}
+                  </span>
+                )}
                 <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest">
                   {new Date(post.created_at).toLocaleDateString("tr-TR", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
                   })}
+                </span>
+                <span className="text-zinc-700 select-none">•</span>
+                <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400">
+                  <HiClock className="h-4 w-4" />
+                  {readingTime} dk okuma
                 </span>
                 <span className="text-zinc-700 select-none">•</span>
                 <ViewCounter slug={post.slug} initialViews={post.views || 0} />
@@ -81,6 +102,18 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
               <p className="mt-4 text-base text-zinc-400 italic">
                 {post.excerpt}
               </p>
+              {(post.tags?.length ?? 0) > 0 && (
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {post.tags!.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full bg-white/5 px-2.5 py-1 text-[11px] font-medium text-zinc-400 border border-white/10 transition hover:border-emerald-400/40 hover:text-emerald-400"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
               <div className="mt-6 border-b border-white/10" />
             </header>
 
@@ -161,6 +194,20 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
               </ReactMarkdown>
             </div>
           </article>
+
+          {/* İlgili Yazılar */}
+          {relatedPosts.length > 0 && (
+            <aside className="mt-16 border-t border-white/10 pt-10">
+              <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-400">
+                İlgili Yazılar
+              </h2>
+              <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {relatedPosts.map((relatedPost) => (
+                  <BlogCard key={relatedPost.id} post={relatedPost} />
+                ))}
+              </div>
+            </aside>
+          )}
         </div>
       </main>
       <Footer />
