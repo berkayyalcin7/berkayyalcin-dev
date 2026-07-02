@@ -42,6 +42,9 @@ BLOG PROJE YAYIN.txt
 GITHUB_OPERATIONS.md
 /local-docs/
 
+# claude code - makineye özel local ayarlar
+.claude/settings.local.json
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

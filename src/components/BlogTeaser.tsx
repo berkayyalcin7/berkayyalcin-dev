@@ -1,16 +1,33 @@
 import { getPublishedPosts } from "@/lib/blog";
 import Link from "next/link";
+import { HiArrowRight } from "react-icons/hi2";
+import BlogCard from "@/components/BlogCard";
+
+const TEASER_POST_COUNT = 4;
 
 export default async function BlogTeaser() {
   const posts = await getPublishedPosts();
+  const teaserPosts = posts.slice(0, TEASER_POST_COUNT);
+  const [featuredPost, ...otherPosts] = teaserPosts;
 
   return (
     <section id="blog" className="scroll-mt-24 border-t border-white/10 px-6 py-20">
       <div className="mx-auto max-w-5xl">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-400">
-          Blog
-        </h2>
-        
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-400">
+            Blog
+          </h2>
+          {posts.length > 0 && (
+            <Link
+              href="/blog"
+              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-400 transition hover:text-emerald-400"
+            >
+              Tüm Yazılar
+              <HiArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </Link>
+          )}
+        </div>
+
         {posts.length === 0 ? (
           <>
             <p className="mt-4 max-w-xl text-2xl font-medium text-white">
@@ -44,36 +61,9 @@ export default async function BlogTeaser() {
               .NET, Web mimarileri ve yazılım dünyasından seçtiğim konular hakkındaki teknik yazılarım.
             </p>
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {posts.map((post) => (
-                <Link
-                  href={`/blog/${post.slug}`}
-                  key={post.id}
-                  className="group relative flex flex-col justify-between rounded-2xl border border-white/5 bg-white/[0.01] p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30 hover:bg-white/[0.03] hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-emerald-500/5"
-                >
-                  {/* Decorative glowing gradient border/effect on hover */}
-                  <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                  
-                  <div>
-                    <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-medium text-emerald-400 border border-emerald-500/10">
-                      {new Date(post.created_at).toLocaleDateString("tr-TR", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </span>
-                    <h3 className="mt-4 text-lg font-semibold leading-snug text-white transition group-hover:text-emerald-400">
-                      {post.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-zinc-400 line-clamp-3">
-                      {post.excerpt}
-                    </p>
-                  </div>
-                  
-                  <div className="mt-6 flex items-center gap-1 text-xs font-semibold text-zinc-400 transition-colors group-hover:text-emerald-400">
-                    <span>Devamını Oku</span>
-                    <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
-                  </div>
-                </Link>
+              {featuredPost && <BlogCard post={featuredPost} featured />}
+              {otherPosts.map((post) => (
+                <BlogCard key={post.id} post={post} />
               ))}
             </div>
           </>
