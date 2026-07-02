@@ -12,6 +12,7 @@ export const siteConfig = {
     emailAddress: "berkayyalcin7@gmail.com",
     email: "mailto:berkayyalcin7@gmail.com",
   },
+  cvUrl: "https://dyqriqtgitmyiytrlwyi.supabase.co/storage/v1/object/public/cv/cv.pdf",
   nav: [
     { label: "Hakkımda", href: "/#hakkimda" },
     { label: "Deneyim", href: "/#deneyim" },

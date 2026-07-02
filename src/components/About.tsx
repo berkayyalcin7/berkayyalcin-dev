@@ -7,7 +7,9 @@ import {
   HiComputerDesktop,
   HiServer,
   HiLink,
+  HiArrowDownTray,
 } from "react-icons/hi2";
+import { siteConfig } from "@/lib/site-config";
 
 type Highlight = {
   label: string;
@@ -46,6 +48,18 @@ export default function About() {
               SharePoint Management gibi kurumsal araçlarla çalışma deneyimim
               var.
             </p>
+
+            <div className="mt-6">
+              <a
+                href={siteConfig.cvUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-xs font-semibold text-black transition hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/10"
+              >
+                <HiArrowDownTray className="h-4 w-4" />
+                CV'mi İndir (PDF)
+              </a>
+            </div>
 
             <div className="mt-8 border-t border-zinc-200 dark:border-white/10 pt-6">
               <h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
