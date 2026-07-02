@@ -6,6 +6,7 @@ import {
 } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -30,10 +31,31 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
       title: "Yazı Bulunamadı | Berkay Yalçın - Blog",
     };
   }
+  
+  const baseUrl = "https://berkayyalcin.dev";
+  const coverImageUrl = post.cover_image
+    ? (post.cover_image.startsWith("http") ? post.cover_image : `${baseUrl}${post.cover_image}`)
+    : `${baseUrl}/icon.png`;
+
   return {
     title: `${post.title} | Berkay Yalçın - Blog`,
     description: post.excerpt,
     keywords: post.tags ?? undefined,
+    openGraph: {
+      title: `${post.title} | Berkay Yalçın - Blog`,
+      description: post.excerpt,
+      url: `${baseUrl}/blog/${post.slug}`,
+      type: "article",
+      publishedTime: post.created_at,
+      modifiedTime: post.updated_at || post.created_at,
+      authors: ["Berkay Yalçın"],
+      images: [
+        {
+          url: coverImageUrl,
+          alt: post.title,
+        },
+      ],
+    },
   };
 }
 
@@ -58,8 +80,44 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
   const relatedPosts = getRelatedPosts(post, allPosts);
   const readingTime = getReadingTime(post.content);
 
+  const baseUrl = "https://berkayyalcin.dev";
+  const coverImageUrl = post.cover_image
+    ? (post.cover_image.startsWith("http") ? post.cover_image : `${baseUrl}${post.cover_image}`)
+    : `${baseUrl}/icon.png`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.excerpt,
+    "image": coverImageUrl,
+    "datePublished": post.created_at,
+    "dateModified": post.updated_at || post.created_at,
+    "author": {
+      "@type": "Person",
+      "name": "Berkay Yalçın",
+      "url": baseUrl
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Berkay Yalçın",
+      "logo": {
+        "@type": "ImageObject",
+        "url": `${baseUrl}/icon.png`
+      }
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": `${baseUrl}/blog/${post.slug}`
+    }
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Header />
       <main className="flex-1 px-6 py-28 relative z-10">
         <div className="mx-auto max-w-3xl">
@@ -76,10 +134,13 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
           <article>
             {post.cover_image && (
               <div className="relative w-full aspect-video md:aspect-[21/9] mb-8 overflow-hidden rounded-2xl border border-zinc-200 shadow-xl bg-zinc-100 dark:border-white/10 dark:shadow-2xl dark:bg-zinc-900">
-                <img
+                <Image
                   src={post.cover_image}
                   alt={post.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 768px"
+                  className="object-cover"
                 />
               </div>
             )}

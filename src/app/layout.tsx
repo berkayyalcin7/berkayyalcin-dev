@@ -24,11 +24,6 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     type: "website",
   },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.title,
-    description: siteConfig.description,
-  },
 };
 
 export default function RootLayout({
