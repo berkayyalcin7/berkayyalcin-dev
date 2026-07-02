@@ -262,22 +262,32 @@ export default function AnimatedBackground() {
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-black"
+      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-slate-50 dark:bg-black transition-colors duration-300"
     >
       {/* Yavaşça hareket eden ışık lekeleri (aurora efekti) */}
       <div
-        className="motion-safe:[animation:aurora-drift-1_22s_ease-in-out_infinite] absolute -top-32 -left-32 h-[32rem] w-[32rem] rounded-full bg-emerald-500/20 blur-3xl"
+        className="motion-safe:[animation:aurora-drift-1_22s_ease-in-out_infinite] absolute -top-32 -left-32 h-[32rem] w-[32rem] rounded-full bg-emerald-500/8 dark:bg-emerald-500/20 blur-3xl transition-colors duration-300"
       />
       <div
-        className="motion-safe:[animation:aurora-drift-2_26s_ease-in-out_infinite] absolute top-1/3 -right-40 h-[36rem] w-[36rem] rounded-full bg-blue-500/15 blur-3xl"
+        className="motion-safe:[animation:aurora-drift-2_26s_ease-in-out_infinite] absolute top-1/3 -right-40 h-[36rem] w-[36rem] rounded-full bg-blue-500/6 dark:bg-blue-500/15 blur-3xl transition-colors duration-300"
       />
       <div
-        className="motion-safe:[animation:aurora-drift-3_30s_ease-in-out_infinite] absolute bottom-[-10rem] left-1/3 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-violet-500/10 blur-3xl"
+        className="motion-safe:[animation:aurora-drift-3_30s_ease-in-out_infinite] absolute bottom-[-10rem] left-1/3 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-violet-500/5 dark:bg-violet-500/10 blur-3xl transition-colors duration-300"
       />
 
-      {/* İnce nokta ızgarası — devre kartı / blueprint hissi */}
+      {/* İnce nokta ızgarası — Açık Tema */}
       <div
-        className="motion-safe:[animation:grid-pan_14s_linear_infinite] absolute inset-0 opacity-[0.15]"
+        className="motion-safe:[animation:grid-pan_14s_linear_infinite] absolute inset-0 opacity-[0.7] dark:hidden"
+        style={{
+          backgroundImage:
+            "radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px)",
+          backgroundSize: "32px 32px",
+        }}
+      />
+
+      {/* İnce nokta ızgarası — Koyu Tema */}
+      <div
+        className="motion-safe:[animation:grid-pan_14s_linear_infinite] absolute inset-0 hidden opacity-[0.15] dark:block"
         style={{
           backgroundImage:
             "radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px)",
@@ -286,10 +296,10 @@ export default function AnimatedBackground() {
       />
 
       {/* Canlı bağlantı ağı */}
-      <canvas ref={canvasRef} className="h-full w-full opacity-90" />
+      <canvas ref={canvasRef} className="h-full w-full opacity-60 dark:opacity-90 transition-opacity duration-300" />
 
-      {/* Kenarlarda hafif vinyet, içerik okunabilirliğini artırır */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
+      {/* Kenarlarda hafif vinyet */}
+      <div className="absolute inset-0 bg-gradient-to-b from-slate-50/20 via-transparent to-slate-50/40 dark:from-black/40 dark:via-transparent dark:to-black/60 transition-all duration-300" />
     </div>
   );
 }

@@ -58,10 +58,10 @@ export default function ViewCounter({ slug, initialViews }: ViewCounterProps) {
   }, [slug]);
 
   return (
-    <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400 select-none">
-      <span className="h-1.5 w-1.5 rounded-full bg-zinc-600 animate-pulse" style={{ backgroundColor: hasIncremented ? '#10b981' : '#52525b' }} />
-      <HiEye className="h-4 w-4 text-zinc-400 transition-colors duration-300" style={{ color: hasIncremented ? '#34d399' : '#a1a1aa' }} />
-      <span className="transition-all duration-500 ease-out" style={{ color: hasIncremented ? '#e4e4e7' : '#a1a1aa' }}>
+    <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 dark:text-zinc-400 select-none">
+      <span className={`h-1.5 w-1.5 rounded-full animate-pulse transition-colors duration-300 ${hasIncremented ? 'bg-emerald-500' : 'bg-zinc-400 dark:bg-zinc-600'}`} />
+      <HiEye className={`h-4 w-4 transition-colors duration-300 ${hasIncremented ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-400 dark:text-zinc-500'}`} />
+      <span className={`transition-all duration-500 ease-out ${hasIncremented ? 'text-zinc-800 dark:text-zinc-200' : 'text-zinc-500 dark:text-zinc-400'}`}>
         {views} okunma
       </span>
     </div>

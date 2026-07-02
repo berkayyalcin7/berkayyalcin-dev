@@ -26,30 +26,30 @@ export default async function BlogIndexPage() {
         <div className="mx-auto max-w-5xl">
           <Link
             href="/#blog"
-            className="inline-flex items-center gap-2 text-sm text-zinc-400 hover:text-emerald-400 transition mb-8"
+            className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 transition mb-8"
           >
             <HiArrowLeft className="h-4 w-4" />
             Ana Sayfa
           </Link>
 
-          <h1 className="text-sm font-semibold uppercase tracking-widest text-emerald-400">
+          <h1 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
             Blog
           </h1>
-          <p className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+          <p className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
             Teknoloji & Deneyim Paylaşımları
           </p>
-          <p className="mt-3 max-w-xl text-base text-zinc-400">
+          <p className="mt-3 max-w-xl text-base text-zinc-600 dark:text-zinc-400">
             .NET, web mimarileri ve yazılım dünyasından seçtiğim konular
             hakkındaki tüm teknik yazılarım — kategoriye göre filtreleyebilir
             veya arama yapabilirsiniz.
           </p>
 
           {posts.length === 0 ? (
-            <div className="mt-12 rounded-2xl border border-dashed border-white/10 bg-white/[0.02] p-12 text-center">
-              <p className="text-lg font-medium text-white">
+            <div className="mt-12 rounded-2xl border border-dashed border-zinc-200 bg-zinc-100/40 dark:border-white/10 dark:bg-white/[0.02] p-12 text-center">
+              <p className="text-lg font-medium text-zinc-900 dark:text-white">
                 Yazılar çok yakında burada olacak.
               </p>
-              <p className="mt-2 text-sm text-zinc-400">
+              <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
                 Blog yazıları yayınlandıkça bu sayfada otomatik listelenecek.
               </p>
             </div>
