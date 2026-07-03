@@ -104,7 +104,7 @@ olması gerekir:
 - [x] Projeler bölümü (Supabase)
 - [x] Kariyer zaman çizelgesi ve CV indirme
 - [x] Light/Dark tema (varsayılan dark)
-- [ ] Mobil navigasyon menüsü
+- [x] Mobil navigasyon menüsü
 - [ ] SEO: sitemap.xml + yapılandırılmış veri (JSON-LD)
 - [ ] RSS feed
 - [ ] İletişim formu (Supabase)
