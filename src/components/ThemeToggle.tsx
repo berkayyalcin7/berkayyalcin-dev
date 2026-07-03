@@ -1,22 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { HiSun, HiMoon } from "react-icons/hi2";
 
-export default function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark" | null>(null);
+// Tema bilgisi React dışında (html.classList + localStorage) tutulduğu için
+// useSyncExternalStore ile okunur; toggle "themechange" event'iyle haber verir.
+function subscribe(onChange: () => void) {
+  window.addEventListener("themechange", onChange);
+  return () => window.removeEventListener("themechange", onChange);
+}
 
-  useEffect(() => {
-    // Tarayıcı yüklendiğinde mevcut temayı bul
-    const isLight = document.documentElement.classList.contains("light");
-    setTheme(isLight ? "light" : "dark");
-  }, []);
+function getSnapshot(): "light" | "dark" {
+  return document.documentElement.classList.contains("light") ? "light" : "dark";
+}
+
+function getServerSnapshot(): "light" | "dark" {
+  return "dark"; // SSR'da varsayılan tema
+}
+
+export default function ThemeToggle() {
+  const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 
   const toggleTheme = () => {
-    if (!theme) return;
-
     const nextTheme = theme === "light" ? "dark" : "light";
-    
+
     if (nextTheme === "light") {
       document.documentElement.classList.add("light");
       document.documentElement.classList.remove("dark");
@@ -26,17 +33,10 @@ export default function ThemeToggle() {
       document.documentElement.classList.remove("light");
       localStorage.setItem("theme", "dark");
     }
-    
-    setTheme(nextTheme);
 
-    // Canvas arka planını güncellemesi için özel bir event tetikle
+    // Hem bu bileşenin hem de canvas arka planının güncellenmesi için
     window.dispatchEvent(new Event("themechange"));
   };
-
-  if (!theme) {
-    // Hydration mismatch'i önlemek için yüklenene kadar boş alan ayır
-    return <div className="h-9 w-9 rounded-full border border-zinc-200/50 bg-zinc-100/50 dark:border-white/5 dark:bg-white/[0.01]" />;
-  }
 
   return (
     <button

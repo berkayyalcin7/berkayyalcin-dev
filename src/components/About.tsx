@@ -57,7 +57,7 @@ export default function About() {
                 className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-xs font-semibold text-black transition hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/10"
               >
                 <HiArrowDownTray className="h-4 w-4" />
-                CV'mi İndir (PDF)
+                CV&apos;mi İndir (PDF)
               </a>
             </div>
 
