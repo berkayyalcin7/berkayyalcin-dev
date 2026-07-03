@@ -78,7 +78,9 @@ export default function Header() {
   }, [isMenuOpen]);
 
   const isActive = (href: string) =>
-    (pathname === "/" && href === `/#${activeSection}`) || pathname === href;
+    (pathname === "/" && href === `/#${activeSection}`) ||
+    pathname === href ||
+    (!href.startsWith("/#") && href !== "/" && pathname.startsWith(`${href}/`));
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/80 dark:border-white/10 dark:bg-black/60 backdrop-blur-md transition-colors duration-300">
