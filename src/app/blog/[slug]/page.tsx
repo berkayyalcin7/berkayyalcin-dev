@@ -15,6 +15,7 @@ import { HiArrowLeft, HiClock } from "react-icons/hi2";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import ViewCounter from "@/components/ViewCounter";
+import ReadingProgress from "@/components/ReadingProgress";
 import type { Metadata } from "next";
 
 export const revalidate = 1800; // Revalidate at most every 30 minutes (ISR)
@@ -118,6 +119,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <ReadingProgress />
       <Header />
       <main className="flex-1 px-6 py-28 relative z-10">
         <div className="mx-auto max-w-3xl">

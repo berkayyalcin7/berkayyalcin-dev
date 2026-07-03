@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "@/lib/site-config";
 import BackgroundLoader from "@/components/BackgroundLoader";
+import BackToTop from "@/components/BackToTop";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,14 +39,17 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                if (localStorage.theme === 'light' || (!('theme' in localStorage) && !window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                // Varsayılan tema dark; light yalnızca kullanıcı toggle ile seçtiyse uygulanır.
+                if (localStorage.theme === 'light') {
                   document.documentElement.classList.add('light');
                   document.documentElement.classList.remove('dark');
                 } else {
                   document.documentElement.classList.add('dark');
                   document.documentElement.classList.remove('light');
                 }
-              } catch (_) {}
+              } catch (_) {
+                document.documentElement.classList.add('dark');
+              }
             `,
           }}
         />
@@ -53,6 +57,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-slate-50 text-zinc-900 dark:bg-black dark:text-white transition-colors duration-300">
         <BackgroundLoader />
         {children}
+        <BackToTop />
         <Analytics />
         <SpeedInsights />
       </body>

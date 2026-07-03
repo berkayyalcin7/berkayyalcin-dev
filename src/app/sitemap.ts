@@ -1,33 +1,32 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
 import { getPublishedPosts } from "@/lib/blog";
+import { siteConfig } from "@/lib/site-config";
+
+export const revalidate = 1800; // Blog sayfalarıyla aynı ISR aralığı
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://berkayyalcin.dev";
-
-  // 1. Fetch posts dynamically from Supabase
   const posts = await getPublishedPosts();
-  const blogUrls = posts.map((post) => ({
-    url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: new Date(post.updated_at || post.created_at),
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
+
+  const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${siteConfig.url}/blog/${post.slug}`,
+    lastModified: new Date(post.updated_at ?? post.created_at),
+    changeFrequency: "monthly",
+    priority: 0.7,
   }));
 
-  // 2. Define static routes
-  const staticUrls = [
+  return [
     {
-      url: baseUrl,
+      url: siteConfig.url,
       lastModified: new Date(),
-      changeFrequency: "weekly" as const,
-      priority: 1.0,
+      changeFrequency: "weekly",
+      priority: 1,
     },
     {
-      url: `${baseUrl}/blog`,
+      url: `${siteConfig.url}/blog`,
       lastModified: new Date(),
-      changeFrequency: "weekly" as const,
+      changeFrequency: "daily",
       priority: 0.9,
     },
+    ...postEntries,
   ];
-
-  return [...staticUrls, ...blogUrls];
 }

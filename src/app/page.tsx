@@ -9,6 +9,7 @@ import BlogTeaser from "@/components/BlogTeaser";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
+import Reveal from "@/components/Reveal";
 
 export const metadata: Metadata = {
   title: "Berkay Yalçın | Full Stack .NET Developer",
@@ -82,12 +83,24 @@ export default function Home() {
       <Header />
       <main className="flex-1">
         <Hero />
-        <About />
-        <Timeline />
-        <Skills />
-        <Projects />
-        <BlogTeaser />
-        <Contact />
+        <Reveal>
+          <About />
+        </Reveal>
+        <Reveal>
+          <Timeline />
+        </Reveal>
+        <Reveal>
+          <Skills />
+        </Reveal>
+        <Reveal>
+          <Projects />
+        </Reveal>
+        <Reveal>
+          <BlogTeaser />
+        </Reveal>
+        <Reveal>
+          <Contact />
+        </Reveal>
       </main>
       <Footer />
     </>
