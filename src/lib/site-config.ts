@@ -15,8 +15,6 @@ export const siteConfig = {
   cvUrl: "https://dyqriqtgitmyiytrlwyi.supabase.co/storage/v1/object/public/cv/cv.pdf",
   nav: [
     { label: "Hakkımda", href: "/#hakkimda" },
-    { label: "Deneyim", href: "/#deneyim" },
-    { label: "Yetenekler", href: "/#yetenekler" },
     { label: "Projeler", href: "/#projeler" },
     { label: "Araçlar", href: "/araclar" },
     { label: "Blog", href: "/#blog" },

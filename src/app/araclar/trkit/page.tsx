@@ -39,7 +39,8 @@ export default function TrkitPage() {
           <p className="mt-3 max-w-2xl text-base text-zinc-600 dark:text-zinc-400">
             Geliştirdiğim açık kaynak npm paketi: TC Kimlik No, VKN, IBAN, telefon ve plaka
             doğrulama; KVKK dostu maskeleme; Türkçe <code className="font-mono text-sm">İ/ı</code>{" "}
-            duyarlı metin işlemleri; sayıyı yazıya çevirme ve KDV hesapları. Saf fonksiyonlardan
+            duyarlı metin işlemleri; sayıyı yazıya çevirme, KDV hesapları ve Diyanet takvimiyle
+            doğrulanmış resmî tatil / iş günü hesapları. Saf fonksiyonlardan
             oluşur — React, Vue, Angular, Node fark etmeksizin her yerde çalışır. Aşağıdaki
             demolar paketi doğrudan tarayıcınızda çalıştırır.
           </p>

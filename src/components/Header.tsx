@@ -6,8 +6,6 @@ import { usePathname } from "next/navigation";
 import type { IconType } from "react-icons";
 import {
   HiUser,
-  HiBriefcase,
-  HiSparkles,
   HiFolder,
   HiWrenchScrewdriver,
   HiNewspaper,
@@ -21,8 +19,6 @@ import ThemeToggle from "@/components/ThemeToggle";
 
 const navIcons: Record<string, IconType> = {
   "/#hakkimda": HiUser,
-  "/#deneyim": HiBriefcase,
-  "/#yetenekler": HiSparkles,
   "/#projeler": HiFolder,
   "/araclar": HiWrenchScrewdriver,
   "/#blog": HiNewspaper,
