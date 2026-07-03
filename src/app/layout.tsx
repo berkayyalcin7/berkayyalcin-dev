@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { siteConfig } from "@/lib/site-config";
 import BackgroundLoader from "@/components/BackgroundLoader";
+import BackToTop from "@/components/BackToTop";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -61,6 +62,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-slate-50 text-zinc-900 dark:bg-black dark:text-white transition-colors duration-300">
         <BackgroundLoader />
         {children}
+        <BackToTop />
         <Analytics />
         <SpeedInsights />
       </body>
