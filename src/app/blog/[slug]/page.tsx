@@ -6,6 +6,7 @@ import {
 } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import ReactMarkdown from "react-markdown";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -14,6 +15,7 @@ import { HiArrowLeft, HiClock } from "react-icons/hi2";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import ViewCounter from "@/components/ViewCounter";
+import ReadingProgress from "@/components/ReadingProgress";
 import type { Metadata } from "next";
 
 export const revalidate = 1800; // Revalidate at most every 30 minutes (ISR)
@@ -60,6 +62,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
 
   return (
     <>
+      <ReadingProgress />
       <Header />
       <main className="flex-1 px-6 py-28 relative z-10">
         <div className="mx-auto max-w-3xl">
@@ -76,10 +79,13 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
           <article>
             {post.cover_image && (
               <div className="relative w-full aspect-video md:aspect-[21/9] mb-8 overflow-hidden rounded-2xl border border-zinc-200 shadow-xl bg-zinc-100 dark:border-white/10 dark:shadow-2xl dark:bg-zinc-900">
-                <img
+                <Image
                   src={post.cover_image}
                   alt={post.title}
-                  className="w-full h-full object-cover"
+                  fill
+                  priority
+                  sizes="(max-width: 768px) 100vw, 768px"
+                  className="object-cover"
                 />
               </div>
             )}
