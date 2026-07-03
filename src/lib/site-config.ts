@@ -18,6 +18,7 @@ export const siteConfig = {
     { label: "Deneyim", href: "/#deneyim" },
     { label: "Yetenekler", href: "/#yetenekler" },
     { label: "Projeler", href: "/#projeler" },
+    { label: "Araçlar", href: "/araclar" },
     { label: "Blog", href: "/#blog" },
     { label: "İletişim", href: "/#iletisim" },
   ],
