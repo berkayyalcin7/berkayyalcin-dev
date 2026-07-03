@@ -1,4 +1,24 @@
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { HiEnvelope } from "react-icons/hi2";
 import { siteConfig } from "@/lib/site-config";
+
+const socialLinks = [
+  {
+    label: "GitHub",
+    href: siteConfig.social.github,
+    icon: FaGithub,
+  },
+  {
+    label: "LinkedIn",
+    href: siteConfig.social.linkedin,
+    icon: FaLinkedin,
+  },
+  {
+    label: "E-posta",
+    href: siteConfig.social.email,
+    icon: HiEnvelope,
+  },
+];
 
 export default function Hero() {
   return (
@@ -14,12 +34,19 @@ export default function Hero() {
 
       <div className="mx-auto max-w-5xl">
         <span className="inline-flex items-center gap-2 rounded-full border border-zinc-200 bg-zinc-100/50 px-4 py-1.5 text-xs font-medium text-emerald-600 dark:border-white/10 dark:bg-white/5 dark:text-emerald-400 transition-colors">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+          <span className="relative flex h-1.5 w-1.5">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75 dark:bg-emerald-400" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
+          </span>
           Yeni projeler üzerinde çalışıyorum
         </span>
 
         <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-6xl">
-          Merhaba, ben {siteConfig.name}.
+          Merhaba, ben{" "}
+          <span className="bg-gradient-to-r from-emerald-500 via-emerald-400 to-blue-500 bg-clip-text text-transparent">
+            {siteConfig.name}
+          </span>
+          .
         </h1>
         <p className="mt-4 max-w-xl text-lg text-zinc-600 dark:text-zinc-400 sm:text-xl">
           {siteConfig.role} — {siteConfig.location}. Modern web ve .NET
@@ -40,6 +67,22 @@ export default function Hero() {
           >
             Benimle İletişime Geç
           </a>
+
+          {/* Sosyal bağlantılar */}
+          <div className="flex items-center gap-2 sm:ml-2 sm:border-l sm:border-zinc-200 sm:pl-6 dark:sm:border-white/10">
+            {socialLinks.map(({ label, href, icon: Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-zinc-100/50 text-zinc-600 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:text-emerald-500 dark:border-white/10 dark:bg-white/[0.02] dark:text-zinc-400 dark:hover:border-emerald-400/40 dark:hover:text-emerald-400"
+              >
+                <Icon className="h-4.5 w-4.5" />
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </section>
