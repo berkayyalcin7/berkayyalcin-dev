@@ -105,6 +105,7 @@ olması gerekir:
 - [x] Kariyer zaman çizelgesi ve CV indirme
 - [x] Light/Dark tema (varsayılan dark)
 - [x] Mobil navigasyon menüsü
-- [ ] SEO: sitemap.xml + yapılandırılmış veri (JSON-LD)
+- [x] SEO: sitemap.xml (dinamik, blog yazıları dahil)
+- [ ] SEO: yapılandırılmış veri (JSON-LD)
 - [ ] RSS feed
 - [ ] İletişim formu (Supabase)
