@@ -22,7 +22,7 @@ export const tools: ToolPackage[] = [
     registry: "npm",
     tagline: "Türk geliştiriciler için sıfır bağımlılıklı utility kit",
     description:
-      "TC Kimlik No, VKN, IBAN, telefon ve plaka doğrulama; KVKK dostu maskeleme; Türkçe İ/ı duyarlı metin işlemleri; sayıyı yazıya çevirme ve KDV hesapları. Saf fonksiyonlardan oluşur — React, Vue, Angular, Node fark etmeksizin her yerde çalışır.",
+      "TC Kimlik No, VKN, IBAN, telefon ve plaka doğrulama; KVKK dostu maskeleme; Türkçe İ/ı duyarlı metin işlemleri; sayıyı yazıya çevirme, KDV hesapları ve Diyanet takvimiyle doğrulanmış resmî tatil / iş günü hesapları. Saf fonksiyonlardan oluşur — React, Vue, Angular, Node fark etmeksizin her yerde çalışır.",
     installCommand: "npm install trkit",
     packageUrl: "https://www.npmjs.com/package/trkit",
     githubUrl: "https://github.com/berkayyalcin7/trkit",

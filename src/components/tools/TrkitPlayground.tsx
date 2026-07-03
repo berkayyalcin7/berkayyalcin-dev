@@ -3,13 +3,16 @@
 import { useState, type ReactNode } from "react";
 import { HiCheckCircle, HiClipboard, HiClipboardDocumentCheck, HiXCircle } from "react-icons/hi2";
 import {
+  addWorkingDaysTR,
   formatIBAN,
   formatTRPhone,
   formatTRY,
+  getHolidaysTR,
   isValidPlate,
   isValidTCKN,
   isValidTRIban,
   isValidTRPhone,
+  isWorkingDayTR,
   maskIBAN,
   maskPhone,
   maskTCKN,
@@ -117,11 +120,18 @@ export default function TrkitPlayground() {
   const [kdvRate, setKdvRate] = useState("20");
   const [plate, setPlate] = useState("34 ABC 123");
   const [plateCode, setPlateCode] = useState("59");
+  const [workDate, setWorkDate] = useState("2026-10-29");
+  const [workDays, setWorkDays] = useState("5");
 
   const amountNum = Number(amount);
   const numInt = Number(num);
   const kdv = splitKDV(Number(kdvAmount), Number(kdvRate));
   const city = getCityByPlate(Number(plateCode));
+  const working = isWorkingDayTR(workDate);
+  const holidayNames = (getHolidaysTR(Number(workDate.slice(0, 4))) ?? [])
+    .filter((h) => h.date === workDate)
+    .map((h) => h.name)
+    .join(", ");
 
   return (
     <div className="grid gap-5 sm:grid-cols-2">
@@ -240,6 +250,39 @@ export default function TrkitPlayground() {
           <ResultRow label="Net" value={kdv ? formatTRY(kdv.net) : null} />
           <ResultRow label="KDV" value={kdv ? formatTRY(kdv.kdv) : null} />
           <ResultRow label="Brüt" value={kdv ? formatTRY(kdv.gross) : null} />
+        </div>
+      </DemoCard>
+
+      <DemoCard title="Resmî Tatil & İş Günü" fn="isWorkingDayTR">
+        <div className="flex gap-3">
+          <input
+            type="date"
+            value={workDate}
+            onChange={(e) => setWorkDate(e.target.value)}
+            className={inputClass}
+            min="2020-01-01"
+            max="2030-12-31"
+            aria-label="Tarih (2020-2030)"
+          />
+          <input
+            value={workDays}
+            onChange={(e) => setWorkDays(e.target.value)}
+            className={`${inputClass} max-w-24`}
+            inputMode="numeric"
+            placeholder="+gün"
+            aria-label="Eklenecek iş günü sayısı"
+          />
+        </div>
+        <div className="mt-3">
+          <ResultRow
+            label="Durum"
+            value={working === null ? null : working ? "İş günü" : "Tatil / hafta sonu"}
+          />
+          <ResultRow label="Tatil adı" value={holidayNames === "" ? null : holidayNames} />
+          <ResultRow
+            label={`+${workDays || "?"} iş günü`}
+            value={addWorkingDaysTR(workDate, Number(workDays))}
+          />
         </div>
       </DemoCard>
 
