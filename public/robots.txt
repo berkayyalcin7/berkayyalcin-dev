@@ -33,3 +33,5 @@ Disallow: /
 
 User-agent: FacebookBot
 Disallow: /
+
+Sitemap: https://berkayyalcin.dev/sitemap.xml
