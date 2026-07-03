@@ -129,7 +129,7 @@ export default function ContactButton({
                       Özgeçmiş
                     </span>
                     <span className="block text-sm font-semibold text-zinc-900 dark:text-white">
-                      CV'mi İndir (PDF)
+                      CV&apos;mi İndir (PDF)
                     </span>
                   </span>
                 </a>
