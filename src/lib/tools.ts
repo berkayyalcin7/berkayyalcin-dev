@@ -35,6 +35,26 @@ export const tools: ToolPackage[] = [
       "MIT lisansı",
     ],
   },
+  {
+    slug: "locakit",
+    name: "locakit",
+    registry: "npm",
+    tagline: "AI agent'lar için deterministik i18n motoru",
+    description:
+      "Çok dilli projelerde locale JSON'larını agent'ınızla senkron tutar: eksik ve bayatlamış key'leri lockfile ile tespit eder, çeviriyi zaten kullandığınız AI agent (Claude Code vb.) kodun bağlamını okuyarak yapar, locakit de yer tutucu paritesi, glossary ve Türkçe dil paketi kurallarıyla doğrulayıp JSON'a güvenle yazar. Çeviri API'si yok, SaaS hesabı yok, token faturası yok.",
+    installCommand: "npm install -D locakit",
+    packageUrl: "https://www.npmjs.com/package/locakit",
+    githubUrl: "https://github.com/berkayyalcin7/locakit",
+    features: [
+      "Sıfır bağımlılık",
+      "API key gerektirmez",
+      "Lockfile ile bayatlama takibi",
+      "CI dostu check",
+      "Türkçe dil paketi",
+      "Claude Code skill'i",
+      "MIT lisansı",
+    ],
+  },
 ];
 
 export function getToolBySlug(slug: string): ToolPackage | undefined {
