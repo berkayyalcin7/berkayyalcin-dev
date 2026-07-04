@@ -1,17 +1,17 @@
 "use client";
 
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import { usePathname } from "next/navigation";
 
 /**
- * Client navigasyonlarında (özellikle dil değişiminde) kök layout yeniden render
- * olduğunda <html> üzerindeki tema class'ı kaybolabiliyor. Bu bileşen her rota
- * değişiminden sonra temayı localStorage'daki tercihe göre yeniden uygular.
+ * Dil değişiminde [lang] layout'u remount olur ve <html> üzerindeki tema class'ı
+ * silinir. useLayoutEffect, tarayıcı boyama yapmadan ÖNCE senkron çalıştığı için
+ * tema aynı karede geri uygulanır — gözle görülür dark/light "çift geçiş" olmaz.
  */
 export default function ThemeSync() {
   const pathname = usePathname();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     let stored: string | null = null;
     try {
       stored = localStorage.getItem("theme");

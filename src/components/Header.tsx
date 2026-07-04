@@ -47,8 +47,13 @@ export default function Header({ lang, dict }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
+  // Proxy '/'yi görünmez şekilde '/tr'ye rewrite ettiği için SSR'da pathname
+  // '/tr/...' gelir, tarayıcıda ise '/...' olur. Karşılaştırmalar ve dil
+  // değiştirici hedefi için dil prefix'i soyulmuş normalize yol kullanılır.
+  const basePath = pathname.replace(/^\/(tr|en)(?=\/|$)/, "") || "/";
+
   const homePath = lang === "tr" ? "/" : `/${lang}`;
-  const isHome = pathname === homePath;
+  const isHome = basePath === "/";
 
   // Scrollspy: ana sayfada görünür bölümün nav linkini vurgula
   useEffect(() => {
@@ -80,20 +85,14 @@ export default function Header({ lang, dict }: HeaderProps) {
     return () => observer.disconnect();
   }, [isHome]);
 
-  const isActive = (href: string) => {
-    const localized = localeHref(lang, href);
-    return (
-      (isHome && href === `/#${activeSection}`) ||
-      pathname === localized ||
-      (!href.startsWith("/#") && href !== "/" && pathname.startsWith(`${localized}/`))
-    );
-  };
+  const isActive = (href: string) =>
+    (isHome && href === `/#${activeSection}`) ||
+    basePath === href ||
+    (!href.startsWith("/#") && href !== "/" && basePath.startsWith(`${href}/`));
 
   // Dil değiştirici: mevcut yolun diğer dildeki karşılığı
   const switchTarget =
-    lang === "tr"
-      ? `/en${pathname === "/" ? "" : pathname}` || "/en"
-      : pathname.replace(/^\/en(?=\/|$)/, "") || "/";
+    lang === "tr" ? (basePath === "/" ? "/en" : `/en${basePath}`) : basePath;
   const switchLabel = lang === "tr" ? "EN" : "TR";
 
   return (
@@ -127,14 +126,17 @@ export default function Header({ lang, dict }: HeaderProps) {
         </nav>
 
         <div className="flex items-center gap-3 sm:gap-4">
-          <Link
+          {/* Bilinçli olarak <a>: dil değişimi tam sayfa yüklemesiyle yapılır.
+              Client navigasyonu [lang] layout'unu remount edip tema class'ını
+              siliyor ve inline script'ler için React dev uyarısı üretiyordu. */}
+          <a
             href={switchTarget}
             aria-label={dict.switchLocale}
             className="flex h-9 items-center gap-1.5 rounded-full border border-zinc-200/60 bg-zinc-100/50 px-3 text-xs font-semibold text-zinc-600 transition hover:border-emerald-500/40 hover:text-emerald-500 dark:border-white/5 dark:bg-white/[0.01] dark:text-zinc-400 dark:hover:border-emerald-500/30 dark:hover:text-emerald-400"
           >
             <HiLanguage className="h-4 w-4" />
             {switchLabel}
-          </Link>
+          </a>
           <ThemeToggle ariaLabel={dict.themeToggle} />
           <ContactButton
             dict={dict.contactModal}
