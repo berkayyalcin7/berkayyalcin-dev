@@ -7,6 +7,7 @@ import { siteConfig } from "@/lib/site-config";
 import { getDictionary, hasLocale, locales } from "@/lib/i18n";
 import BackgroundLoader from "@/components/BackgroundLoader";
 import BackToTop from "@/components/BackToTop";
+import ThemeSync from "@/components/ThemeSync";
 import "../globals.css";
 
 const geistSans = Geist({
@@ -14,6 +15,30 @@ const geistSans = Geist({
   subsets: ["latin"],
   display: "swap",
 });
+
+// Modül seviyesinde sabit element: referansı hiç değişmediği için React, [lang]
+// değişip layout yeniden render olduğunda bu alt ağacı atlar — client'ta script
+// render uyarısı da tetiklenmez. (İlk boyamada FOUC önleme görevi aynı kalır.)
+const THEME_INIT_SCRIPT = (
+  <script
+    dangerouslySetInnerHTML={{
+      __html: `
+        try {
+          // Varsayılan tema dark; light yalnızca kullanıcı toggle ile seçtiyse uygulanır.
+          if (localStorage.theme === 'light') {
+            document.documentElement.classList.add('light');
+            document.documentElement.classList.remove('dark');
+          } else {
+            document.documentElement.classList.add('dark');
+            document.documentElement.classList.remove('light');
+          }
+        } catch (_) {
+          document.documentElement.classList.add('dark');
+        }
+      `,
+    }}
+  />
+);
 
 type LayoutParams = { params: Promise<{ lang: string }> };
 
@@ -54,27 +79,9 @@ export default async function RootLayout({
 
   return (
     <html lang={lang} className={`${geistSans.variable} h-full antialiased`} suppressHydrationWarning>
-      <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              try {
-                // Varsayılan tema dark; light yalnızca kullanıcı toggle ile seçtiyse uygulanır.
-                if (localStorage.theme === 'light') {
-                  document.documentElement.classList.add('light');
-                  document.documentElement.classList.remove('dark');
-                } else {
-                  document.documentElement.classList.add('dark');
-                  document.documentElement.classList.remove('light');
-                }
-              } catch (_) {
-                document.documentElement.classList.add('dark');
-              }
-            `,
-          }}
-        />
-      </head>
+      <head>{THEME_INIT_SCRIPT}</head>
       <body className="flex min-h-full flex-col bg-slate-50 text-zinc-900 dark:bg-black dark:text-white transition-colors duration-300">
+        <ThemeSync />
         <BackgroundLoader />
         {children}
         <BackToTop ariaLabel={dict.backToTop.aria} />
