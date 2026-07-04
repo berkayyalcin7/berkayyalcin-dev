@@ -2,47 +2,51 @@ import { getProjects, type Project } from "@/lib/projects";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { HiArrowUpRight, HiCodeBracket } from "react-icons/hi2";
+import type { Dictionary } from "@/lib/i18n";
+import { fill } from "@/lib/locale-link";
 
-// Supabase'de proje yokken gösterilen örnek içerik
-const FALLBACK_PROJECTS: Pick<
+type ProjectsDict = Dictionary["projects"];
+
+// Supabase'de proje yokken gösterilen örnek içerik; açıklamalar sözlükten gelir
+function fallbackProjects(dict: ProjectsDict): Pick<
   Project,
   "id" | "title" | "description" | "github_url" | "live_url" | "technologies"
->[] = [
-  {
-    id: "mock-1",
-    title: "E-Commerce Microservices",
-    description:
-      "CQRS ve Event-Driven Design mimarileri kullanılarak .NET 8 ile geliştirilmiş ölçeklenebilir e-ticaret mikroservis yapısı.",
-    github_url: "https://github.com/berkayyalcin7",
-    live_url: null,
-    technologies: [".NET 8", "RabbitMQ", "Docker", "PostgreSQL", "Redis"],
-  },
-  {
-    id: "mock-2",
-    title: "Personal Portfolio & Blog",
-    description:
-      "Ziyaretçi sayaçları, dinamik içerik yönetimi ve modern karanlık tema estetiğine sahip Next.js portfolyo projesi.",
-    github_url: "https://github.com/berkayyalcin7",
-    live_url: "https://berkayyalcin.dev",
-    technologies: ["Next.js", "Tailwind CSS", "Supabase", "TypeScript"],
-  },
-  {
-    id: "mock-3",
-    title: "Real-time Chat Engine",
-    description:
-      "WebSocket protokolü üzerinden anlık mesajlaşma ve oda sistemini destekleyen yüksek performanslı Go backend motoru.",
-    github_url: "https://github.com/berkayyalcin7",
-    live_url: null,
-    technologies: ["Go", "WebSockets", "Redis", "Docker"],
-  },
-];
+>[] {
+  return [
+    {
+      id: "mock-1",
+      title: "E-Commerce Microservices",
+      description: dict.fallback.microservices,
+      github_url: "https://github.com/berkayyalcin7",
+      live_url: null,
+      technologies: [".NET 8", "RabbitMQ", "Docker", "PostgreSQL", "Redis"],
+    },
+    {
+      id: "mock-2",
+      title: "Personal Portfolio & Blog",
+      description: dict.fallback.portfolio,
+      github_url: "https://github.com/berkayyalcin7",
+      live_url: "https://berkayyalcin.dev",
+      technologies: ["Next.js", "Tailwind CSS", "Supabase", "TypeScript"],
+    },
+    {
+      id: "mock-3",
+      title: "Real-time Chat Engine",
+      description: dict.fallback.chat,
+      github_url: "https://github.com/berkayyalcin7",
+      live_url: null,
+      technologies: ["Go", "WebSockets", "Redis", "Docker"],
+    },
+  ];
+}
 
 type ProjectCardProps = {
-  project: (typeof FALLBACK_PROJECTS)[number];
+  project: ReturnType<typeof fallbackProjects>[number];
   index: number;
+  dict: ProjectsDict;
 };
 
-function ProjectCard({ project, index }: ProjectCardProps) {
+function ProjectCard({ project, index, dict }: ProjectCardProps) {
   return (
     <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100/50 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30 hover:bg-zinc-150/60 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03] hover:shadow-lg dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-emerald-500/5">
       {/* Hover'da beliren ışıma */}
@@ -74,7 +78,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white transition-colors"
-                aria-label={`${project.title} GitHub Adresi`}
+                aria-label={fill(dict.githubAria, { title: project.title })}
               >
                 <FaGithub className="h-5 w-5" />
               </Link>
@@ -85,7 +89,7 @@ function ProjectCard({ project, index }: ProjectCardProps) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
-                aria-label={`${project.title} Canlı Demo`}
+                aria-label={fill(dict.liveAria, { title: project.title })}
               >
                 <HiArrowUpRight className="h-5 w-5" />
               </Link>
@@ -112,30 +116,28 @@ function ProjectCard({ project, index }: ProjectCardProps) {
   );
 }
 
-export default async function Projects() {
+export default async function Projects({ dict }: { dict: ProjectsDict }) {
   const projects = await getProjects();
   const hasProjects = projects.length > 0;
-  const visibleProjects = hasProjects ? projects : FALLBACK_PROJECTS;
+  const visibleProjects = hasProjects ? projects : fallbackProjects(dict);
 
   return (
     <section id="projeler" className="scroll-mt-24 border-t border-zinc-200 dark:border-white/10 px-6 py-20">
       <div className="mx-auto max-w-5xl">
         <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-          Projeler
+          {dict.heading}
         </h2>
 
         <p className="mt-4 max-w-xl text-2xl font-medium text-zinc-900 dark:text-white">
-          Geliştirdiğim Yazılımlar & Çalışmalar
+          {dict.subtitle}
         </p>
         <p className="mt-3 max-w-xl text-base text-zinc-600 dark:text-zinc-400">
-          {hasProjects
-            ? "Açık kaynaklı projelerim, kişisel araçlarım ve geliştirdiğim kurumsal uygulamalar."
-            : "Buradaki projeler zamanla güncellenecek olup paylaşılanlar örnek olarak yer almaktadır."}
+          {hasProjects ? dict.descriptionHasProjects : dict.descriptionFallback}
         </p>
 
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {visibleProjects.map((project, index) => (
-            <ProjectCard key={project.id} project={project} index={index} />
+            <ProjectCard key={project.id} project={project} index={index} dict={dict} />
           ))}
         </div>
       </div>

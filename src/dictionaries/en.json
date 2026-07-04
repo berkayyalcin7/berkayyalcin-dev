@@ -1,0 +1,271 @@
+{
+  "meta": {
+    "siteTitle": "Berkay Yalçın - Blog",
+    "siteDescription": "Personal portfolio and blog of software developer Berkay Yalçın. Projects, articles and experience.",
+    "homeTitle": "Berkay Yalçın | Full Stack .NET Developer",
+    "homeDescription": "Berkay Yalçın's personal portfolio with technical blog posts on .NET Core, microservice architectures and software development."
+  },
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "tools": "Tools",
+    "blog": "Blog",
+    "contact": "Contact"
+  },
+  "header": {
+    "contactCta": "Get in Touch",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "themeToggle": "Toggle theme",
+    "switchLocale": "Türkçe'ye geç"
+  },
+  "profile": {
+    "role": "Computer Engineer & .NET Full Stack Developer",
+    "location": "Türkiye"
+  },
+  "hero": {
+    "badge": "Currently working on new projects",
+    "title": "Hi, I'm {name}.",
+    "subtitle": "{role} — {location}. I build end-to-end products with the modern web and the .NET ecosystem, and share what I learn on this blog.",
+    "ctaBlog": "Read the Blog",
+    "ctaContact": "Get in Touch",
+    "emailAria": "Email"
+  },
+  "about": {
+    "heading": "About",
+    "leadBefore": "I see software development not just as a profession, but as a journey of",
+    "leadHighlight": "continuous learning and building",
+    "leadAfter": ".",
+    "body": "I'm a Computer Engineer building end-to-end solutions in the .NET ecosystem as well as with modern web technologies. I have hands-on experience with enterprise tools such as Entity Framework Core, Microsoft SQL Server, Azure DevOps and Microsoft SharePoint Management.",
+    "downloadCv": "Download My CV (PDF)",
+    "expertiseHeading": "Application & Integration Expertise",
+    "expertise": {
+      "web": {
+        "title": "Web Development",
+        "description": "Fast, SEO-friendly and responsive modern web applications with TypeScript, React, Next.js and Tailwind CSS."
+      },
+      "desktop": {
+        "title": "Desktop Development",
+        "description": "High-performance, reliable enterprise desktop software for Windows, built on WinForms and WPF."
+      },
+      "services": {
+        "title": "Background Services",
+        "description": "Long-running background jobs, Windows/Worker Service applications and scheduled data/queue processing systems."
+      },
+      "api": {
+        "title": "API Design & Integrations",
+        "description": "Secure, RESTful API design (.NET Web API) and data/service integration with a variety of third-party systems."
+      }
+    },
+    "highlights": {
+      "titleLabel": "Title",
+      "titleValue": "Computer Engineer",
+      "expertiseLabel": "Expertise",
+      "expertiseValue": ".NET Full Stack Developer",
+      "ecosystemLabel": "Ecosystem",
+      "ecosystemValue": "Web & Enterprise Software",
+      "locationLabel": "Location",
+      "locationValue": "Türkiye"
+    }
+  },
+  "timeline": {
+    "heading": "Experience & Career",
+    "subtitle": "My Career Timeline",
+    "experience": [
+      {
+        "period": "2021 - {year}",
+        "company": "YKK Türkiye A.Ş",
+        "role": "Software Development Specialist",
+        "points": [
+          "Building enterprise ERP and portal solutions with a .NET backend and modern frontend technologies.",
+          "Microservice architectures, integrations, and the optimization and management of web services.",
+          "Digitalizing business processes and driving performance improvement work."
+        ]
+      },
+      {
+        "period": "2021 - 2021",
+        "company": "Metamin Mümessillik A.Ş",
+        "role": "Software Development Specialist",
+        "points": [
+          "Designing and coding internal operational applications, services and database structures.",
+          "API integrations and delivering on business units' reporting needs."
+        ]
+      },
+      {
+        "period": "2020 - 2021",
+        "company": "Türk Hava Kuvvetleri",
+        "role": "Air Force Engineer Lieutenant",
+        "points": [
+          "Managing IT infrastructure and developing/maintaining software for military information processing needs."
+        ]
+      },
+      {
+        "period": "2018 - 2020",
+        "company": "Doğruyer Reklam Bilişim A.Ş",
+        "role": "Software Development Specialist",
+        "points": [
+          "Building web-based projects, custom automation systems and e-commerce infrastructure from scratch.",
+          "Integrating frontend and backend components, and optimizing database queries."
+        ]
+      },
+      {
+        "period": "2014 - 2018",
+        "company": "Trakya Üniversitesi",
+        "role": "B.Sc. in Computer Engineering",
+        "points": [
+          "Training in core algorithms, data structures and software engineering methodologies, plus graduation projects."
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "heading": "Skills",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend & .NET Ecosystem",
+      "database": "Databases",
+      "devops": "DevOps & Enterprise Tools"
+    }
+  },
+  "projects": {
+    "heading": "Projects",
+    "subtitle": "Software & Work I've Built",
+    "descriptionHasProjects": "My open-source projects, personal tools and the enterprise applications I've built.",
+    "descriptionFallback": "The projects here will be updated over time; the ones shown are examples.",
+    "githubAria": "{title} on GitHub",
+    "liveAria": "{title} live demo",
+    "fallback": {
+      "microservices": "A scalable e-commerce microservice architecture built with .NET 8 using CQRS and event-driven design.",
+      "portfolio": "A Next.js portfolio project with visitor counters, dynamic content management and a modern dark-theme aesthetic.",
+      "chat": "A high-performance Go backend engine supporting real-time messaging and rooms over the WebSocket protocol."
+    }
+  },
+  "blogTeaser": {
+    "heading": "Blog",
+    "allPosts": "All Posts",
+    "title": "Notes on Technology & Experience",
+    "body": "My technical writing on .NET, web architectures and hand-picked topics from the software world.",
+    "postsInTurkish": "Blog posts are currently published in Turkish only.",
+    "emptyTitle": "Posts are coming very soon.",
+    "emptyBody": "Blog posts will be listed here automatically once they are added to the Supabase database.",
+    "comingSoon": "Coming soon"
+  },
+  "blogCard": {
+    "readingTime": "{minutes} min read",
+    "readMore": "Read More"
+  },
+  "blogPage": {
+    "metaTitle": "Blog",
+    "metaDescription": "Technical articles, experience and notes on .NET, web architectures and the software world.",
+    "backHome": "Home",
+    "heading": "Blog",
+    "title": "Notes on Technology & Experience",
+    "intro": "All my technical writing on .NET, web architectures and hand-picked topics from the software world — filter by category or search.",
+    "emptyTitle": "Posts are coming very soon.",
+    "emptyBody": "Blog posts will be listed here automatically as they are published."
+  },
+  "blogPost": {
+    "backToAll": "All Posts",
+    "relatedPosts": "Related Posts",
+    "notFoundTitle": "Post Not Found",
+    "readingTime": "{minutes} min read"
+  },
+  "toolsPage": {
+    "metaTitle": "Tools",
+    "metaDescription": "Open-source packages and developer tools I've built — each with a live demo. Started with npm packages; NuGet packages are on the way.",
+    "backHome": "Home",
+    "backToTools": "Tools",
+    "heading": "Tools",
+    "title": "Open-Source Packages & Developer Tools",
+    "intro": "This is where I collect the open-source packages I build — you can try each one live in your browser before installing. It started with npm packages; NuGet packages for the .NET side will join this section over time.",
+    "tryLive": "Try It Live",
+    "demoInTurkishNote": "The interactive demo UI is currently in Turkish.",
+    "githubAria": "{name} on GitHub",
+    "packageAria": "{name} package page"
+  },
+  "trkit": {
+    "tagline": "Zero-dependency utility kit for Turkish developers",
+    "description": "Validation for Turkish ID numbers, tax numbers, IBANs, phone numbers and license plates; KVKK-friendly masking; Turkish İ/ı-aware text operations; number-to-words, VAT calculations and official holiday / business-day helpers verified against the Diyanet calendar. Pure functions — works everywhere, whether React, Vue, Angular or Node.",
+    "features": [
+      "Zero dependencies",
+      "100% test coverage",
+      "Tree-shakeable",
+      "TypeScript-first",
+      "KVKK-friendly",
+      "MIT licensed"
+    ],
+    "pageTitle": "trkit — a Utility Kit for Turkish Developers",
+    "pageIntro": "My open-source npm package: validation for Turkish ID numbers, tax numbers, IBANs, phone numbers and license plates; KVKK-friendly masking; Turkish İ/ı-aware text operations; number-to-words, VAT calculations and official holiday / business-day helpers verified against the Diyanet calendar. Pure functions — works everywhere, whether React, Vue, Angular or Node. The demos below run the package right in your browser.",
+    "metaDescription": "trkit — try Türkiye-specific validation, formatting and KVKK masking functions live in your browser. A zero-dependency, open-source npm package.",
+    "disclaimer": "Sample values are synthetic; they are not real personal data. trkit only performs format/checksum validation — it never queries any government service, does not process personal data, and is not a KVKK/GDPR compliance guarantee. Nothing you enter leaves your browser."
+  },
+  "locakit": {
+    "tagline": "Deterministic i18n engine for AI agents",
+    "description": "Keeps your locale JSON files in sync with your agent in multilingual projects: it detects missing and stale keys with a lockfile, your existing AI agent (Claude Code and friends) does the translating with full codebase context, and locakit validates placeholder parity, glossary terms and Turkish language-pack rules before writing safely to JSON. No translation API, no SaaS account, no token bill.",
+    "features": [
+      "Zero dependencies",
+      "No API keys required",
+      "Lockfile staleness tracking",
+      "CI-friendly check",
+      "Turkish language pack",
+      "Claude Code skill",
+      "MIT licensed"
+    ],
+    "pageTitle": "locakit — a Deterministic i18n Engine for AI Agents",
+    "pageIntroBefore": "Every translation tool ships its own LLM pipeline: API keys, SaaS accounts, token bills. Meanwhile, the agent you use all day already reads your codebase.",
+    "pageIntroEmphasis": "locakit splits the job at the right seam:",
+    "pageIntroAfter": "your agent does the translating; locakit handles the deterministic work — detecting missing/stale keys, validating placeholders and glossary terms, and writing JSON safely.",
+    "metaDescription": "locakit — a deterministic i18n engine for AI agents. It detects missing and stale translation keys, your agent translates with context, and locakit validates and writes safely. Try the validation engine live in your browser.",
+    "workflow": {
+      "diff": {
+        "step": "locakit diff",
+        "who": "locakit",
+        "detail": "Detects missing and stale keys via the lockfile and returns them as JSON, together with your context and glossary."
+      },
+      "translate": {
+        "step": "translate",
+        "who": "your agent",
+        "detail": "Claude Code reads where each key is used in the code — if \"Home\" is a nav link it becomes the navigation label, not the building. Knowing the project's tone keeps the register consistent."
+      },
+      "apply": {
+        "step": "locakit apply",
+        "who": "locakit",
+        "detail": "Writes the patched translations while preserving the source key order; keys that don't exist in the source are rejected (hallucination safety)."
+      },
+      "check": {
+        "step": "locakit check",
+        "who": "locakit",
+        "detail": "Validates placeholder parity, glossary terms and language-pack rules; on errors the CI build fails."
+      }
+    },
+    "liveTitle": "Try the validation engine live",
+    "liveIntroBefore": "The example below is intentionally broken: it contains a missing key, a placeholder mismatch, an orphan key and two classic mistakes caught by the Turkish language pack. Press the",
+    "liveIntroAfter": "button."
+  },
+  "contact": {
+    "heading": "Contact",
+    "title": "Want to build something together?",
+    "cta": "Reach Out"
+  },
+  "contactModal": {
+    "title": "Get in Touch",
+    "subtitle": "You can reach me through the channels below.",
+    "close": "Close",
+    "emailLabel": "Email",
+    "linkedinLabel": "LinkedIn",
+    "viewProfile": "View My Profile",
+    "resumeLabel": "Résumé",
+    "downloadCv": "Download My CV (PDF)"
+  },
+  "footer": {
+    "rights": "All rights reserved."
+  },
+  "backToTop": {
+    "aria": "Back to top"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "body": "The page you're looking for may have been moved or never existed.",
+    "backHome": "Back to Home"
+  }
+}

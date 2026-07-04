@@ -1,86 +1,76 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { FaGithub, FaNpm } from "react-icons/fa";
 import { HiArrowLeft, HiArrowUpRight } from "react-icons/hi2";
 import LocakitPlayground, { InstallCommand } from "@/components/tools/LocakitPlayground";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
-import { getToolBySlug } from "@/lib/tools";
+import { getDictionary, hasLocale, buildHeaderDict } from "@/lib/i18n";
+import { localeHref } from "@/lib/locale-link";
 
-export const metadata: Metadata = {
-  title: `locakit | Araçlar | ${siteConfig.name}`,
-  description:
-    "locakit — AI agent'lar için deterministik i18n motoru. Eksik ve bayat çeviri key'lerini tespit eder, agent'ınız bağlama uygun çevirir, locakit doğrulayıp güvenle yazar. Doğrulama motorunu tarayıcınızda canlı deneyin.",
-};
+type PageParams = { params: Promise<{ lang: string }> };
 
-const locakit = getToolBySlug("locakit");
+export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return {
+    title: `locakit | ${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
+    description: dict.locakit.metaDescription,
+    alternates: {
+      languages: { tr: "/araclar/locakit", en: "/en/araclar/locakit" },
+    },
+  };
+}
 
-const workflow = [
-  {
-    step: "locakit diff",
-    who: "locakit",
-    detail: "Eksik ve bayatlamış key'leri lockfile ile tespit eder, bağlam ve glossary ile birlikte JSON olarak verir.",
-  },
-  {
-    step: "çeviri",
-    who: "agent'ınız",
-    detail: "Claude Code her key'in kodda kullanıldığı yeri okur — \"Home\" nav linkiyse \"Ana Sayfa\" olur, bina ise \"Ev\". Projenin tonunu bildiği için sen/siz tutarlıdır.",
-  },
-  {
-    step: "locakit apply",
-    who: "locakit",
-    detail: "Yamalı çevirileri kaynak key sırasını koruyarak yazar; kaynakta olmayan key'leri reddeder (halüsinasyon emniyeti).",
-  },
-  {
-    step: "locakit check",
-    who: "locakit",
-    detail: "Yer tutucu paritesi, glossary ve dil paketi kurallarını doğrular; CI'da hata varsa build kırılır.",
-  },
-];
+export default async function LocakitPage({ params }: PageParams) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const dict = await getDictionary(lang);
+  const workflow = [
+    dict.locakit.workflow.diff,
+    dict.locakit.workflow.translate,
+    dict.locakit.workflow.apply,
+    dict.locakit.workflow.check,
+  ];
 
-export default function LocakitPage() {
   return (
     <>
-      <Header />
+      <Header lang={lang} dict={buildHeaderDict(dict)} />
       <main className="relative z-10 flex-1 px-6 py-28">
         <div className="mx-auto max-w-5xl">
           <Link
-            href="/araclar"
+            href={localeHref(lang, "/araclar")}
             className="mb-8 inline-flex items-center gap-2 text-sm text-zinc-500 transition hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400"
           >
             <HiArrowLeft className="h-4 w-4" />
-            Araçlar
+            {dict.toolsPage.backToTools}
           </Link>
 
           <h1 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-            Araçlar / locakit
+            {dict.toolsPage.heading} / locakit
           </h1>
           <p className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
-            locakit — AI Agent&apos;lar için Deterministik i18n Motoru
+            {dict.locakit.pageTitle}
           </p>
           <p className="mt-3 max-w-2xl text-base text-zinc-600 dark:text-zinc-400">
-            Çeviri araçlarının hepsi kendi LLM boru hattını kurar: API key, SaaS hesabı, token
-            faturası. Oysa gün boyu kullandığınız agent kod tabanınızı zaten okuyor.{" "}
-            <span className="text-zinc-900 dark:text-white">
-              locakit işi doğru yerinden böler:
-            </span>{" "}
-            çeviriyi agent&apos;ınız yapar; eksik/bayat key tespiti, yer tutucu ve glossary
-            doğrulaması, güvenli JSON yazımı gibi deterministik işleri locakit üstlenir.
+            {dict.locakit.pageIntroBefore}{" "}
+            <span className="text-zinc-900 dark:text-white">{dict.locakit.pageIntroEmphasis}</span>{" "}
+            {dict.locakit.pageIntroAfter}
           </p>
 
-          {locakit && (
-            <div className="mt-5 flex flex-wrap gap-1.5">
-              {locakit.features.map((feature) => (
-                <span
-                  key={feature}
-                  className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400"
-                >
-                  {feature}
-                </span>
-              ))}
-            </div>
-          )}
+          <div className="mt-5 flex flex-wrap gap-1.5">
+            {dict.locakit.features.map((feature) => (
+              <span
+                key={feature}
+                className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400"
+              >
+                {feature}
+              </span>
+            ))}
+          </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <InstallCommand />
@@ -130,23 +120,27 @@ export default function LocakitPage() {
 
           <div className="mt-12">
             <h2 className="text-lg font-semibold text-zinc-900 dark:text-white">
-              Doğrulama motorunu canlı deneyin
+              {dict.locakit.liveTitle}
             </h2>
             <p className="mt-2 max-w-2xl text-sm text-zinc-600 dark:text-zinc-400">
-              Aşağıdaki örnek bilerek hatalı: eksik key, yer tutucu uyumsuzluğu, artık key ve
-              Türkçe dil paketinin yakaladığı iki klasik hata içeriyor.{" "}
+              {dict.locakit.liveIntroBefore}{" "}
               <code className="font-mono text-emerald-600 dark:text-emerald-400">
                 locakit check
               </code>{" "}
-              butonuna basın.
+              {dict.locakit.liveIntroAfter}
             </p>
+            {lang !== "tr" && (
+              <p className="mt-2 text-sm italic text-zinc-500 dark:text-zinc-500">
+                {dict.toolsPage.demoInTurkishNote}
+              </p>
+            )}
             <div className="mt-6">
               <LocakitPlayground />
             </div>
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer dict={dict.footer} />
     </>
   );
 }

@@ -2,10 +2,12 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { notFound } from "next/navigation";
 import { siteConfig } from "@/lib/site-config";
+import { getDictionary, hasLocale, locales } from "@/lib/i18n";
 import BackgroundLoader from "@/components/BackgroundLoader";
 import BackToTop from "@/components/BackToTop";
-import "./globals.css";
+import "../globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,27 +15,45 @@ const geistSans = Geist({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  title: siteConfig.title,
-  description: siteConfig.description,
-  openGraph: {
-    title: siteConfig.title,
-    description: siteConfig.description,
-    url: siteConfig.url,
-    siteName: siteConfig.name,
-    locale: "tr_TR",
-    type: "website",
-  },
-};
+type LayoutParams = { params: Promise<{ lang: string }> };
 
-export default function RootLayout({
+export function generateStaticParams() {
+  return locales.map((lang) => ({ lang }));
+}
+
+export async function generateMetadata({ params }: LayoutParams): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+
+  return {
+    metadataBase: new URL(siteConfig.url),
+    title: dict.meta.siteTitle,
+    description: dict.meta.siteDescription,
+    alternates: {
+      languages: { tr: "/", en: "/en" },
+    },
+    openGraph: {
+      title: dict.meta.siteTitle,
+      description: dict.meta.siteDescription,
+      url: siteConfig.url,
+      siteName: siteConfig.name,
+      locale: lang === "tr" ? "tr_TR" : "en_US",
+      type: "website",
+    },
+  };
+}
+
+export default async function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+  params,
+}: LayoutParams & { children: React.ReactNode }) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const dict = await getDictionary(lang);
+
   return (
-    <html lang="tr" className={`${geistSans.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang={lang} className={`${geistSans.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -57,7 +77,7 @@ export default function RootLayout({
       <body className="flex min-h-full flex-col bg-slate-50 text-zinc-900 dark:bg-black dark:text-white transition-colors duration-300">
         <BackgroundLoader />
         {children}
-        <BackToTop />
+        <BackToTop ariaLabel={dict.backToTop.aria} />
         <Analytics />
         <SpeedInsights />
       </body>

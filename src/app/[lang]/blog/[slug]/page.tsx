@@ -17,19 +17,22 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import ViewCounter from "@/components/ViewCounter";
 import ReadingProgress from "@/components/ReadingProgress";
 import type { Metadata } from "next";
+import { getDictionary, hasLocale, buildHeaderDict, locales } from "@/lib/i18n";
+import { localeHref, fill } from "@/lib/locale-link";
 
 export const revalidate = 1800; // Revalidate at most every 30 minutes (ISR)
 
 type BlogPageProps = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ lang: string; slug: string }>;
 };
 
 export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { lang, slug } = await params;
+  const dict = hasLocale(lang) ? await getDictionary(lang) : null;
   const post = await getPostBySlug(slug);
   if (!post) {
     return {
-      title: "Yazı Bulunamadı | Berkay Yalçın - Blog",
+      title: `${dict?.blogPost.notFoundTitle ?? "Yazı Bulunamadı"} | Berkay Yalçın - Blog`,
     };
   }
   
@@ -62,13 +65,15 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
 
 export async function generateStaticParams() {
   const posts = await getPublishedPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  return locales.flatMap((lang) =>
+    posts.map((post) => ({ lang, slug: post.slug }))
+  );
 }
 
 export default async function BlogPostPage({ params }: BlogPageProps) {
-  const { slug } = await params;
+  const { lang, slug } = await params;
+  if (!hasLocale(lang)) notFound();
+  const dict = await getDictionary(lang);
   const [post, allPosts] = await Promise.all([
     getPostBySlug(slug),
     getPublishedPosts(),
@@ -120,16 +125,16 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <ReadingProgress />
-      <Header />
+      <Header lang={lang} dict={buildHeaderDict(dict)} />
       <main className="flex-1 px-6 py-28 relative z-10">
         <div className="mx-auto max-w-3xl">
           {/* Back button */}
           <Link
-            href="/blog"
+            href={localeHref(lang, "/blog")}
             className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 transition mb-8"
           >
             <HiArrowLeft className="h-4 w-4" />
-            Tüm Yazılar
+            {dict.blogPost.backToAll}
           </Link>
 
           {/* Article Header */}
@@ -154,7 +159,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                   </span>
                 )}
                 <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
-                  {new Date(post.created_at).toLocaleDateString("tr-TR", {
+                  {new Date(post.created_at).toLocaleDateString(lang === "tr" ? "tr-TR" : "en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
@@ -163,7 +168,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                 <span className="text-zinc-300 dark:text-zinc-700 select-none">•</span>
                 <span className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 dark:text-zinc-400">
                   <HiClock className="h-4 w-4" />
-                  {readingTime} dk okuma
+                  {fill(dict.blogPost.readingTime, { minutes: readingTime })}
                 </span>
                 <span className="text-zinc-300 dark:text-zinc-700 select-none">•</span>
                 <ViewCounter slug={post.slug} initialViews={post.views || 0} />
@@ -271,18 +276,18 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
           {relatedPosts.length > 0 && (
             <aside className="mt-16 border-t border-zinc-200 dark:border-white/10 pt-10">
               <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-                İlgili Yazılar
+                {dict.blogPost.relatedPosts}
               </h2>
               <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {relatedPosts.map((relatedPost) => (
-                  <BlogCard key={relatedPost.id} post={relatedPost} />
+                  <BlogCard key={relatedPost.id} post={relatedPost} lang={lang} dict={dict.blogCard} />
                 ))}
               </div>
             </aside>
           )}
         </div>
       </main>
-      <Footer />
+      <Footer dict={dict.footer} />
     </>
   );
 }

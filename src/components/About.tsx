@@ -10,43 +10,64 @@ import {
   HiArrowDownTray,
 } from "react-icons/hi2";
 import { siteConfig } from "@/lib/site-config";
+import type { Dictionary } from "@/lib/i18n";
 
-type Highlight = {
-  label: string;
-  value: string;
-  icon: IconType;
+type AboutProps = {
+  dict: Dictionary["about"];
 };
 
-const highlights: Highlight[] = [
-  { label: "Unvan", value: "Bilgisayar Mühendisi", icon: HiAcademicCap },
-  { label: "Uzmanlık", value: ".NET Full Stack Developer", icon: HiCpuChip },
-  { label: "Ekosistem", value: "Web & Kurumsal Yazılım", icon: HiGlobeAlt },
-  { label: "Konum", value: "Türkiye", icon: HiMapPin },
+const expertiseIcons: { key: keyof Dictionary["about"]["expertise"]; icon: IconType; accent: string }[] = [
+  { key: "web", icon: HiGlobeAlt, accent: "emerald" },
+  { key: "desktop", icon: HiComputerDesktop, accent: "blue" },
+  { key: "services", icon: HiServer, accent: "violet" },
+  { key: "api", icon: HiLink, accent: "amber" },
 ];
 
-export default function About() {
+const accentClasses: Record<string, { card: string; icon: string }> = {
+  emerald: {
+    card: "hover:border-emerald-500/30",
+    icon: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 group-hover:bg-emerald-500/20",
+  },
+  blue: {
+    card: "hover:border-blue-500/30",
+    icon: "bg-blue-500/10 text-blue-600 dark:text-blue-400 group-hover:bg-blue-500/20",
+  },
+  violet: {
+    card: "hover:border-violet-500/30",
+    icon: "bg-violet-500/10 text-violet-600 dark:text-violet-400 group-hover:bg-violet-500/20",
+  },
+  amber: {
+    card: "hover:border-amber-500/30",
+    icon: "bg-amber-500/10 text-amber-600 dark:text-amber-400 group-hover:bg-amber-500/20",
+  },
+};
+
+export default function About({ dict }: AboutProps) {
+  const highlights = [
+    { label: dict.highlights.titleLabel, value: dict.highlights.titleValue, icon: HiAcademicCap },
+    { label: dict.highlights.expertiseLabel, value: dict.highlights.expertiseValue, icon: HiCpuChip },
+    { label: dict.highlights.ecosystemLabel, value: dict.highlights.ecosystemValue, icon: HiGlobeAlt },
+    { label: dict.highlights.locationLabel, value: dict.highlights.locationValue, icon: HiMapPin },
+  ];
+
   return (
     <section id="hakkimda" className="scroll-mt-24 px-6 py-20">
       <div className="mx-auto max-w-5xl">
         <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-          Hakkımda
+          {dict.heading}
         </h2>
 
         <div className="mt-6 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
           <div>
             <p className="max-w-2xl text-2xl font-medium leading-relaxed text-zinc-900 dark:text-white sm:text-3xl">
-              Yazılım geliştirmeyi sadece bir meslek değil,{" "}
+              {dict.leadBefore}{" "}
               <span className="bg-gradient-to-r from-emerald-600 to-blue-500 bg-clip-text text-transparent dark:from-emerald-400 dark:to-blue-400">
-                sürekli öğrenme ve üretme
+                {dict.leadHighlight}
               </span>{" "}
-              yolculuğu olarak görüyorum.
+              {dict.leadAfter}
             </p>
             <p className="mt-6 max-w-2xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
-              Bilgisayar Mühendisiyim ve modern web teknolojilerinin yanı sıra
-              .NET ekosisteminde de uçtan uca çözümler geliştiriyorum. Entity
-              Framework Core, Microsoft SQL Server, Azure DevOps ve Microsoft
-              SharePoint Management gibi kurumsal araçlarla çalışma deneyimim
-              var.
+              {dict.body}
             </p>
 
             <div className="mt-6">
@@ -57,62 +78,35 @@ export default function About() {
                 className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-5 py-2.5 text-xs font-semibold text-black transition hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/10"
               >
                 <HiArrowDownTray className="h-4 w-4" />
-                CV&apos;mi İndir (PDF)
+                {dict.downloadCv}
               </a>
             </div>
 
             <div className="mt-8 border-t border-zinc-200 dark:border-white/10 pt-6">
               <h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                Uygulama ve Entegrasyon Uzmanlıkları
+                {dict.expertiseHeading}
               </h3>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
-                <div className="group flex gap-3 rounded-xl border border-zinc-200 bg-zinc-100/50 p-3 transition hover:border-emerald-500/30 hover:bg-zinc-150/60 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03]">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 transition group-hover:bg-emerald-500/20">
-                    <HiGlobeAlt className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <h4 className="font-semibold text-zinc-850 text-xs transition group-hover:text-zinc-950 dark:text-zinc-200 dark:group-hover:text-white">Web Geliştirme</h4>
-                    <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal">
-                      TypeScript, React, Next.js ve Tailwind CSS ile hızlı, SEO dostu ve responsive modern web uygulamaları.
-                    </p>
+                {expertiseIcons.map(({ key, icon: Icon, accent }) => (
+                  <div
+                    key={key}
+                    className={`group flex gap-3 rounded-xl border border-zinc-200 bg-zinc-100/50 p-3 transition hover:bg-zinc-150/60 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03] ${accentClasses[accent]!.card}`}
+                  >
+                    <span
+                      className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg transition ${accentClasses[accent]!.icon}`}
+                    >
+                      <Icon className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <h4 className="font-semibold text-zinc-850 text-xs transition group-hover:text-zinc-950 dark:text-zinc-200 dark:group-hover:text-white">
+                        {dict.expertise[key].title}
+                      </h4>
+                      <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal">
+                        {dict.expertise[key].description}
+                      </p>
+                    </div>
                   </div>
-                </div>
-
-                <div className="group flex gap-3 rounded-xl border border-zinc-200 bg-zinc-100/50 p-3 transition hover:border-blue-500/30 hover:bg-zinc-150/60 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03]">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400 transition group-hover:bg-blue-500/20">
-                    <HiComputerDesktop className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <h4 className="font-semibold text-zinc-850 text-xs transition group-hover:text-zinc-950 dark:text-zinc-200 dark:group-hover:text-white">Masaüstü (Desktop) Geliştirme</h4>
-                    <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal">
-                      Windows platformu için yüksek performanslı, kararlı WinForms ve WPF tabanlı kurumsal masaüstü yazılımları.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="group flex gap-3 rounded-xl border border-zinc-200 bg-zinc-100/50 p-3 transition hover:border-violet-500/30 hover:bg-zinc-150/60 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03]">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-violet-500/10 text-violet-600 dark:text-violet-400 transition group-hover:bg-violet-500/20">
-                    <HiServer className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <h4 className="font-semibold text-zinc-850 text-xs transition group-hover:text-zinc-950 dark:text-zinc-200 dark:group-hover:text-white">Arka Plan Servisleri (Services)</h4>
-                    <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal">
-                      Sürekli çalışan arka plan işleri, Windows/Worker Service uygulamaları ve planlanmış veri/kuyruk işleme sistemleri.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="group flex gap-3 rounded-xl border border-zinc-200 bg-zinc-100/50 p-3 transition hover:border-amber-500/30 hover:bg-zinc-150/60 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03]">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-amber-500/10 text-amber-600 dark:text-amber-400 transition group-hover:bg-amber-500/20">
-                    <HiLink className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <h4 className="font-semibold text-zinc-850 text-xs transition group-hover:text-zinc-950 dark:text-zinc-200 dark:group-hover:text-white">API Tasarımı & Entegrasyonlar</h4>
-                    <p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400 leading-normal">
-                      Güvenli, RESTful API tasarımları (.NET Web API) ve çeşitli 3. parti sistemlerin veri/servis entegrasyonu.
-                    </p>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>

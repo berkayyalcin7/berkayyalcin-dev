@@ -1,11 +1,19 @@
 import { getPublishedPosts } from "@/lib/blog";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi2";
-import BlogCard from "@/components/BlogCard";
+import BlogCard, { type BlogCardDict } from "@/components/BlogCard";
+import { localeHref } from "@/lib/locale-link";
+import type { Dictionary } from "@/lib/i18n";
 
 const TEASER_POST_COUNT = 4;
 
-export default async function BlogTeaser() {
+type BlogTeaserProps = {
+  lang: string;
+  dict: Dictionary["blogTeaser"];
+  cardDict: BlogCardDict;
+};
+
+export default async function BlogTeaser({ lang, dict, cardDict }: BlogTeaserProps) {
   const posts = await getPublishedPosts(TEASER_POST_COUNT);
   const [featuredPost, ...otherPosts] = posts;
 
@@ -14,14 +22,14 @@ export default async function BlogTeaser() {
       <div className="mx-auto max-w-5xl">
         <div className="flex items-end justify-between gap-4">
           <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-            Blog
+            {dict.heading}
           </h2>
           {posts.length > 0 && (
             <Link
-              href="/blog"
+              href={localeHref(lang, "/blog")}
               className="group inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400"
             >
-              Tüm Yazılar
+              {dict.allPosts}
               <HiArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
           )}
@@ -30,10 +38,10 @@ export default async function BlogTeaser() {
         {posts.length === 0 ? (
           <>
             <p className="mt-4 max-w-xl text-2xl font-medium text-zinc-900 dark:text-white">
-              Yazılar çok yakında burada olacak.
+              {dict.emptyTitle}
             </p>
             <p className="mt-3 max-w-xl text-base text-zinc-600 dark:text-zinc-400">
-              Blog yazıları Supabase veritabanına eklendikten sonra bu alanda otomatik olarak listelenecek.
+              {dict.emptyBody}
             </p>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
               {[1, 2, 3].map((i) => (
@@ -45,7 +53,7 @@ export default async function BlogTeaser() {
                   <div className="mt-3 h-2 w-full rounded bg-zinc-100 dark:bg-white/5" />
                   <div className="mt-2 h-2 w-4/5 rounded bg-zinc-100 dark:bg-white/5" />
                   <span className="mt-6 inline-block text-xs font-medium text-zinc-400 dark:text-zinc-500">
-                    Yakında
+                    {dict.comingSoon}
                   </span>
                 </div>
               ))}
@@ -54,15 +62,22 @@ export default async function BlogTeaser() {
         ) : (
           <>
             <p className="mt-4 max-w-xl text-2xl font-medium text-zinc-900 dark:text-white">
-              Teknoloji & Deneyim Paylaşımları
+              {dict.title}
             </p>
             <p className="mt-3 max-w-xl text-base text-zinc-600 dark:text-zinc-400">
-              .NET, Web mimarileri ve yazılım dünyasından seçtiğim konular hakkındaki teknik yazılarım.
+              {dict.body}
             </p>
+            {lang !== "tr" && (
+              <p className="mt-2 max-w-xl text-sm italic text-zinc-500 dark:text-zinc-500">
+                {dict.postsInTurkish}
+              </p>
+            )}
             <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {featuredPost && <BlogCard post={featuredPost} featured />}
+              {featuredPost && (
+                <BlogCard post={featuredPost} featured lang={lang} dict={cardDict} />
+              )}
               {otherPosts.map((post) => (
-                <BlogCard key={post.id} post={post} />
+                <BlogCard key={post.id} post={post} lang={lang} dict={cardDict} />
               ))}
             </div>
           </>

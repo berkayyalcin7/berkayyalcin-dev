@@ -1,18 +1,22 @@
-import { siteConfig } from "@/lib/site-config";
+import type { Dictionary } from "@/lib/i18n";
+import { fill } from "@/lib/locale-link";
 
-export default function Timeline() {
+export default function Timeline({ dict }: { dict: Dictionary["timeline"] }) {
   // Chronological order from left to right (oldest to newest)
-  const chronologicalExperience = [...siteConfig.experience].reverse();
+  const chronologicalExperience = [...dict.experience].reverse().map((exp) => ({
+    ...exp,
+    period: fill(exp.period, { year: new Date().getFullYear() }),
+  }));
 
   return (
     <section id="deneyim" className="scroll-mt-24 border-t border-zinc-200 dark:border-white/10 px-6 py-20 overflow-hidden">
       <div className="mx-auto max-w-5xl">
         <div>
           <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-            Deneyim & Kariyer
+            {dict.heading}
           </h2>
           <p className="mt-4 text-2xl font-medium text-zinc-900 dark:text-white">
-            Kariyer Zaman Çizelgem
+            {dict.subtitle}
           </p>
         </div>
 

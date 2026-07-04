@@ -13,19 +13,21 @@ import {
 import { VscAzureDevops } from "react-icons/vsc";
 import { HiCube, HiDatabase, HiShare } from "react-icons/hi";
 
+import type { Dictionary } from "@/lib/i18n";
+
 type Skill = {
   name: string;
   icon: IconType;
 };
 
 type SkillCategory = {
-  title: string;
+  key: keyof Dictionary["skills"]["categories"];
   skills: Skill[];
 };
 
 const skillCategories: SkillCategory[] = [
   {
-    title: "Frontend",
+    key: "frontend",
     skills: [
       { name: "TypeScript", icon: SiTypescript },
       { name: "Next.js", icon: SiNextdotjs },
@@ -34,7 +36,7 @@ const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "Backend & .NET Ekosistemi",
+    key: "backend",
     skills: [
       { name: ".NET Full Stack Developer", icon: SiDotnet },
       { name: "Node.js", icon: SiNodedotjs },
@@ -42,7 +44,7 @@ const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "Veritabanı",
+    key: "database",
     skills: [
       { name: "PostgreSQL", icon: SiPostgresql },
       { name: "Microsoft SQL Server", icon: HiDatabase },
@@ -50,7 +52,7 @@ const skillCategories: SkillCategory[] = [
     ],
   },
   {
-    title: "DevOps & Kurumsal Araçlar",
+    key: "devops",
     skills: [
       { name: "Azure DevOps", icon: VscAzureDevops },
       { name: "Microsoft SharePoint Management", icon: HiShare },
@@ -59,7 +61,7 @@ const skillCategories: SkillCategory[] = [
   },
 ];
 
-export default function Skills() {
+export default function Skills({ dict }: { dict: Dictionary["skills"] }) {
   return (
     <section
       id="yetenekler"
@@ -67,14 +69,14 @@ export default function Skills() {
     >
       <div className="mx-auto max-w-5xl">
         <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-          Yetenekler
+          {dict.heading}
         </h2>
 
         <div className="mt-8 grid gap-8 sm:grid-cols-2">
           {skillCategories.map((category) => (
-            <div key={category.title}>
+            <div key={category.key}>
               <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                {category.title}
+                {dict.categories[category.key]}
               </h3>
               <div className="mt-4 flex flex-wrap gap-3">
                 {category.skills.map(({ name, icon: Icon }) => (

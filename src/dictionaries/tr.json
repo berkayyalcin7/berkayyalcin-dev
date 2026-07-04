@@ -1,0 +1,271 @@
+{
+  "meta": {
+    "siteTitle": "Berkay Yalçın - Blog",
+    "siteDescription": "Yazılım geliştirici Berkay Yalçın'ın kişisel portfolyo ve blog sitesi. Projeler, yazılar ve deneyimler.",
+    "homeTitle": "Berkay Yalçın | Full Stack .NET Developer",
+    "homeDescription": "Berkay Yalçın'ın kişisel portfolyosu, .NET Core, mikroservis mimarileri ve yazılım geliştirme üzerine teknik blog yazıları."
+  },
+  "nav": {
+    "about": "Hakkımda",
+    "projects": "Projeler",
+    "tools": "Araçlar",
+    "blog": "Blog",
+    "contact": "İletişim"
+  },
+  "header": {
+    "contactCta": "İletişime Geç",
+    "openMenu": "Menüyü aç",
+    "closeMenu": "Menüyü kapat",
+    "themeToggle": "Temayı değiştir",
+    "switchLocale": "Switch to English"
+  },
+  "profile": {
+    "role": "Bilgisayar Mühendisi & .NET Full Stack Developer",
+    "location": "Türkiye"
+  },
+  "hero": {
+    "badge": "Yeni projeler üzerinde çalışıyorum",
+    "title": "Merhaba, ben {name}.",
+    "subtitle": "{role} — {location}. Modern web ve .NET ekosistemiyle uçtan uca ürünler geliştiriyor, öğrendiklerimi bu blogda paylaşıyorum.",
+    "ctaBlog": "Blog Yazılarını Gör",
+    "ctaContact": "Benimle İletişime Geç",
+    "emailAria": "E-posta"
+  },
+  "about": {
+    "heading": "Hakkımda",
+    "leadBefore": "Yazılım geliştirmeyi sadece bir meslek değil,",
+    "leadHighlight": "sürekli öğrenme ve üretme",
+    "leadAfter": "yolculuğu olarak görüyorum.",
+    "body": "Bilgisayar Mühendisiyim ve modern web teknolojilerinin yanı sıra .NET ekosisteminde de uçtan uca çözümler geliştiriyorum. Entity Framework Core, Microsoft SQL Server, Azure DevOps ve Microsoft SharePoint Management gibi kurumsal araçlarla çalışma deneyimim var.",
+    "downloadCv": "CV'mi İndir (PDF)",
+    "expertiseHeading": "Uygulama ve Entegrasyon Uzmanlıkları",
+    "expertise": {
+      "web": {
+        "title": "Web Geliştirme",
+        "description": "TypeScript, React, Next.js ve Tailwind CSS ile hızlı, SEO dostu ve responsive modern web uygulamaları."
+      },
+      "desktop": {
+        "title": "Masaüstü (Desktop) Geliştirme",
+        "description": "Windows platformu için yüksek performanslı, kararlı WinForms ve WPF tabanlı kurumsal masaüstü yazılımları."
+      },
+      "services": {
+        "title": "Arka Plan Servisleri (Services)",
+        "description": "Sürekli çalışan arka plan işleri, Windows/Worker Service uygulamaları ve planlanmış veri/kuyruk işleme sistemleri."
+      },
+      "api": {
+        "title": "API Tasarımı & Entegrasyonlar",
+        "description": "Güvenli, RESTful API tasarımları (.NET Web API) ve çeşitli 3. parti sistemlerin veri/servis entegrasyonu."
+      }
+    },
+    "highlights": {
+      "titleLabel": "Unvan",
+      "titleValue": "Bilgisayar Mühendisi",
+      "expertiseLabel": "Uzmanlık",
+      "expertiseValue": ".NET Full Stack Developer",
+      "ecosystemLabel": "Ekosistem",
+      "ecosystemValue": "Web & Kurumsal Yazılım",
+      "locationLabel": "Konum",
+      "locationValue": "Türkiye"
+    }
+  },
+  "timeline": {
+    "heading": "Deneyim & Kariyer",
+    "subtitle": "Kariyer Zaman Çizelgem",
+    "experience": [
+      {
+        "period": "2021 - {year}",
+        "company": "YKK Türkiye A.Ş",
+        "role": "Yazılım Geliştirme Uzmanı",
+        "points": [
+          "Kurumsal ERP ve portal çözümlerinin .NET backend ve modern frontend teknolojileriyle geliştirilmesi.",
+          "Mikroservis mimarileri, entegrasyonlar, web servislerinin optimizasyonu ve yönetimi.",
+          "İş süreçlerinin dijitalleştirilmesi ve performans iyileştirme çalışmaları."
+        ]
+      },
+      {
+        "period": "2021 - 2021",
+        "company": "Metamin Mümessillik A.Ş",
+        "role": "Yazılım Geliştirme Uzmanı",
+        "points": [
+          "Şirket içi operasyonel uygulamaların, servislerin ve veritabanı yapılarının tasarlanması ve kodlanması.",
+          "API entegrasyonları ve iş birimlerinin raporlama taleplerinin karşılanması."
+        ]
+      },
+      {
+        "period": "2020 - 2021",
+        "company": "Türk Hava Kuvvetleri",
+        "role": "Hava Mühendis Teğmen",
+        "points": [
+          "Bilişim altyapılarının yönetimi ve askeri bilgi işlem ihtiyaçlarına yönelik yazılımların geliştirilmesi/idame ettirilmesi."
+        ]
+      },
+      {
+        "period": "2018 - 2020",
+        "company": "Doğruyer Reklam Bilişim A.Ş",
+        "role": "Yazılım Geliştirme Uzmanı",
+        "points": [
+          "Web tabanlı projelerin, özel otomasyon sistemlerinin ve e-ticaret altyapılarının sıfırdan geliştirilmesi.",
+          "Ön yüz ve arka yüz bileşenlerinin entegre edilmesi, veri tabanı sorgu optimizasyonları."
+        ]
+      },
+      {
+        "period": "2014 - 2018",
+        "company": "Trakya Üniversitesi",
+        "role": "Bilgisayar Mühendisliği Mezunu",
+        "points": [
+          "Temel algoritma, veri yapıları, yazılım mühendisliği metodolojileri eğitimi ve bitirme projeleri."
+        ]
+      }
+    ]
+  },
+  "skills": {
+    "heading": "Yetenekler",
+    "categories": {
+      "frontend": "Frontend",
+      "backend": "Backend & .NET Ekosistemi",
+      "database": "Veritabanı",
+      "devops": "DevOps & Kurumsal Araçlar"
+    }
+  },
+  "projects": {
+    "heading": "Projeler",
+    "subtitle": "Geliştirdiğim Yazılımlar & Çalışmalar",
+    "descriptionHasProjects": "Açık kaynaklı projelerim, kişisel araçlarım ve geliştirdiğim kurumsal uygulamalar.",
+    "descriptionFallback": "Buradaki projeler zamanla güncellenecek olup paylaşılanlar örnek olarak yer almaktadır.",
+    "githubAria": "{title} GitHub Adresi",
+    "liveAria": "{title} Canlı Demo",
+    "fallback": {
+      "microservices": "CQRS ve Event-Driven Design mimarileri kullanılarak .NET 8 ile geliştirilmiş ölçeklenebilir e-ticaret mikroservis yapısı.",
+      "portfolio": "Ziyaretçi sayaçları, dinamik içerik yönetimi ve modern karanlık tema estetiğine sahip Next.js portfolyo projesi.",
+      "chat": "WebSocket protokolü üzerinden anlık mesajlaşma ve oda sistemini destekleyen yüksek performanslı Go backend motoru."
+    }
+  },
+  "blogTeaser": {
+    "heading": "Blog",
+    "allPosts": "Tüm Yazılar",
+    "title": "Teknoloji & Deneyim Paylaşımları",
+    "body": ".NET, Web mimarileri ve yazılım dünyasından seçtiğim konular hakkındaki teknik yazılarım.",
+    "postsInTurkish": "Blog yazıları şimdilik yalnızca Türkçe yayınlanıyor.",
+    "emptyTitle": "Yazılar çok yakında burada olacak.",
+    "emptyBody": "Blog yazıları Supabase veritabanına eklendikten sonra bu alanda otomatik olarak listelenecek.",
+    "comingSoon": "Yakında"
+  },
+  "blogCard": {
+    "readingTime": "{minutes} dk okuma",
+    "readMore": "Devamını Oku"
+  },
+  "blogPage": {
+    "metaTitle": "Blog",
+    "metaDescription": ".NET, web mimarileri ve yazılım dünyası üzerine teknik yazılar, deneyimler ve notlar.",
+    "backHome": "Ana Sayfa",
+    "heading": "Blog",
+    "title": "Teknoloji & Deneyim Paylaşımları",
+    "intro": ".NET, web mimarileri ve yazılım dünyasından seçtiğim konular hakkındaki tüm teknik yazılarım — kategoriye göre filtreleyebilir veya arama yapabilirsiniz.",
+    "emptyTitle": "Yazılar çok yakında burada olacak.",
+    "emptyBody": "Blog yazıları yayınlandıkça bu sayfada otomatik listelenecek."
+  },
+  "blogPost": {
+    "backToAll": "Tüm Yazılar",
+    "relatedPosts": "İlgili Yazılar",
+    "notFoundTitle": "Yazı Bulunamadı",
+    "readingTime": "{minutes} dk okuma"
+  },
+  "toolsPage": {
+    "metaTitle": "Araçlar",
+    "metaDescription": "Geliştirdiğim açık kaynak paketler ve geliştirici araçları — canlı demolarıyla birlikte. npm paketleriyle başladı; NuGet paketleri de yolda.",
+    "backHome": "Ana Sayfa",
+    "backToTools": "Araçlar",
+    "heading": "Araçlar",
+    "title": "Açık Kaynak Paketler & Geliştirici Araçları",
+    "intro": "Geliştirdiğim açık kaynak paketleri burada topluyorum — her birini kurmadan önce tarayıcınızda canlı deneyebilirsiniz. Şu an npm paketleriyle başladı; ilerleyen dönemde .NET tarafı için NuGet paketleri de bu bölüme eklenecek.",
+    "tryLive": "Canlı Dene",
+    "demoInTurkishNote": "Etkileşimli demo arayüzü şimdilik Türkçe.",
+    "githubAria": "{name} GitHub adresi",
+    "packageAria": "{name} paket sayfası"
+  },
+  "trkit": {
+    "tagline": "Türk geliştiriciler için sıfır bağımlılıklı utility kit",
+    "description": "TC Kimlik No, VKN, IBAN, telefon ve plaka doğrulama; KVKK dostu maskeleme; Türkçe İ/ı duyarlı metin işlemleri; sayıyı yazıya çevirme, KDV hesapları ve Diyanet takvimiyle doğrulanmış resmî tatil / iş günü hesapları. Saf fonksiyonlardan oluşur — React, Vue, Angular, Node fark etmeksizin her yerde çalışır.",
+    "features": [
+      "Sıfır bağımlılık",
+      "%100 test kapsamı",
+      "Tree-shakeable",
+      "TypeScript-first",
+      "KVKK dostu",
+      "MIT lisansı"
+    ],
+    "pageTitle": "trkit — Türk Geliştiriciler için Utility Kit",
+    "pageIntro": "Geliştirdiğim açık kaynak npm paketi: TC Kimlik No, VKN, IBAN, telefon ve plaka doğrulama; KVKK dostu maskeleme; Türkçe İ/ı duyarlı metin işlemleri; sayıyı yazıya çevirme, KDV hesapları ve Diyanet takvimiyle doğrulanmış resmî tatil / iş günü hesapları. Saf fonksiyonlardan oluşur — React, Vue, Angular, Node fark etmeksizin her yerde çalışır. Aşağıdaki demolar paketi doğrudan tarayıcınızda çalıştırır.",
+    "metaDescription": "trkit — Türkiye'ye özgü doğrulama, formatlama ve KVKK maskeleme fonksiyonlarını tarayıcınızda canlı deneyin. Sıfır bağımlılıklı, açık kaynak npm paketi.",
+    "disclaimer": "Örnek değerler sentetiktir; gerçek kişi verisi değildir. trkit yalnızca format/checksum doğrulaması yapar — hiçbir devlet servisine sorgu göndermez, kişisel veri işlemez ve KVKK/GDPR uyum garantisi değildir. Girdiğiniz veriler tarayıcınızdan çıkmaz."
+  },
+  "locakit": {
+    "tagline": "AI agent'lar için deterministik i18n motoru",
+    "description": "Çok dilli projelerde locale JSON'larını agent'ınızla senkron tutar: eksik ve bayatlamış key'leri lockfile ile tespit eder, çeviriyi zaten kullandığınız AI agent (Claude Code vb.) kodun bağlamını okuyarak yapar, locakit de yer tutucu paritesi, glossary ve Türkçe dil paketi kurallarıyla doğrulayıp JSON'a güvenle yazar. Çeviri API'si yok, SaaS hesabı yok, token faturası yok.",
+    "features": [
+      "Sıfır bağımlılık",
+      "API key gerektirmez",
+      "Lockfile ile bayatlama takibi",
+      "CI dostu check",
+      "Türkçe dil paketi",
+      "Claude Code skill'i",
+      "MIT lisansı"
+    ],
+    "pageTitle": "locakit — AI Agent'lar için Deterministik i18n Motoru",
+    "pageIntroBefore": "Çeviri araçlarının hepsi kendi LLM boru hattını kurar: API key, SaaS hesabı, token faturası. Oysa gün boyu kullandığınız agent kod tabanınızı zaten okuyor.",
+    "pageIntroEmphasis": "locakit işi doğru yerinden böler:",
+    "pageIntroAfter": "çeviriyi agent'ınız yapar; eksik/bayat key tespiti, yer tutucu ve glossary doğrulaması, güvenli JSON yazımı gibi deterministik işleri locakit üstlenir.",
+    "metaDescription": "locakit — AI agent'lar için deterministik i18n motoru. Eksik ve bayat çeviri key'lerini tespit eder, agent'ınız bağlama uygun çevirir, locakit doğrulayıp güvenle yazar. Doğrulama motorunu tarayıcınızda canlı deneyin.",
+    "workflow": {
+      "diff": {
+        "step": "locakit diff",
+        "who": "locakit",
+        "detail": "Eksik ve bayatlamış key'leri lockfile ile tespit eder, bağlam ve glossary ile birlikte JSON olarak verir."
+      },
+      "translate": {
+        "step": "çeviri",
+        "who": "agent'ınız",
+        "detail": "Claude Code her key'in kodda kullanıldığı yeri okur — \"Home\" nav linkiyse \"Ana Sayfa\" olur, bina ise \"Ev\". Projenin tonunu bildiği için sen/siz tutarlıdır."
+      },
+      "apply": {
+        "step": "locakit apply",
+        "who": "locakit",
+        "detail": "Yamalı çevirileri kaynak key sırasını koruyarak yazar; kaynakta olmayan key'leri reddeder (halüsinasyon emniyeti)."
+      },
+      "check": {
+        "step": "locakit check",
+        "who": "locakit",
+        "detail": "Yer tutucu paritesi, glossary ve dil paketi kurallarını doğrular; CI'da hata varsa build kırılır."
+      }
+    },
+    "liveTitle": "Doğrulama motorunu canlı deneyin",
+    "liveIntroBefore": "Aşağıdaki örnek bilerek hatalı: eksik key, yer tutucu uyumsuzluğu, artık key ve Türkçe dil paketinin yakaladığı iki klasik hata içeriyor.",
+    "liveIntroAfter": "butonuna basın."
+  },
+  "contact": {
+    "heading": "İletişim",
+    "title": "Birlikte bir şeyler geliştirmek ister misin?",
+    "cta": "Bana Ulaş"
+  },
+  "contactModal": {
+    "title": "İletişime Geç",
+    "subtitle": "Aşağıdaki kanallardan bana ulaşabilirsin.",
+    "close": "Kapat",
+    "emailLabel": "E-posta",
+    "linkedinLabel": "LinkedIn",
+    "viewProfile": "Profilimi Görüntüle",
+    "resumeLabel": "Özgeçmiş",
+    "downloadCv": "CV'mi İndir (PDF)"
+  },
+  "footer": {
+    "rights": "Tüm hakları saklıdır."
+  },
+  "backToTop": {
+    "aria": "Sayfanın başına dön"
+  },
+  "notFound": {
+    "title": "Sayfa bulunamadı",
+    "body": "Aradığınız sayfa taşınmış veya hiç var olmamış olabilir.",
+    "backHome": "Ana Sayfaya Dön"
+  }
+}

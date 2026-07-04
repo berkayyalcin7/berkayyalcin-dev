@@ -1,0 +1,7 @@
+{
+  "source": "tr",
+  "targets": ["en"],
+  "files": "src/dictionaries/{locale}.json",
+  "context": "Personal portfolio & tech blog of Berkay Yalçın, a Turkish .NET full-stack developer. Audience: recruiters and fellow developers. Tone: professional but warm, first person. UI copy should be concise; headings in title case where natural in English. Keep tech terms (Next.js, .NET, Supabase, CQRS, npm) untranslated. Company names, university names and product names (trkit, locakit) must stay as-is.",
+  "glossary": ["trkit", "locakit", "Claude Code", "Supabase", "Next.js", ".NET", "npm", "GitHub", "LinkedIn", "YKK Türkiye A.Ş", "Trakya Üniversitesi"]
+}
