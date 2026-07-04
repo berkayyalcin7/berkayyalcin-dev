@@ -6,9 +6,8 @@ import BlogCard from "@/components/BlogCard";
 const TEASER_POST_COUNT = 4;
 
 export default async function BlogTeaser() {
-  const posts = await getPublishedPosts();
-  const teaserPosts = posts.slice(0, TEASER_POST_COUNT);
-  const [featuredPost, ...otherPosts] = teaserPosts;
+  const posts = await getPublishedPosts(TEASER_POST_COUNT);
+  const [featuredPost, ...otherPosts] = posts;
 
   return (
     <section id="blog" className="scroll-mt-24 border-t border-zinc-200 dark:border-white/10 px-6 py-20">

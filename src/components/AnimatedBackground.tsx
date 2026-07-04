@@ -13,13 +13,46 @@ type Particle = {
   color: string;
 };
 
-const PARTICLE_COUNT = 90;
+const MIN_PARTICLES = 30;
+const MAX_PARTICLES = 90;
 const MAX_LINK_DISTANCE = 165;
 const COLORS = [
   { r: 16, g: 185, b: 129 }, // emerald
   { r: 59, g: 130, b: 246 }, // blue
   { r: 168, g: 85, b: 247 }, // violet accent
 ];
+
+// Sprite: çekirdek yarıçapının kaç katına kadar halo uzanır.
+const SPRITE_GLOW_SCALE = 4;
+const SPRITE_CORE_RADIUS = 8;
+
+/**
+ * Parçacık başına canvas shadowBlur çok pahalı olduğundan, ışıltılı nokta her
+ * renk için bir kez offscreen canvas'a çizilir ve karede drawImage ile kopyalanır.
+ */
+function createParticleSprite(color: string): HTMLCanvasElement {
+  const size = SPRITE_CORE_RADIUS * SPRITE_GLOW_SCALE * 2;
+  const sprite = document.createElement("canvas");
+  sprite.width = sprite.height = size;
+  const ctx = sprite.getContext("2d")!;
+  const center = size / 2;
+
+  const gradient = ctx.createRadialGradient(center, center, 0, center, center, center);
+  gradient.addColorStop(0, `rgba(${color}, 0.9)`);
+  gradient.addColorStop(0.25, `rgba(${color}, 0.85)`); // çekirdek
+  gradient.addColorStop(0.5, `rgba(${color}, 0.22)`); // halo
+  gradient.addColorStop(1, `rgba(${color}, 0)`);
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, size, size);
+
+  return sprite;
+}
+
+/** Küçük ekranlarda (mobil) parçacık sayısını alanla orantılı azaltır. */
+function particleCountFor(width: number, height: number, dpr: number): number {
+  const cssArea = (width / dpr) * (height / dpr);
+  return Math.round(Math.min(MAX_PARTICLES, Math.max(MIN_PARTICLES, cssArea / 18000)));
+}
 
 function requestIdle(callback: () => void) {
   if (typeof window.requestIdleCallback === "function") {
@@ -56,8 +89,14 @@ export default function AnimatedBackground() {
       height = canvas!.height = canvas!.offsetHeight * dpr;
     }
 
+    const sprites = new Map<string, HTMLCanvasElement>();
+    for (const color of COLORS) {
+      const key = `${color.r}, ${color.g}, ${color.b}`;
+      sprites.set(key, createParticleSprite(key));
+    }
+
     function createParticles() {
-      particles = Array.from({ length: PARTICLE_COUNT }, () => {
+      particles = Array.from({ length: particleCountFor(width, height, dpr) }, () => {
         const color = COLORS[Math.floor(Math.random() * COLORS.length)];
         const baseRadius = Math.random() * 1.4 + 1;
         return {
@@ -192,16 +231,12 @@ export default function AnimatedBackground() {
         }
       }
 
-      // 4. Draw actual particles
+      // 4. Draw actual particles (sprite kopyalama; shadowBlur'a göre kat kat ucuz)
       for (const p of particles) {
-        ctx!.beginPath();
-        ctx!.fillStyle = `rgba(${p.color}, 0.9)`;
-        ctx!.shadowColor = `rgba(${p.color}, 0.8)`;
-        ctx!.shadowBlur = 6 * dpr;
-        ctx!.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-        ctx!.fill();
+        const sprite = sprites.get(p.color)!;
+        const drawSize = p.radius * SPRITE_GLOW_SCALE * 2;
+        ctx!.drawImage(sprite, p.x - drawSize / 2, p.y - drawSize / 2, drawSize, drawSize);
       }
-      ctx!.shadowBlur = 0;
 
       ctx!.restore();
     }
@@ -275,9 +310,9 @@ export default function AnimatedBackground() {
         className="motion-safe:[animation:aurora-drift-3_30s_ease-in-out_infinite] absolute bottom-[-10rem] left-1/3 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-violet-500/5 dark:bg-violet-500/10 blur-3xl transition-colors duration-300"
       />
 
-      {/* İnce nokta ızgarası — Açık Tema */}
+      {/* İnce nokta ızgarası — Açık Tema. -inset-16: grid-pan transform'u 64px kaydırdığı için taşma payı */}
       <div
-        className="motion-safe:[animation:grid-pan_14s_linear_infinite] absolute inset-0 opacity-[0.7] dark:hidden"
+        className="motion-safe:[animation:grid-pan_14s_linear_infinite] absolute -inset-16 opacity-[0.7] dark:hidden"
         style={{
           backgroundImage:
             "radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px)",
@@ -285,9 +320,9 @@ export default function AnimatedBackground() {
         }}
       />
 
-      {/* İnce nokta ızgarası — Koyu Tema */}
+      {/* İnce nokta ızgarası — Koyu Tema. -inset-16: grid-pan transform'u 64px kaydırdığı için taşma payı */}
       <div
-        className="motion-safe:[animation:grid-pan_14s_linear_infinite] absolute inset-0 hidden opacity-[0.15] dark:block"
+        className="motion-safe:[animation:grid-pan_14s_linear_infinite] absolute -inset-16 hidden opacity-[0.15] dark:block"
         style={{
           backgroundImage:
             "radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px)",
