@@ -11,6 +11,8 @@ import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
 
+export const revalidate = 1800; // Blog sayfalarıyla aynı ISR aralığı; on-demand /api/revalidate'e ek emniyet ağı
+
 export const metadata: Metadata = {
   title: "Berkay Yalçın | Full Stack .NET Developer",
   description:

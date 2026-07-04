@@ -49,12 +49,14 @@ body {
   }
 }
 
+/* transform anime edilir (compositor'da çalışır); background-position her karede paint
+   tetikler. Katman -inset-16 ile 64px taşırıldığından 64px kaydırma desenle örtüşür. */
 @keyframes grid-pan {
   0% {
-    background-position: 0 0;
+    transform: translate(0, 0);
   }
   100% {
-    background-position: 64px 64px;
+    transform: translate(64px, 64px);
   }
 }
 

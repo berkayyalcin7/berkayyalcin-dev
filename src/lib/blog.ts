@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
@@ -22,12 +23,19 @@ export type Post = {
   tags?: string[] | null;
 };
 
-export async function getPublishedPosts(): Promise<Post[]> {
-  const { data, error } = await supabase
+// React.cache: aynı istek içinde birden çok bileşen çağırırsa sorgu tekilleşir.
+export const getPublishedPosts = cache(async (limit?: number): Promise<Post[]> => {
+  let query = supabase
     .from("posts")
     .select("*")
     .eq("published", true)
     .order("created_at", { ascending: false });
+
+  if (limit !== undefined) {
+    query = query.limit(limit);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error("Error fetching posts:", {
@@ -40,7 +48,7 @@ export async function getPublishedPosts(): Promise<Post[]> {
   }
 
   return data as Post[];
-}
+});
 
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   const { data, error } = await supabase
