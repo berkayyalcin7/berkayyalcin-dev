@@ -52,7 +52,7 @@ export default function Header({ lang, dict }: HeaderProps) {
   // değiştirici hedefi için dil prefix'i soyulmuş normalize yol kullanılır.
   const basePath = pathname.replace(/^\/(tr|en)(?=\/|$)/, "") || "/";
 
-  const homePath = lang === "tr" ? "/" : `/${lang}`;
+  const homePath = lang === "en" ? "/" : `/${lang}`;
   const isHome = basePath === "/";
 
   // Scrollspy: ana sayfada görünür bölümün nav linkini vurgula
@@ -90,10 +90,14 @@ export default function Header({ lang, dict }: HeaderProps) {
     basePath === href ||
     (!href.startsWith("/#") && href !== "/" && basePath.startsWith(`${href}/`));
 
-  // Dil değiştirici: mevcut yolun diğer dildeki karşılığı
-  const switchTarget =
-    lang === "tr" ? (basePath === "/" ? "/en" : `/en${basePath}`) : basePath;
-  const switchLabel = lang === "tr" ? "EN" : "TR";
+  // Dil değiştirici: mevcut yolun diğer dildeki karşılığı.
+  // EN prefix'siz kanoniktir; TR /tr prefix'i alır.
+  const trTarget = basePath === "/" ? "/tr" : `/tr${basePath}`;
+  const enTarget = basePath;
+  const localeSegments = [
+    { code: "TR", href: trTarget, active: lang === "tr" },
+    { code: "EN", href: enTarget, active: lang !== "tr" },
+  ];
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/80 dark:border-white/10 dark:bg-black/60 backdrop-blur-md transition-colors duration-300">
@@ -128,15 +132,33 @@ export default function Header({ lang, dict }: HeaderProps) {
         <div className="flex items-center gap-3 sm:gap-4">
           {/* Bilinçli olarak <a>: dil değişimi tam sayfa yüklemesiyle yapılır.
               Client navigasyonu [lang] layout'unu remount edip tema class'ını
-              siliyor ve inline script'ler için React dev uyarısı üretiyordu. */}
-          <a
-            href={switchTarget}
+              siliyor ve inline script'ler için React dev uyarısı üretiyordu.
+              İki dil de segment olarak görünür; aktif olan vurgulu rozettir. */}
+          <div
             aria-label={dict.switchLocale}
-            className="flex h-9 items-center gap-1.5 rounded-full border border-zinc-200/60 bg-zinc-100/50 px-3 text-xs font-semibold text-zinc-600 transition hover:border-emerald-500/40 hover:text-emerald-500 dark:border-white/5 dark:bg-white/[0.01] dark:text-zinc-400 dark:hover:border-emerald-500/30 dark:hover:text-emerald-400"
+            className="flex h-9 items-center gap-0.5 rounded-full border border-zinc-200/60 bg-zinc-100/50 p-1 dark:border-white/10 dark:bg-white/[0.03]"
           >
-            <HiLanguage className="h-4 w-4" />
-            {switchLabel}
-          </a>
+            <HiLanguage className="ml-1.5 mr-0.5 h-4 w-4 shrink-0 text-zinc-400 dark:text-zinc-500" />
+            {localeSegments.map((segment) =>
+              segment.active ? (
+                <span
+                  key={segment.code}
+                  aria-current="true"
+                  className="flex h-7 items-center rounded-full bg-emerald-500 px-2.5 text-xs font-bold tracking-wide text-black shadow-sm shadow-emerald-500/30"
+                >
+                  {segment.code}
+                </span>
+              ) : (
+                <a
+                  key={segment.code}
+                  href={segment.href}
+                  className="flex h-7 items-center rounded-full px-2.5 text-xs font-bold tracking-wide text-zinc-500 transition hover:bg-emerald-500/10 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400"
+                >
+                  {segment.code}
+                </a>
+              )
+            )}
+          </div>
           <ThemeToggle ariaLabel={dict.themeToggle} />
           <ContactButton
             dict={dict.contactModal}

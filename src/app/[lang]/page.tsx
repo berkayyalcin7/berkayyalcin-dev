@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     title: dict.meta.homeTitle,
     description: dict.meta.homeDescription,
     alternates: {
-      languages: { tr: "/", en: "/en" },
+      languages: { en: "/", tr: "/tr", "x-default": "/" },
     },
     openGraph: {
       title: dict.meta.homeTitle,
@@ -111,7 +111,7 @@ export default async function Home({ params }: PageParams) {
           <Skills dict={dict.skills} />
         </Reveal>
         <Reveal>
-          <Projects dict={dict.projects} />
+          <Projects lang={lang} dict={dict.projects} />
         </Reveal>
         <Reveal>
           <BlogTeaser lang={lang} dict={dict.blogTeaser} cardDict={dict.blogCard} />

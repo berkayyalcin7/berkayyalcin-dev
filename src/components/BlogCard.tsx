@@ -1,20 +1,49 @@
 import Link from "next/link";
 import Image from "next/image";
 import { HiEye, HiClock, HiArrowRight } from "react-icons/hi2";
-import { getReadingTime, type Post } from "@/lib/blog";
+import { getReadingTime, type LocalizedPost } from "@/lib/blog";
 import { localeHref, fill } from "@/lib/locale-link";
 
 export type BlogCardDict = {
   readingTime: string;
   readMore: string;
+  languagesAria: string;
 };
 
 type BlogCardProps = {
-  post: Post;
+  post: LocalizedPost;
   featured?: boolean;
   lang: string;
   dict: BlogCardDict;
 };
+
+/** Yazının mevcut olduğu diller; aktif dil dolgun, diğeri çerçeveli rozet. */
+function LanguageBadges({ post, lang, ariaLabel }: { post: LocalizedPost; lang: string; ariaLabel: string }) {
+  const badges = [
+    { code: "TR", available: true },
+    { code: "EN", available: post.hasEnglish },
+  ].filter((badge) => badge.available);
+
+  // Kartta gösterilen içeriğin dili: EN görünümünde çeviri varsa EN, yoksa TR
+  const shownCode = lang === "en" && post.hasEnglish ? "EN" : "TR";
+
+  return (
+    <span aria-label={ariaLabel} className="ml-auto inline-flex items-center gap-1">
+      {badges.map((badge) => (
+        <span
+          key={badge.code}
+          className={`inline-flex items-center rounded-md px-1.5 py-0.5 text-[10px] font-bold tracking-wider ${
+            badge.code === shownCode
+              ? "bg-emerald-500 text-black shadow-sm shadow-emerald-500/30"
+              : "border border-zinc-300 text-zinc-500 dark:border-white/20 dark:text-zinc-400"
+          }`}
+        >
+          {badge.code}
+        </span>
+      ))}
+    </span>
+  );
+}
 
 function formatDate(date: string, lang: string) {
   return new Date(date).toLocaleDateString(lang === "tr" ? "tr-TR" : "en-US", {
@@ -77,6 +106,7 @@ export default function BlogCard({ post, featured = false, lang, dict }: BlogCar
             <span className="text-[11px] font-medium text-zinc-500">
               {formatDate(post.created_at, lang)}
             </span>
+            <LanguageBadges post={post} lang={lang} ariaLabel={dict.languagesAria} />
           </div>
 
           <h3

@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     title: `trkit | ${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
     description: dict.trkit.metaDescription,
     alternates: {
-      languages: { tr: "/araclar/trkit", en: "/en/araclar/trkit" },
+      languages: { en: "/araclar/trkit", tr: "/tr/araclar/trkit", "x-default": "/araclar/trkit" },
     },
   };
 }

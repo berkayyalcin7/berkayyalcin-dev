@@ -1,4 +1,4 @@
-import { getProjects, type Project } from "@/lib/projects";
+import { getProjects, localizeProjects, type Project } from "@/lib/projects";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { HiArrowUpRight, HiCodeBracket } from "react-icons/hi2";
@@ -116,8 +116,8 @@ function ProjectCard({ project, index, dict }: ProjectCardProps) {
   );
 }
 
-export default async function Projects({ dict }: { dict: ProjectsDict }) {
-  const projects = await getProjects();
+export default async function Projects({ lang, dict }: { lang: string; dict: ProjectsDict }) {
+  const projects = localizeProjects(await getProjects(), lang);
   const hasProjects = projects.length > 0;
   const visibleProjects = hasProjects ? projects : fallbackProjects(dict);
 

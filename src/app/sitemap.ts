@@ -4,7 +4,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export const revalidate = 1800; // Blog sayfalarıyla aynı ISR aralığı
 
-// TR prefix'siz kanonik URL'ler + /en altındaki İngilizce karşılıkları
+// EN prefix'siz kanonik URL'ler + /tr altındaki Türkçe karşılıkları
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getPublishedPosts();
 
@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
-      url: `${siteConfig.url}/en/blog/${post.slug}`,
+      url: `${siteConfig.url}/tr/blog/${post.slug}`,
       lastModified: new Date(post.updated_at ?? post.created_at),
       changeFrequency: "monthly" as const,
       priority: 0.5,
@@ -39,7 +39,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: page.priority,
     },
     {
-      url: `${siteConfig.url}/en${page.path}`,
+      url: `${siteConfig.url}/tr${page.path}`,
       lastModified: new Date(),
       changeFrequency: page.changeFrequency,
       priority: Math.max(0.3, page.priority - 0.2),

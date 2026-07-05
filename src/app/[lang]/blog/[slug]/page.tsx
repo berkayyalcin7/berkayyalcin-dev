@@ -3,6 +3,8 @@ import {
   getPublishedPosts,
   getReadingTime,
   getRelatedPosts,
+  localizePost,
+  localizePosts,
 } from "@/lib/blog";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -11,7 +13,7 @@ import ReactMarkdown from "react-markdown";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BlogCard from "@/components/BlogCard";
-import { HiArrowLeft, HiClock } from "react-icons/hi2";
+import { HiArrowLeft, HiClock, HiLanguage } from "react-icons/hi2";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 import ViewCounter from "@/components/ViewCounter";
@@ -29,13 +31,14 @@ type BlogPageProps = {
 export async function generateMetadata({ params }: BlogPageProps): Promise<Metadata> {
   const { lang, slug } = await params;
   const dict = hasLocale(lang) ? await getDictionary(lang) : null;
-  const post = await getPostBySlug(slug);
-  if (!post) {
+  const rawPost = await getPostBySlug(slug);
+  if (!rawPost) {
     return {
-      title: `${dict?.blogPost.notFoundTitle ?? "Yazı Bulunamadı"} | Berkay Yalçın - Blog`,
+      title: `${dict?.blogPost.notFoundTitle ?? "Post Not Found"} | Berkay Yalçın - Blog`,
     };
   }
-  
+
+  const post = localizePost(rawPost, lang);
   const baseUrl = "https://berkayyalcin.dev";
   const coverImageUrl = post.cover_image
     ? (post.cover_image.startsWith("http") ? post.cover_image : `${baseUrl}${post.cover_image}`)
@@ -45,6 +48,13 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
     title: `${post.title} | Berkay Yalçın - Blog`,
     description: post.excerpt,
     keywords: post.tags ?? undefined,
+    alternates: {
+      languages: {
+        en: `/blog/${post.slug}`,
+        tr: `/tr/blog/${post.slug}`,
+        "x-default": `/blog/${post.slug}`,
+      },
+    },
     openGraph: {
       title: `${post.title} | Berkay Yalçın - Blog`,
       description: post.excerpt,
@@ -74,16 +84,17 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
   const { lang, slug } = await params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
-  const [post, allPosts] = await Promise.all([
+  const [rawPost, allPosts] = await Promise.all([
     getPostBySlug(slug),
     getPublishedPosts(),
   ]);
 
-  if (!post) {
+  if (!rawPost) {
     notFound();
   }
 
-  const relatedPosts = getRelatedPosts(post, allPosts);
+  const post = localizePost(rawPost, lang);
+  const relatedPosts = localizePosts(getRelatedPosts(rawPost, allPosts), lang);
   const readingTime = getReadingTime(post.content);
 
   const baseUrl = "https://berkayyalcin.dev";
@@ -91,11 +102,15 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
     ? (post.cover_image.startsWith("http") ? post.cover_image : `${baseUrl}${post.cover_image}`)
     : `${baseUrl}/icon.png`;
 
+  // Gösterilen içeriğin gerçek dili (EN istenip çeviri yoksa TR gösterilir)
+  const contentLang = lang === "en" && post.hasEnglish ? "en" : "tr";
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": post.title,
     "description": post.excerpt,
+    "inLanguage": contentLang,
     "image": coverImageUrl,
     "datePublished": post.created_at,
     "dateModified": post.updated_at || post.created_at,
@@ -137,6 +152,14 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
             {dict.blogPost.backToAll}
           </Link>
 
+          {/* EN istendi ama çeviri yok: Türkçe orijinal gösterildiğini belirt */}
+          {post.isFallback && (
+            <div className="mb-8 flex items-start gap-3 rounded-2xl border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-sm text-amber-700 dark:border-amber-400/20 dark:bg-amber-400/5 dark:text-amber-300">
+              <HiLanguage className="mt-0.5 h-4 w-4 shrink-0" />
+              <p>{dict.blogPost.fallbackNotice}</p>
+            </div>
+          )}
+
           {/* Article Header */}
           <article>
             {post.cover_image && (
@@ -158,6 +181,20 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                     {post.category}
                   </span>
                 )}
+                <span className="inline-flex items-center gap-1">
+                  {["TR", ...(post.hasEnglish ? ["EN"] : [])].map((code) => (
+                    <span
+                      key={code}
+                      className={`inline-flex items-center rounded-md px-2 py-0.5 text-[11px] font-bold tracking-wider ${
+                        code.toLowerCase() === contentLang
+                          ? "bg-emerald-500 text-black shadow-sm shadow-emerald-500/30"
+                          : "border border-zinc-300 text-zinc-500 dark:border-white/20 dark:text-zinc-400"
+                      }`}
+                    >
+                      {code}
+                    </span>
+                  ))}
+                </span>
                 <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest">
                   {new Date(post.created_at).toLocaleDateString(lang === "tr" ? "tr-TR" : "en-US", {
                     year: "numeric",
