@@ -17,7 +17,7 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "themeToggle": "Toggle theme",
-    "switchLocale": "Türkçe'ye geç"
+    "switchLocale": "Change language"
   },
   "profile": {
     "role": "Computer Engineer & .NET Full Stack Developer",
@@ -145,14 +145,21 @@
     "allPosts": "All Posts",
     "title": "Notes on Technology & Experience",
     "body": "My technical writing on .NET, web architectures and hand-picked topics from the software world.",
-    "postsInTurkish": "Blog posts are currently published in Turkish only.",
+    "postsInTurkish": "Posts with the EN badge are available in English; the others are in Turkish for now.",
     "emptyTitle": "Posts are coming very soon.",
     "emptyBody": "Blog posts will be listed here automatically once they are added to the Supabase database.",
     "comingSoon": "Coming soon"
   },
   "blogCard": {
     "readingTime": "{minutes} min read",
-    "readMore": "Read More"
+    "readMore": "Read More",
+    "languagesAria": "Available languages"
+  },
+  "blogExplorer": {
+    "all": "All",
+    "searchPlaceholder": "Search posts...",
+    "noResults": "No results found",
+    "noResultsBody": "Try picking a different category or changing your search term."
   },
   "blogPage": {
     "metaTitle": "Blog",
@@ -168,7 +175,8 @@
     "backToAll": "All Posts",
     "relatedPosts": "Related Posts",
     "notFoundTitle": "Post Not Found",
-    "readingTime": "{minutes} min read"
+    "readingTime": "{minutes} min read",
+    "fallbackNotice": "This post hasn't been translated into English yet — you're reading the Turkish original."
   },
   "toolsPage": {
     "metaTitle": "Tools",

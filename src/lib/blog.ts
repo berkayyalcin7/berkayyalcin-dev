@@ -21,7 +21,40 @@ export type Post = {
   // Kolonlar Supabase'de henüz yoksa undefined gelir; kod her iki durumu da destekler.
   category?: string | null;
   tags?: string[] | null;
+  // İngilizce çeviri kolonları; null/undefined ise yazının yalnızca TR'si vardır.
+  title_en?: string | null;
+  excerpt_en?: string | null;
+  content_en?: string | null;
 };
+
+/**
+ * Dile göre çözülmüş yazı: title/excerpt/content istenen dilin metnini taşır.
+ * `hasEnglish` rozetler için, `isFallback` EN istenip TR gösterildiğinde
+ * "çeviri yok" notunu tetiklemek için kullanılır. TR kaynak dil olduğundan
+ * her yazı Türkçe'ye sahiptir.
+ */
+export type LocalizedPost = Post & {
+  hasEnglish: boolean;
+  isFallback: boolean;
+};
+
+export function localizePost(post: Post, lang: string): LocalizedPost {
+  const hasEnglish = Boolean(post.title_en && post.excerpt_en && post.content_en);
+  const useEnglish = lang === "en" && hasEnglish;
+
+  return {
+    ...post,
+    title: useEnglish ? post.title_en! : post.title,
+    excerpt: useEnglish ? post.excerpt_en! : post.excerpt,
+    content: useEnglish ? post.content_en! : post.content,
+    hasEnglish,
+    isFallback: lang === "en" && !hasEnglish,
+  };
+}
+
+export function localizePosts(posts: Post[], lang: string): LocalizedPost[] {
+  return posts.map((post) => localizePost(post, lang));
+}
 
 // React.cache: aynı istek içinde birden çok bileşen çağırırsa sorgu tekilleşir.
 export const getPublishedPosts = cache(async (limit?: number): Promise<Post[]> => {

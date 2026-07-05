@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     title: `${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
     description: dict.toolsPage.metaDescription,
     alternates: {
-      languages: { tr: "/araclar", en: "/en/araclar" },
+      languages: { en: "/araclar", tr: "/tr/araclar", "x-default": "/araclar" },
     },
   };
 }

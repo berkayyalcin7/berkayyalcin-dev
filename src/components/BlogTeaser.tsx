@@ -1,4 +1,4 @@
-import { getPublishedPosts } from "@/lib/blog";
+import { getPublishedPosts, localizePosts } from "@/lib/blog";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi2";
 import BlogCard, { type BlogCardDict } from "@/components/BlogCard";
@@ -14,8 +14,9 @@ type BlogTeaserProps = {
 };
 
 export default async function BlogTeaser({ lang, dict, cardDict }: BlogTeaserProps) {
-  const posts = await getPublishedPosts(TEASER_POST_COUNT);
+  const posts = localizePosts(await getPublishedPosts(TEASER_POST_COUNT), lang);
   const [featuredPost, ...otherPosts] = posts;
+  const hasUntranslated = lang === "en" && posts.some((post) => !post.hasEnglish);
 
   return (
     <section id="blog" className="scroll-mt-24 border-t border-zinc-200 dark:border-white/10 px-6 py-20">
@@ -67,7 +68,7 @@ export default async function BlogTeaser({ lang, dict, cardDict }: BlogTeaserPro
             <p className="mt-3 max-w-xl text-base text-zinc-600 dark:text-zinc-400">
               {dict.body}
             </p>
-            {lang !== "tr" && (
+            {hasUntranslated && (
               <p className="mt-2 max-w-xl text-sm italic text-zinc-500 dark:text-zinc-500">
                 {dict.postsInTurkish}
               </p>

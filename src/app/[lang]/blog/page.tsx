@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { HiArrowLeft } from "react-icons/hi2";
-import { getCategories, getPublishedPosts } from "@/lib/blog";
+import { getCategories, getPublishedPosts, localizePosts } from "@/lib/blog";
 import BlogExplorer from "@/components/BlogExplorer";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     title: `${dict.blogPage.metaTitle} | ${siteConfig.name}`,
     description: dict.blogPage.metaDescription,
     alternates: {
-      languages: { tr: "/blog", en: "/en/blog" },
+      languages: { en: "/blog", tr: "/tr/blog", "x-default": "/blog" },
     },
   };
 }
@@ -31,8 +31,9 @@ export default async function BlogIndexPage({ params }: PageParams) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
-  const posts = await getPublishedPosts();
+  const posts = localizePosts(await getPublishedPosts(), lang);
   const categories = getCategories(posts);
+  const hasUntranslated = lang === "en" && posts.some((post) => !post.hasEnglish);
 
   return (
     <>
@@ -56,7 +57,7 @@ export default async function BlogIndexPage({ params }: PageParams) {
           <p className="mt-3 max-w-xl text-base text-zinc-600 dark:text-zinc-400">
             {dict.blogPage.intro}
           </p>
-          {lang !== "tr" && (
+          {hasUntranslated && (
             <p className="mt-2 max-w-xl text-sm italic text-zinc-500 dark:text-zinc-500">
               {dict.blogTeaser.postsInTurkish}
             </p>
@@ -72,7 +73,13 @@ export default async function BlogIndexPage({ params }: PageParams) {
               </p>
             </div>
           ) : (
-            <BlogExplorer posts={posts} categories={categories} lang={lang} cardDict={dict.blogCard} />
+            <BlogExplorer
+              posts={posts}
+              categories={categories}
+              lang={lang}
+              dict={dict.blogExplorer}
+              cardDict={dict.blogCard}
+            />
           )}
         </div>
       </main>

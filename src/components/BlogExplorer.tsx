@@ -3,30 +3,41 @@
 import { useMemo, useState } from "react";
 import { HiMagnifyingGlass, HiSquares2X2 } from "react-icons/hi2";
 import BlogCard, { type BlogCardDict } from "@/components/BlogCard";
-import type { Post } from "@/lib/blog";
+import type { LocalizedPost } from "@/lib/blog";
+
+export type BlogExplorerDict = {
+  all: string;
+  searchPlaceholder: string;
+  noResults: string;
+  noResultsBody: string;
+};
 
 type BlogExplorerProps = {
-  posts: Post[];
+  posts: LocalizedPost[];
   categories: string[];
   lang: string;
+  dict: BlogExplorerDict;
   cardDict: BlogCardDict;
 };
 
-export default function BlogExplorer({ posts, categories, lang, cardDict }: BlogExplorerProps) {
+export default function BlogExplorer({ posts, categories, lang, dict, cardDict }: BlogExplorerProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [query, setQuery] = useState("");
 
+  // Küçük harfe çevirme dile duyarlı: TR'de I→ı, EN'de I→i
+  const searchLocale = lang === "tr" ? "tr" : "en";
+
   const filteredPosts = useMemo(() => {
-    const normalizedQuery = query.trim().toLocaleLowerCase("tr");
+    const normalizedQuery = query.trim().toLocaleLowerCase(searchLocale);
     return posts.filter((post) => {
       if (activeCategory && post.category !== activeCategory) return false;
       if (!normalizedQuery) return true;
       const haystack = [post.title, post.excerpt, ...(post.tags ?? [])]
         .join(" ")
-        .toLocaleLowerCase("tr");
+        .toLocaleLowerCase(searchLocale);
       return haystack.includes(normalizedQuery);
     });
-  }, [posts, activeCategory, query]);
+  }, [posts, activeCategory, query, searchLocale]);
 
   return (
     <div>
@@ -43,7 +54,7 @@ export default function BlogExplorer({ posts, categories, lang, cardDict }: Blog
             }`}
           >
             <HiSquares2X2 className="h-3.5 w-3.5" />
-            Tümü
+            {dict.all}
           </button>
           {categories.map((category) => (
             <button
@@ -69,7 +80,7 @@ export default function BlogExplorer({ posts, categories, lang, cardDict }: Blog
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Yazılarda ara..."
+            placeholder={dict.searchPlaceholder}
             className="w-full rounded-full border border-zinc-200 bg-zinc-100/30 py-2 pl-9 pr-4 text-sm text-zinc-900 placeholder:text-zinc-400 outline-none transition focus:border-emerald-500/50 focus:bg-zinc-100/60 dark:border-white/10 dark:bg-white/[0.02] dark:text-white dark:placeholder:text-zinc-500 dark:focus:border-emerald-400/50 dark:focus:bg-white/[0.04]"
           />
         </label>
@@ -78,10 +89,8 @@ export default function BlogExplorer({ posts, categories, lang, cardDict }: Blog
       {/* Sonuçlar */}
       {filteredPosts.length === 0 ? (
         <div className="mt-12 rounded-2xl border border-dashed border-zinc-200 bg-zinc-100/40 dark:border-white/10 dark:bg-white/[0.02] p-12 text-center">
-          <p className="text-lg font-medium text-zinc-900 dark:text-white">Sonuç bulunamadı</p>
-          <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
-            Farklı bir kategori seçmeyi veya arama terimini değiştirmeyi deneyin.
-          </p>
+          <p className="text-lg font-medium text-zinc-900 dark:text-white">{dict.noResults}</p>
+          <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">{dict.noResultsBody}</p>
         </div>
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

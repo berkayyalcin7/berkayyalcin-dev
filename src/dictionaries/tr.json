@@ -17,7 +17,7 @@
     "openMenu": "Menüyü aç",
     "closeMenu": "Menüyü kapat",
     "themeToggle": "Temayı değiştir",
-    "switchLocale": "Switch to English"
+    "switchLocale": "Dil seç"
   },
   "profile": {
     "role": "Bilgisayar Mühendisi & .NET Full Stack Developer",
@@ -145,14 +145,21 @@
     "allPosts": "Tüm Yazılar",
     "title": "Teknoloji & Deneyim Paylaşımları",
     "body": ".NET, Web mimarileri ve yazılım dünyasından seçtiğim konular hakkındaki teknik yazılarım.",
-    "postsInTurkish": "Blog yazıları şimdilik yalnızca Türkçe yayınlanıyor.",
+    "postsInTurkish": "EN rozetli yazıların İngilizce çevirisi mevcut; diğerleri şimdilik yalnızca Türkçe.",
     "emptyTitle": "Yazılar çok yakında burada olacak.",
     "emptyBody": "Blog yazıları Supabase veritabanına eklendikten sonra bu alanda otomatik olarak listelenecek.",
     "comingSoon": "Yakında"
   },
   "blogCard": {
     "readingTime": "{minutes} dk okuma",
-    "readMore": "Devamını Oku"
+    "readMore": "Devamını Oku",
+    "languagesAria": "Mevcut diller"
+  },
+  "blogExplorer": {
+    "all": "Tümü",
+    "searchPlaceholder": "Yazılarda ara...",
+    "noResults": "Sonuç bulunamadı",
+    "noResultsBody": "Farklı bir kategori seçmeyi veya arama terimini değiştirmeyi deneyin."
   },
   "blogPage": {
     "metaTitle": "Blog",
@@ -168,7 +175,8 @@
     "backToAll": "Tüm Yazılar",
     "relatedPosts": "İlgili Yazılar",
     "notFoundTitle": "Yazı Bulunamadı",
-    "readingTime": "{minutes} dk okuma"
+    "readingTime": "{minutes} dk okuma",
+    "fallbackNotice": "Bu yazının İngilizce çevirisi henüz yayınlanmadı — Türkçe orijinalini okuyorsunuz."
   },
   "toolsPage": {
     "metaTitle": "Araçlar",

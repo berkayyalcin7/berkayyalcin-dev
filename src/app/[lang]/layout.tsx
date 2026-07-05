@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: LayoutParams): Promise<Metada
     title: dict.meta.siteTitle,
     description: dict.meta.siteDescription,
     alternates: {
-      languages: { tr: "/", en: "/en" },
+      languages: { en: "/", tr: "/tr", "x-default": "/" },
     },
     openGraph: {
       title: dict.meta.siteTitle,

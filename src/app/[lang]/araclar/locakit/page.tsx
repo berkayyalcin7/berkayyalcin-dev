@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     title: `locakit | ${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
     description: dict.locakit.metaDescription,
     alternates: {
-      languages: { tr: "/araclar/locakit", en: "/en/araclar/locakit" },
+      languages: { en: "/araclar/locakit", tr: "/tr/araclar/locakit", "x-default": "/araclar/locakit" },
     },
   };
 }
