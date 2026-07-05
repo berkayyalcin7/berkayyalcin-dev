@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { FaGithub, FaNpm } from "react-icons/fa";
 import { SiNuget } from "react-icons/si";
 import { HiArrowLeft, HiArrowRight, HiArrowUpRight } from "react-icons/hi2";
@@ -7,12 +8,25 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
 import { tools, type ToolPackage } from "@/lib/tools";
+import { getDictionary, hasLocale, buildHeaderDict, type Dictionary } from "@/lib/i18n";
+import { localeHref, fill } from "@/lib/locale-link";
 
-export const metadata: Metadata = {
-  title: `Araçlar | ${siteConfig.name}`,
-  description:
-    "Geliştirdiğim açık kaynak paketler ve geliştirici araçları — canlı demolarıyla birlikte. npm paketleriyle başladı; NuGet paketleri de yolda.",
-};
+type PageParams = { params: Promise<{ lang: string }> };
+
+type ToolText = { tagline: string; description: string; features: string[] };
+
+export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return {
+    title: `${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
+    description: dict.toolsPage.metaDescription,
+    alternates: {
+      languages: { tr: "/araclar", en: "/en/araclar" },
+    },
+  };
+}
 
 function RegistryBadge({ registry }: { registry: ToolPackage["registry"] }) {
   if (registry === "npm") {
@@ -29,7 +43,17 @@ function RegistryBadge({ registry }: { registry: ToolPackage["registry"] }) {
   );
 }
 
-function ToolCard({ tool }: { tool: ToolPackage }) {
+function ToolCard({
+  tool,
+  text,
+  pageDict,
+  lang,
+}: {
+  tool: ToolPackage;
+  text: ToolText;
+  pageDict: Dictionary["toolsPage"];
+  lang: string;
+}) {
   return (
     <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100/50 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/5 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03]">
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
@@ -43,7 +67,7 @@ function ToolCard({ tool }: { tool: ToolPackage }) {
               </h3>
               <RegistryBadge registry={tool.registry} />
             </div>
-            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{tool.tagline}</p>
+            <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{text.tagline}</p>
           </div>
           <div className="flex items-center gap-3 pt-1">
             <Link
@@ -51,7 +75,7 @@ function ToolCard({ tool }: { tool: ToolPackage }) {
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-500 transition-colors hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-white"
-              aria-label={`${tool.name} GitHub adresi`}
+              aria-label={fill(pageDict.githubAria, { name: tool.name })}
             >
               <FaGithub className="h-5 w-5" />
             </Link>
@@ -60,7 +84,7 @@ function ToolCard({ tool }: { tool: ToolPackage }) {
               target="_blank"
               rel="noopener noreferrer"
               className="text-zinc-500 transition-colors hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400"
-              aria-label={`${tool.name} paket sayfası`}
+              aria-label={fill(pageDict.packageAria, { name: tool.name })}
             >
               <HiArrowUpRight className="h-5 w-5" />
             </Link>
@@ -68,11 +92,11 @@ function ToolCard({ tool }: { tool: ToolPackage }) {
         </div>
 
         <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-          {tool.description}
+          {text.description}
         </p>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {tool.features.map((feature) => (
+          {text.features.map((feature) => (
             <span
               key={feature}
               className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-medium text-emerald-600 dark:text-emerald-400"
@@ -88,10 +112,10 @@ function ToolCard({ tool }: { tool: ToolPackage }) {
           {tool.installCommand}
         </code>
         <Link
-          href={`/araclar/${tool.slug}`}
+          href={localeHref(lang, `/araclar/${tool.slug}`)}
           className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-sm font-medium text-emerald-600 transition hover:bg-emerald-500/20 dark:text-emerald-400"
         >
-          Canlı Dene
+          {pageDict.tryLive}
           <HiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
         </Link>
       </div>
@@ -99,40 +123,49 @@ function ToolCard({ tool }: { tool: ToolPackage }) {
   );
 }
 
-export default function ToolsHubPage() {
+export default async function ToolsHubPage({ params }: PageParams) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const dict = await getDictionary(lang);
+  const toolTexts: Record<string, ToolText> = { trkit: dict.trkit, locakit: dict.locakit };
+
   return (
     <>
-      <Header />
+      <Header lang={lang} dict={buildHeaderDict(dict)} />
       <main className="relative z-10 flex-1 px-6 py-28">
         <div className="mx-auto max-w-5xl">
           <Link
-            href="/"
+            href={localeHref(lang, "/")}
             className="mb-8 inline-flex items-center gap-2 text-sm text-zinc-500 transition hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400"
           >
             <HiArrowLeft className="h-4 w-4" />
-            Ana Sayfa
+            {dict.toolsPage.backHome}
           </Link>
 
           <h1 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-            Araçlar
+            {dict.toolsPage.heading}
           </h1>
           <p className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
-            Açık Kaynak Paketler & Geliştirici Araçları
+            {dict.toolsPage.title}
           </p>
           <p className="mt-3 max-w-2xl text-base text-zinc-600 dark:text-zinc-400">
-            Geliştirdiğim açık kaynak paketleri burada topluyorum — her birini kurmadan önce
-            tarayıcınızda canlı deneyebilirsiniz. Şu an npm paketleriyle başladı; ilerleyen
-            dönemde .NET tarafı için NuGet paketleri de bu bölüme eklenecek.
+            {dict.toolsPage.intro}
           </p>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-2">
             {tools.map((tool) => (
-              <ToolCard key={tool.slug} tool={tool} />
+              <ToolCard
+                key={tool.slug}
+                tool={tool}
+                text={toolTexts[tool.slug]!}
+                pageDict={dict.toolsPage}
+                lang={lang}
+              />
             ))}
           </div>
         </div>
       </main>
-      <Footer />
+      <Footer dict={dict.footer} />
     </>
   );
 }

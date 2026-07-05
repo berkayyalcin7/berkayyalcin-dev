@@ -6,14 +6,27 @@ import { HiEnvelope, HiXMark, HiArrowDownTray } from "react-icons/hi2";
 import { FaLinkedin } from "react-icons/fa6";
 import { siteConfig } from "@/lib/site-config";
 
+export type ContactModalDict = {
+  title: string;
+  subtitle: string;
+  close: string;
+  emailLabel: string;
+  linkedinLabel: string;
+  viewProfile: string;
+  resumeLabel: string;
+  downloadCv: string;
+};
+
 type ContactButtonProps = {
   className: string;
   children: ReactNode;
+  dict: ContactModalDict;
 };
 
 export default function ContactButton({
   className,
   children,
+  dict,
 }: ContactButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -52,7 +65,7 @@ export default function ContactButton({
           >
             <button
               type="button"
-              aria-label="Kapat"
+              aria-label={dict.close}
               onClick={() => setIsOpen(false)}
               className="absolute inset-0 bg-black/70 backdrop-blur-sm"
             />
@@ -62,7 +75,7 @@ export default function ContactButton({
                 ref={closeButtonRef}
                 type="button"
                 onClick={() => setIsOpen(false)}
-                aria-label="Kapat"
+                aria-label={dict.close}
                 className="absolute right-4 top-4 rounded-full p-1 text-zinc-400 transition hover:bg-zinc-100 hover:text-zinc-900 dark:hover:bg-white/10 dark:hover:text-white"
               >
                 <HiXMark className="h-5 w-5" />
@@ -72,10 +85,10 @@ export default function ContactButton({
                 id="contact-modal-title"
                 className="text-lg font-semibold text-zinc-900 dark:text-white"
               >
-                İletişime Geç
+                {dict.title}
               </h3>
               <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
-                Aşağıdaki kanallardan bana ulaşabilirsin.
+                {dict.subtitle}
               </p>
 
               <div className="mt-6 flex flex-col gap-3">
@@ -88,7 +101,7 @@ export default function ContactButton({
                   </span>
                   <span>
                     <span className="block text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                      E-posta
+                      {dict.emailLabel}
                     </span>
                     <span className="block text-sm font-semibold text-zinc-900 dark:text-white">
                       {siteConfig.social.emailAddress}
@@ -107,10 +120,10 @@ export default function ContactButton({
                   </span>
                   <span>
                     <span className="block text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                      LinkedIn
+                      {dict.linkedinLabel}
                     </span>
                     <span className="block text-sm font-semibold text-zinc-900 dark:text-white">
-                      Profilimi Görüntüle
+                      {dict.viewProfile}
                     </span>
                   </span>
                 </a>
@@ -126,10 +139,10 @@ export default function ContactButton({
                   </span>
                   <span>
                     <span className="block text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
-                      Özgeçmiş
+                      {dict.resumeLabel}
                     </span>
                     <span className="block text-sm font-semibold text-zinc-900 dark:text-white">
-                      CV&apos;mi İndir (PDF)
+                      {dict.downloadCv}
                     </span>
                   </span>
                 </a>

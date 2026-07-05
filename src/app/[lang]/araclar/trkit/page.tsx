@@ -1,62 +1,68 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { FaGithub, FaNpm } from "react-icons/fa";
 import { HiArrowLeft, HiArrowUpRight } from "react-icons/hi2";
 import TrkitPlayground, { InstallCommand } from "@/components/tools/TrkitPlayground";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
-import { getToolBySlug } from "@/lib/tools";
+import { getDictionary, hasLocale, buildHeaderDict } from "@/lib/i18n";
+import { localeHref } from "@/lib/locale-link";
 
-export const metadata: Metadata = {
-  title: `trkit | Araçlar | ${siteConfig.name}`,
-  description:
-    "trkit — Türkiye'ye özgü doğrulama, formatlama ve KVKK maskeleme fonksiyonlarını tarayıcınızda canlı deneyin. Sıfır bağımlılıklı, açık kaynak npm paketi.",
-};
+type PageParams = { params: Promise<{ lang: string }> };
 
-const trkit = getToolBySlug("trkit");
+export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+  return {
+    title: `trkit | ${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
+    description: dict.trkit.metaDescription,
+    alternates: {
+      languages: { tr: "/araclar/trkit", en: "/en/araclar/trkit" },
+    },
+  };
+}
 
-export default function TrkitPage() {
+export default async function TrkitPage({ params }: PageParams) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const dict = await getDictionary(lang);
+
   return (
     <>
-      <Header />
+      <Header lang={lang} dict={buildHeaderDict(dict)} />
       <main className="relative z-10 flex-1 px-6 py-28">
         <div className="mx-auto max-w-5xl">
           <Link
-            href="/araclar"
+            href={localeHref(lang, "/araclar")}
             className="mb-8 inline-flex items-center gap-2 text-sm text-zinc-500 transition hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400"
           >
             <HiArrowLeft className="h-4 w-4" />
-            Araçlar
+            {dict.toolsPage.backToTools}
           </Link>
 
           <h1 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-            Araçlar / trkit
+            {dict.toolsPage.heading} / trkit
           </h1>
           <p className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
-            trkit — Türk Geliştiriciler için Utility Kit
+            {dict.trkit.pageTitle}
           </p>
           <p className="mt-3 max-w-2xl text-base text-zinc-600 dark:text-zinc-400">
-            Geliştirdiğim açık kaynak npm paketi: TC Kimlik No, VKN, IBAN, telefon ve plaka
-            doğrulama; KVKK dostu maskeleme; Türkçe <code className="font-mono text-sm">İ/ı</code>{" "}
-            duyarlı metin işlemleri; sayıyı yazıya çevirme, KDV hesapları ve Diyanet takvimiyle
-            doğrulanmış resmî tatil / iş günü hesapları. Saf fonksiyonlardan
-            oluşur — React, Vue, Angular, Node fark etmeksizin her yerde çalışır. Aşağıdaki
-            demolar paketi doğrudan tarayıcınızda çalıştırır.
+            {dict.trkit.pageIntro}
           </p>
 
-          {trkit && (
-            <div className="mt-5 flex flex-wrap gap-1.5">
-              {trkit.features.map((feature) => (
-                <span
-                  key={feature}
-                  className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400"
-                >
-                  {feature}
-                </span>
-              ))}
-            </div>
-          )}
+          <div className="mt-5 flex flex-wrap gap-1.5">
+            {dict.trkit.features.map((feature) => (
+              <span
+                key={feature}
+                className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400"
+              >
+                {feature}
+              </span>
+            ))}
+          </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <InstallCommand />
@@ -82,19 +88,22 @@ export default function TrkitPage() {
             </Link>
           </div>
 
+          {lang !== "tr" && (
+            <p className="mt-6 text-sm italic text-zinc-500 dark:text-zinc-500">
+              {dict.toolsPage.demoInTurkishNote}
+            </p>
+          )}
+
           <div className="mt-12">
             <TrkitPlayground />
           </div>
 
           <p className="mt-10 max-w-2xl text-xs leading-relaxed text-zinc-500 dark:text-zinc-500">
-            Örnek değerler sentetiktir; gerçek kişi verisi değildir. trkit yalnızca
-            format/checksum doğrulaması yapar — hiçbir devlet servisine sorgu göndermez, kişisel
-            veri işlemez ve KVKK/GDPR uyum garantisi değildir. Girdiğiniz veriler tarayıcınızdan
-            çıkmaz.
+            {dict.trkit.disclaimer}
           </p>
         </div>
       </main>
-      <Footer />
+      <Footer dict={dict.footer} />
     </>
   );
 }

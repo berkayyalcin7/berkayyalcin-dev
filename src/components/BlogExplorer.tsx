@@ -2,15 +2,17 @@
 
 import { useMemo, useState } from "react";
 import { HiMagnifyingGlass, HiSquares2X2 } from "react-icons/hi2";
-import BlogCard from "@/components/BlogCard";
+import BlogCard, { type BlogCardDict } from "@/components/BlogCard";
 import type { Post } from "@/lib/blog";
 
 type BlogExplorerProps = {
   posts: Post[];
   categories: string[];
+  lang: string;
+  cardDict: BlogCardDict;
 };
 
-export default function BlogExplorer({ posts, categories }: BlogExplorerProps) {
+export default function BlogExplorer({ posts, categories, lang, cardDict }: BlogExplorerProps) {
   const [activeCategory, setActiveCategory] = useState<string | null>(null);
   const [query, setQuery] = useState("");
 
@@ -84,7 +86,7 @@ export default function BlogExplorer({ posts, categories }: BlogExplorerProps) {
       ) : (
         <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {filteredPosts.map((post) => (
-            <BlogCard key={post.id} post={post} />
+            <BlogCard key={post.id} post={post} lang={lang} dict={cardDict} />
           ))}
         </div>
       )}

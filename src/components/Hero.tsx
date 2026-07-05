@@ -1,26 +1,25 @@
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { HiEnvelope } from "react-icons/hi2";
 import { siteConfig } from "@/lib/site-config";
+import { localeHref, fill } from "@/lib/locale-link";
+import type { Dictionary } from "@/lib/i18n";
 
-const socialLinks = [
-  {
-    label: "GitHub",
-    href: siteConfig.social.github,
-    icon: FaGithub,
-  },
-  {
-    label: "LinkedIn",
-    href: siteConfig.social.linkedin,
-    icon: FaLinkedin,
-  },
-  {
-    label: "E-posta",
-    href: siteConfig.social.email,
-    icon: HiEnvelope,
-  },
-];
+type HeroProps = {
+  lang: string;
+  dict: Dictionary["hero"];
+  profile: Dictionary["profile"];
+};
 
-export default function Hero() {
+export default function Hero({ lang, dict, profile }: HeroProps) {
+  const socialLinks = [
+    { label: "GitHub", href: siteConfig.social.github, icon: FaGithub },
+    { label: "LinkedIn", href: siteConfig.social.linkedin, icon: FaLinkedin },
+    { label: dict.emailAria, href: siteConfig.social.email, icon: HiEnvelope },
+  ];
+
+  // "Merhaba, ben {name}." şablonunu, isim vurgulu span'iyle render etmek için böl
+  const [titleBefore, titleAfter] = dict.title.split("{name}");
+
   return (
     <section className="relative overflow-hidden px-6 pb-24 pt-20 sm:pt-32">
       <div
@@ -38,34 +37,32 @@ export default function Hero() {
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-75 dark:bg-emerald-400" />
             <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500 dark:bg-emerald-400" />
           </span>
-          Yeni projeler üzerinde çalışıyorum
+          {dict.badge}
         </span>
 
         <h1 className="mt-6 max-w-3xl text-4xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-6xl">
-          Merhaba, ben{" "}
+          {titleBefore}
           <span className="bg-gradient-to-r from-emerald-500 via-emerald-400 to-blue-500 bg-clip-text text-transparent">
             {siteConfig.name}
           </span>
-          .
+          {titleAfter}
         </h1>
         <p className="mt-4 max-w-xl text-lg text-zinc-600 dark:text-zinc-400 sm:text-xl">
-          {siteConfig.role} — {siteConfig.location}. Modern web ve .NET
-          ekosistemiyle uçtan uca ürünler geliştiriyor, öğrendiklerimi bu
-          blogda paylaşıyorum.
+          {fill(dict.subtitle, { role: profile.role, location: profile.location })}
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
           <a
-            href="#blog"
+            href={localeHref(lang, "/#blog")}
             className="rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-black transition hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/10"
           >
-            Blog Yazılarını Gör
+            {dict.ctaBlog}
           </a>
           <a
-            href="#iletisim"
+            href={localeHref(lang, "/#iletisim")}
             className="rounded-full border border-zinc-200 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-500 dark:border-white/15 dark:text-white dark:hover:border-emerald-400/60 dark:hover:text-emerald-400"
           >
-            Benimle İletişime Geç
+            {dict.ctaContact}
           </a>
 
           {/* Sosyal bağlantılar */}

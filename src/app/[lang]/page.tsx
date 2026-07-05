@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -8,35 +9,50 @@ import Projects from "@/components/Projects";
 import BlogTeaser from "@/components/BlogTeaser";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import { siteConfig } from "@/lib/site-config";
 import Reveal from "@/components/Reveal";
+import { siteConfig } from "@/lib/site-config";
+import { getDictionary, hasLocale, buildHeaderDict } from "@/lib/i18n";
 
 export const revalidate = 1800; // Blog sayfalarıyla aynı ISR aralığı; on-demand /api/revalidate'e ek emniyet ağı
 
-export const metadata: Metadata = {
-  title: "Berkay Yalçın | Full Stack .NET Developer",
-  description:
-    "Berkay Yalçın'ın kişisel portfolyosu, .NET Core, mikroservis mimarileri ve yazılım geliştirme üzerine teknik blog yazıları.",
-  openGraph: {
-    title: "Berkay Yalçın | Full Stack .NET Developer",
-    description:
-      "Berkay Yalçın'ın kişisel portfolyosu, .NET Core, mikroservis mimarileri ve yazılım geliştirme üzerine teknik blog yazıları.",
-    url: siteConfig.url,
-    siteName: siteConfig.name,
-    locale: "tr_TR",
-    type: "website",
-    images: [
-      {
-        url: `${siteConfig.url}/icon.png`,
-        width: 512,
-        height: 512,
-        alt: "Berkay Yalçın",
-      },
-    ],
-  },
-};
+type PageParams = { params: Promise<{ lang: string }> };
 
-export default function Home() {
+export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
+  const { lang } = await params;
+  if (!hasLocale(lang)) return {};
+  const dict = await getDictionary(lang);
+
+  return {
+    title: dict.meta.homeTitle,
+    description: dict.meta.homeDescription,
+    alternates: {
+      languages: { tr: "/", en: "/en" },
+    },
+    openGraph: {
+      title: dict.meta.homeTitle,
+      description: dict.meta.homeDescription,
+      url: siteConfig.url,
+      siteName: siteConfig.name,
+      locale: lang === "tr" ? "tr_TR" : "en_US",
+      type: "website",
+      images: [
+        {
+          url: `${siteConfig.url}/icon.png`,
+          width: 512,
+          height: 512,
+          alt: siteConfig.name,
+        },
+      ],
+    },
+  };
+}
+
+export default async function Home({ params }: PageParams) {
+  const { lang } = await params;
+  if (!hasLocale(lang)) notFound();
+  const dict = await getDictionary(lang);
+  const headerDict = buildHeaderDict(dict);
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
@@ -56,7 +72,7 @@ export default function Home() {
       "addressCountry": "TR",
       "addressLocality": "Tekirdağ / Çorlu"
     },
-    "description": "Berkay Yalçın'ın kişisel portfolyosu, .NET Core, mikroservis mimarileri ve yazılım geliştirme üzerine teknik blog yazıları."
+    "description": dict.meta.homeDescription
   };
 
   const profilePageJsonLd = {
@@ -67,7 +83,7 @@ export default function Home() {
       "name": "Berkay Yalçın",
       "alternateName": "berkayyalcin",
       "identifier": "berkayyalcin7",
-      "description": "Bilgisayar Mühendisi & .NET Full Stack Developer",
+      "description": dict.profile.role,
       "image": "https://berkayyalcin.dev/icon.png"
     }
   };
@@ -82,29 +98,29 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }}
       />
-      <Header />
+      <Header lang={lang} dict={headerDict} />
       <main className="flex-1">
-        <Hero />
+        <Hero lang={lang} dict={dict.hero} profile={dict.profile} />
         <Reveal>
-          <About />
+          <About dict={dict.about} />
         </Reveal>
         <Reveal>
-          <Timeline />
+          <Timeline dict={dict.timeline} />
         </Reveal>
         <Reveal>
-          <Skills />
+          <Skills dict={dict.skills} />
         </Reveal>
         <Reveal>
-          <Projects />
+          <Projects dict={dict.projects} />
         </Reveal>
         <Reveal>
-          <BlogTeaser />
+          <BlogTeaser lang={lang} dict={dict.blogTeaser} cardDict={dict.blogCard} />
         </Reveal>
         <Reveal>
-          <Contact />
+          <Contact dict={dict.contact} modalDict={dict.contactModal} />
         </Reveal>
       </main>
-      <Footer />
+      <Footer dict={dict.footer} />
     </>
   );
 }

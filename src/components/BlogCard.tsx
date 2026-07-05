@@ -2,26 +2,34 @@ import Link from "next/link";
 import Image from "next/image";
 import { HiEye, HiClock, HiArrowRight } from "react-icons/hi2";
 import { getReadingTime, type Post } from "@/lib/blog";
+import { localeHref, fill } from "@/lib/locale-link";
+
+export type BlogCardDict = {
+  readingTime: string;
+  readMore: string;
+};
 
 type BlogCardProps = {
   post: Post;
   featured?: boolean;
+  lang: string;
+  dict: BlogCardDict;
 };
 
-function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("tr-TR", {
+function formatDate(date: string, lang: string) {
+  return new Date(date).toLocaleDateString(lang === "tr" ? "tr-TR" : "en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
 }
 
-export default function BlogCard({ post, featured = false }: BlogCardProps) {
+export default function BlogCard({ post, featured = false, lang, dict }: BlogCardProps) {
   const readingTime = getReadingTime(post.content);
 
   return (
     <Link
-      href={`/blog/${post.slug}`}
+      href={localeHref(lang, `/blog/${post.slug}`)}
       className={`group relative flex flex-col overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100/50 dark:border-white/5 dark:bg-white/[0.01] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30 hover:bg-zinc-150/70 dark:hover:bg-white/[0.03] hover:shadow-lg dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-emerald-500/5 ${
         featured ? "sm:col-span-2 lg:col-span-2" : ""
       }`}
@@ -67,7 +75,7 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
               </span>
             )}
             <span className="text-[11px] font-medium text-zinc-500">
-              {formatDate(post.created_at)}
+              {formatDate(post.created_at, lang)}
             </span>
           </div>
 
@@ -104,7 +112,7 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
           <div className="flex items-center gap-2.5 shrink-0">
             <span className="inline-flex items-center gap-1">
               <HiClock className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-600" />
-              {readingTime} dk okuma
+              {fill(dict.readingTime, { minutes: readingTime })}
             </span>
             <span className="inline-flex items-center gap-1">
               <HiEye className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-600" />
@@ -112,7 +120,7 @@ export default function BlogCard({ post, featured = false }: BlogCardProps) {
             </span>
           </div>
           <span className="inline-flex items-center gap-1 font-semibold text-zinc-500 transition-colors group-hover:text-emerald-600 dark:text-zinc-400 dark:group-hover:text-emerald-400">
-            <span className="hidden sm:inline lg:hidden xl:inline">Devamını Oku</span>
+            <span className="hidden sm:inline lg:hidden xl:inline">{dict.readMore}</span>
             <HiArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </span>
         </div>
