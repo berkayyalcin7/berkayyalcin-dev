@@ -29,7 +29,16 @@
     "subtitle": "{role} — {location}. I build end-to-end products with the modern web and the .NET ecosystem, and share what I learn on this blog.",
     "ctaBlog": "Read the Blog",
     "ctaContact": "Get in Touch",
-    "emailAria": "Email"
+    "emailAria": "Email",
+    "codeBuilding": "a developer devkit npm package",
+    "codeStatus": "open to new opportunities",
+    "buildPassing": "build passing"
+  },
+  "stats": {
+    "years": "Years of Experience",
+    "packages": "Open-Source Packages",
+    "posts": "Blog Posts",
+    "technologies": "Technologies"
   },
   "about": {
     "heading": "About",

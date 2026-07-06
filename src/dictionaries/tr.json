@@ -29,7 +29,16 @@
     "subtitle": "{role} — {location}. Modern web ve .NET ekosistemiyle uçtan uca ürünler geliştiriyor, öğrendiklerimi bu blogda paylaşıyorum.",
     "ctaBlog": "Blog Yazılarını Gör",
     "ctaContact": "Benimle İletişime Geç",
-    "emailAria": "E-posta"
+    "emailAria": "E-posta",
+    "codeBuilding": "geliştirici devkit npm paketi",
+    "codeStatus": "yeni fırsatlara açık",
+    "buildPassing": "build passing"
+  },
+  "stats": {
+    "years": "Yıl Deneyim",
+    "packages": "Açık Kaynak Paket",
+    "posts": "Blog Yazısı",
+    "technologies": "Teknoloji"
   },
   "about": {
     "heading": "Hakkımda",

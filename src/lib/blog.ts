@@ -83,6 +83,21 @@ export const getPublishedPosts = cache(async (limit?: number): Promise<Post[]> =
   return data as Post[];
 });
 
+/** Stats şeridi için hafif sorgu: satırları çekmeden sadece sayıyı döner. */
+export const getPublishedPostsCount = cache(async (): Promise<number> => {
+  const { count, error } = await supabase
+    .from("posts")
+    .select("*", { count: "exact", head: true })
+    .eq("published", true);
+
+  if (error) {
+    console.error("Error fetching post count:", error);
+    return 0;
+  }
+
+  return count ?? 0;
+});
+
 export async function getPostBySlug(slug: string): Promise<Post | null> {
   const { data, error } = await supabase
     .from("posts")

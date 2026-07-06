@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import Stats from "@/components/Stats";
 import About from "@/components/About";
 import Timeline from "@/components/Timeline";
 import Skills from "@/components/Skills";
@@ -101,6 +102,9 @@ export default async function Home({ params }: PageParams) {
       <Header lang={lang} dict={headerDict} />
       <main className="flex-1">
         <Hero lang={lang} dict={dict.hero} profile={dict.profile} />
+        <Reveal>
+          <Stats dict={dict.stats} />
+        </Reveal>
         <Reveal>
           <About dict={dict.about} />
         </Reveal>

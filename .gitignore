@@ -41,6 +41,7 @@ yarn-error.log*
 BLOG PROJE YAYIN.txt
 GITHUB_OPERATIONS.md
 /local-docs/
+/docs/
 
 # claude code - makineye özel local ayarlar
 .claude/settings.local.json
