@@ -3,7 +3,8 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaGithub, FaNpm } from "react-icons/fa";
 import { HiArrowLeft, HiArrowUpRight } from "react-icons/hi2";
-import LocakitPlayground, { InstallCommand } from "@/components/tools/LocakitPlayground";
+import LocakitPlayground from "@/components/tools/LocakitPlayground";
+import { InstallCommand } from "@/components/tools/shared";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
@@ -73,7 +74,7 @@ export default async function LocakitPage({ params }: PageParams) {
           </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <InstallCommand />
+            <InstallCommand command="npm install -D locakit" />
             <Link
               href="https://www.npmjs.com/package/locakit"
               target="_blank"

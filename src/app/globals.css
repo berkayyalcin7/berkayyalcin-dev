@@ -108,3 +108,16 @@ body {
     transform: translateX(0);
   }
 }
+
+/* Contact "final scene": arka plan ışıması nabız gibi büyüyüp küçülür. */
+@keyframes contact-glow {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: translate(-50%, -33%) scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: translate(-50%, -33%) scale(1.2);
+  }
+}

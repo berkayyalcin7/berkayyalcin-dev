@@ -127,7 +127,11 @@ export default async function ToolsHubPage({ params }: PageParams) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
-  const toolTexts: Record<string, ToolText> = { trkit: dict.trkit, locakit: dict.locakit };
+  const toolTexts: Record<string, ToolText> = {
+    trkit: dict.trkit,
+    locakit: dict.locakit,
+    utilkit: dict.utilkit,
+  };
 
   return (
     <>

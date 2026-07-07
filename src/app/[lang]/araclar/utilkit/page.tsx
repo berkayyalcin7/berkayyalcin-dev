@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { FaGithub, FaNpm } from "react-icons/fa";
 import { HiArrowLeft, HiArrowUpRight } from "react-icons/hi2";
-import TrkitPlayground from "@/components/tools/TrkitPlayground";
+import UtilkitPlayground from "@/components/tools/UtilkitPlayground";
 import { InstallCommand } from "@/components/tools/shared";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -18,15 +18,19 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   if (!hasLocale(lang)) return {};
   const dict = await getDictionary(lang);
   return {
-    title: `trkit | ${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
-    description: dict.trkit.metaDescription,
+    title: `utilkit | ${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
+    description: dict.utilkit.metaDescription,
     alternates: {
-      languages: { en: "/araclar/trkit", tr: "/tr/araclar/trkit", "x-default": "/araclar/trkit" },
+      languages: {
+        en: "/araclar/utilkit",
+        tr: "/tr/araclar/utilkit",
+        "x-default": "/araclar/utilkit",
+      },
     },
   };
 }
 
-export default async function TrkitPage({ params }: PageParams) {
+export default async function UtilkitPage({ params }: PageParams) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
@@ -45,17 +49,17 @@ export default async function TrkitPage({ params }: PageParams) {
           </Link>
 
           <h1 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
-            {dict.toolsPage.heading} / trkit
+            {dict.toolsPage.heading} / utilkit
           </h1>
           <p className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
-            {dict.trkit.pageTitle}
+            {dict.utilkit.pageTitle}
           </p>
           <p className="mt-3 max-w-2xl text-base text-zinc-600 dark:text-zinc-400">
-            {dict.trkit.pageIntro}
+            {dict.utilkit.pageIntro}
           </p>
 
           <div className="mt-5 flex flex-wrap gap-1.5">
-            {dict.trkit.features.map((feature) => (
+            {dict.utilkit.features.map((feature) => (
               <span
                 key={feature}
                 className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400"
@@ -66,9 +70,9 @@ export default async function TrkitPage({ params }: PageParams) {
           </div>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
-            <InstallCommand command="npm install trkit" />
+            <InstallCommand command="npm install @berkayyalcin/utilkit" />
             <Link
-              href="https://www.npmjs.com/package/trkit"
+              href="https://www.npmjs.com/package/@berkayyalcin/utilkit"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 px-4 py-2.5 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-600 dark:border-white/10 dark:text-zinc-300 dark:hover:border-emerald-400/40 dark:hover:text-emerald-400"
@@ -78,7 +82,7 @@ export default async function TrkitPage({ params }: PageParams) {
               <HiArrowUpRight className="h-3.5 w-3.5" />
             </Link>
             <Link
-              href="https://github.com/berkayyalcin7/trkit"
+              href="https://github.com/berkayyalcin7/utilkit"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 px-4 py-2.5 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-600 dark:border-white/10 dark:text-zinc-300 dark:hover:border-emerald-400/40 dark:hover:text-emerald-400"
@@ -89,19 +93,9 @@ export default async function TrkitPage({ params }: PageParams) {
             </Link>
           </div>
 
-          {lang !== "tr" && (
-            <p className="mt-6 text-sm italic text-zinc-500 dark:text-zinc-500">
-              {dict.toolsPage.demoInTurkishNote}
-            </p>
-          )}
-
           <div className="mt-12">
-            <TrkitPlayground />
+            <UtilkitPlayground dict={dict.utilkitPlayground} />
           </div>
-
-          <p className="mt-10 max-w-2xl text-xs leading-relaxed text-zinc-500 dark:text-zinc-500">
-            {dict.trkit.disclaimer}
-          </p>
         </div>
       </main>
       <Footer dict={dict.footer} />

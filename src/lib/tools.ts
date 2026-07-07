@@ -3,7 +3,7 @@
 
 export type ToolRegistry = "npm" | "nuget";
 
-export type ToolSlug = "trkit" | "locakit";
+export type ToolSlug = "trkit" | "locakit" | "utilkit";
 
 export type ToolPackage = {
   slug: ToolSlug;
@@ -30,6 +30,14 @@ export const tools: ToolPackage[] = [
     installCommand: "npm install -D locakit",
     packageUrl: "https://www.npmjs.com/package/locakit",
     githubUrl: "https://github.com/berkayyalcin7/locakit",
+  },
+  {
+    slug: "utilkit",
+    name: "utilkit",
+    registry: "npm",
+    installCommand: "npm install @berkayyalcin/utilkit",
+    packageUrl: "https://www.npmjs.com/package/@berkayyalcin/utilkit",
+    githubUrl: "https://github.com/berkayyalcin7/utilkit",
   },
 ];
 

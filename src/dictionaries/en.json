@@ -149,6 +149,18 @@
       "chat": "A high-performance Go backend engine supporting real-time messaging and rooms over the WebSocket protocol."
     }
   },
+  "featuredPackages": {
+    "heading": "Open Source",
+    "title": "Packages I've published on npm",
+    "body": "Zero-dependency, TypeScript-first developer tools with high test coverage. Try each one live in your browser before installing.",
+    "installLabel": "install",
+    "outputAdded": "added 1 package · 0 dependencies",
+    "zeroDeps": "0 dependencies",
+    "tryLive": "Try It Live",
+    "npmAria": "{name} on npm",
+    "githubAria": "{name} on GitHub",
+    "viewAll": "View All Tools"
+  },
   "blogTeaser": {
     "heading": "Blog",
     "allPosts": "All Posts",
@@ -259,10 +271,53 @@
     "liveIntroBefore": "The example below is intentionally broken: it contains a missing key, a placeholder mismatch, an orphan key and two classic mistakes caught by the Turkish language pack. Press the",
     "liveIntroAfter": "button."
   },
+  "utilkit": {
+    "tagline": "A zero-dependency devkit for everyday needs",
+    "description": "Unicode-safe Base64 encoding, correct string length (visual character + UTF-8 byte), and safe JSON parsing. Pure functions — works everywhere, whether React, Vue, Angular or Node.",
+    "features": [
+      "Zero dependencies",
+      "100% test coverage",
+      "Tree-shakeable",
+      "TypeScript-first",
+      "Null-safe",
+      "MIT licensed"
+    ],
+    "pageTitle": "utilkit — Everyday Developer Utilities",
+    "pageIntro": "My open-source npm package: Unicode-safe Base64 encoding, correct string length (visual character + UTF-8 byte), and safe JSON parsing. Pure functions — works everywhere, whether React, Vue, Angular or Node. The demos below run the package right in your browser.",
+    "metaDescription": "utilkit — try Unicode-safe Base64 encoding, correct string length and safe JSON parsing functions live in your browser. A zero-dependency, open-source npm package."
+  },
+  "utilkitPlayground": {
+    "base64": {
+      "title": "Base64 Encode / Decode",
+      "encodeLabel": "Text to encode",
+      "decodeLabel": "Base64 to decode",
+      "encodeResult": "Encoded",
+      "decodeResult": "Decoded",
+      "invalidBase64": "Invalid Base64 — returned null"
+    },
+    "length": {
+      "title": "Character & Byte Length",
+      "placeholder": "Enter text with emoji",
+      "charLength": "Visual character (stringLength)",
+      "byteLength": "UTF-8 bytes (byteLength)",
+      "nativeLength": "Native .length (for comparison)"
+    },
+    "json": {
+      "title": "Safe JSON Parse",
+      "placeholder": "Enter JSON text",
+      "validResult": "Parsed",
+      "invalidResult": "Invalid JSON — returned null"
+    }
+  },
   "contact": {
     "heading": "Contact",
-    "title": "Want to build something together?",
-    "cta": "Reach Out"
+    "title": "Let's build something together.",
+    "subtitle": "For a project idea, a collaboration, or just to say hi — the inbox is always open.",
+    "cta": "Reach Out",
+    "emailLabel": "Email",
+    "githubLabel": "GitHub",
+    "linkedinLabel": "LinkedIn",
+    "availability": "Open to new opportunities and collaborations"
   },
   "contactModal": {
     "title": "Get in Touch",

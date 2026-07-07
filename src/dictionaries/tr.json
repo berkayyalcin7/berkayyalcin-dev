@@ -149,6 +149,18 @@
       "chat": "WebSocket protokolü üzerinden anlık mesajlaşma ve oda sistemini destekleyen yüksek performanslı Go backend motoru."
     }
   },
+  "featuredPackages": {
+    "heading": "Açık Kaynak",
+    "title": "npm'de yayınladığım paketler",
+    "body": "Sıfır bağımlılıklı, TypeScript-first ve test kapsamı yüksek geliştirici araçları. Kurmadan önce tarayıcında canlı deneyebilirsin.",
+    "installLabel": "kurulum",
+    "outputAdded": "added 1 package · 0 dependencies",
+    "zeroDeps": "0 bağımlılık",
+    "tryLive": "Canlı Dene",
+    "npmAria": "{name} npm paket sayfası",
+    "githubAria": "{name} GitHub deposu",
+    "viewAll": "Tüm Araçları Gör"
+  },
   "blogTeaser": {
     "heading": "Blog",
     "allPosts": "Tüm Yazılar",
@@ -259,10 +271,53 @@
     "liveIntroBefore": "Aşağıdaki örnek bilerek hatalı: eksik key, yer tutucu uyumsuzluğu, artık key ve Türkçe dil paketinin yakaladığı iki klasik hata içeriyor.",
     "liveIntroAfter": "butonuna basın."
   },
+  "utilkit": {
+    "tagline": "Günlük ihtiyaçlar için sıfır bağımlılıklı devkit",
+    "description": "Unicode-güvenli Base64 kodlama, doğru string uzunluğu (görsel karakter + UTF-8 byte) ve güvenli JSON ayrıştırma. Saf fonksiyonlardan oluşur — React, Vue, Angular, Node fark etmeksizin her yerde çalışır.",
+    "features": [
+      "Sıfır bağımlılık",
+      "%100 test kapsamı",
+      "Tree-shakeable",
+      "TypeScript-first",
+      "Null-safe",
+      "MIT lisansı"
+    ],
+    "pageTitle": "utilkit — Günlük Geliştirici Araçları",
+    "pageIntro": "Geliştirdiğim açık kaynak npm paketi: Unicode-güvenli Base64 kodlama, doğru string uzunluğu (görsel karakter + UTF-8 byte) ve güvenli JSON ayrıştırma. Saf fonksiyonlardan oluşur — React, Vue, Angular, Node fark etmeksizin her yerde çalışır. Aşağıdaki demolar paketi doğrudan tarayıcınızda çalıştırır.",
+    "metaDescription": "utilkit — Unicode-güvenli Base64 kodlama, doğru string uzunluğu ve güvenli JSON ayrıştırma fonksiyonlarını tarayıcınızda canlı deneyin. Sıfır bağımlılıklı, açık kaynak npm paketi."
+  },
+  "utilkitPlayground": {
+    "base64": {
+      "title": "Base64 Encode / Decode",
+      "encodeLabel": "Kodlanacak metin",
+      "decodeLabel": "Çözülecek Base64",
+      "encodeResult": "Kodlanmış",
+      "decodeResult": "Çözülmüş",
+      "invalidBase64": "Geçersiz Base64 — null döndü"
+    },
+    "length": {
+      "title": "Karakter & Byte Uzunluğu",
+      "placeholder": "Emoji içeren bir metin girin",
+      "charLength": "Görsel karakter (stringLength)",
+      "byteLength": "UTF-8 byte (byteLength)",
+      "nativeLength": "Native .length (karşılaştırma)"
+    },
+    "json": {
+      "title": "Safe JSON Parse",
+      "placeholder": "JSON metni girin",
+      "validResult": "Ayrıştırıldı",
+      "invalidResult": "Geçersiz JSON — null döndü"
+    }
+  },
   "contact": {
     "heading": "İletişim",
-    "title": "Birlikte bir şeyler geliştirmek ister misin?",
-    "cta": "Bana Ulaş"
+    "title": "Birlikte bir şeyler inşa edelim.",
+    "subtitle": "Bir proje fikri, iş birliği ya da sadece merhaba demek için — kutu her zaman açık.",
+    "cta": "Bana Ulaş",
+    "emailLabel": "E-posta",
+    "githubLabel": "GitHub",
+    "linkedinLabel": "LinkedIn",
+    "availability": "Yeni fırsatlara ve iş birliklerine açık"
   },
   "contactModal": {
     "title": "İletişime Geç",

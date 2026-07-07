@@ -6,6 +6,7 @@ import Stats from "@/components/Stats";
 import About from "@/components/About";
 import Timeline from "@/components/Timeline";
 import Skills from "@/components/Skills";
+import FeaturedPackages from "@/components/FeaturedPackages";
 import Projects from "@/components/Projects";
 import BlogTeaser from "@/components/BlogTeaser";
 import Contact from "@/components/Contact";
@@ -113,6 +114,13 @@ export default async function Home({ params }: PageParams) {
         </Reveal>
         <Reveal>
           <Skills dict={dict.skills} />
+        </Reveal>
+        <Reveal>
+          <FeaturedPackages
+            lang={lang}
+            dict={dict.featuredPackages}
+            packageTexts={{ trkit: dict.trkit, locakit: dict.locakit, utilkit: dict.utilkit }}
+          />
         </Reveal>
         <Reveal>
           <Projects lang={lang} dict={dict.projects} />

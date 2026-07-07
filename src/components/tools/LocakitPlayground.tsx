@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {
-  HiCheckCircle,
-  HiClipboard,
-  HiClipboardDocumentCheck,
-  HiExclamationTriangle,
-  HiXCircle,
-} from "react-icons/hi2";
+import { HiCheckCircle, HiExclamationTriangle, HiXCircle } from "react-icons/hi2";
 
 // locakit'in çekirdek doğrulama mantığının tarayıcıya taşınmış hali.
 // Paket CLI'ı node:fs kullandığı için demo bu saf kopyayla çalışır;
@@ -177,37 +171,6 @@ function IssueRow({ issue }: { issue: Issue }) {
         </p>
       </div>
     </div>
-  );
-}
-
-export function InstallCommand() {
-  const [copied, setCopied] = useState(false);
-
-  async function copy() {
-    try {
-      await navigator.clipboard.writeText("npm install -D locakit");
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      // Pano erişimi yoksa sessizce geç
-    }
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={copy}
-      className="group inline-flex items-center gap-3 rounded-xl border border-zinc-200 bg-zinc-100/60 px-4 py-2.5 font-mono text-sm text-zinc-800 transition hover:border-emerald-500/40 dark:border-white/10 dark:bg-white/[0.03] dark:text-zinc-200"
-      aria-label="npm install -D locakit komutunu kopyala"
-    >
-      <span className="select-none text-emerald-500">$</span>
-      npm install -D locakit
-      {copied ? (
-        <HiClipboardDocumentCheck className="h-4 w-4 text-emerald-500" />
-      ) : (
-        <HiClipboard className="h-4 w-4 text-zinc-400 transition group-hover:text-emerald-500" />
-      )}
-    </button>
   );
 }
 
