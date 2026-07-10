@@ -258,7 +258,7 @@ export default function LocakitPlayground() {
       {issues !== null && !parseError && (
         <div className="rounded-2xl border border-zinc-200 bg-zinc-100/50 p-5 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.01]">
           {issues.length === 0 ? (
-            <p className="inline-flex items-center gap-2 text-sm text-emerald-600 dark:text-emerald-400">
+            <p className="inline-flex items-center gap-2 text-sm text-emerald-700 dark:text-emerald-400">
               <HiCheckCircle className="h-5 w-5" />
               Tüm çeviriler tam ve tutarlı — CI yeşil.
             </p>

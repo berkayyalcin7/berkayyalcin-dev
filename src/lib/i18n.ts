@@ -22,6 +22,7 @@ export const getDictionary = (locale: Locale) => dictionaries[locale]();
 export function buildHeaderDict(dict: Dictionary) {
   return {
     nav: dict.nav,
+    mainNav: dict.header.mainNav,
     contactCta: dict.header.contactCta,
     openMenu: dict.header.openMenu,
     closeMenu: dict.header.closeMenu,

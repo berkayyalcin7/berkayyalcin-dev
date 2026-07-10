@@ -1,12 +1,13 @@
 import type { MetadataRoute } from "next";
-import { getPublishedPosts } from "@/lib/blog";
+import { getPostSummaries } from "@/lib/blog";
 import { siteConfig } from "@/lib/site-config";
+import { tools } from "@/lib/tools";
 
 export const revalidate = 1800; // Blog sayfalarıyla aynı ISR aralığı
 
 // EN prefix'siz kanonik URL'ler + /tr altındaki Türkçe karşılıkları
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const posts = await getPublishedPosts();
+  const posts = await getPostSummaries();
 
   const postEntries: MetadataRoute.Sitemap = posts.flatMap((post) => [
     {
@@ -23,12 +24,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ]);
 
+  // Araç sayfaları tek kaynaktan türetilir; yeni bir paket eklendiğinde
+  // sitemap'e elle eklemek gerekmez (utilkit bu yüzden eksik kalmıştı).
   const staticPages: { path: string; changeFrequency: "weekly" | "daily" | "monthly"; priority: number }[] = [
     { path: "", changeFrequency: "weekly", priority: 1 },
     { path: "/blog", changeFrequency: "daily", priority: 0.9 },
     { path: "/araclar", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/araclar/trkit", changeFrequency: "monthly", priority: 0.8 },
-    { path: "/araclar/locakit", changeFrequency: "monthly", priority: 0.8 },
+    ...tools.map((tool) => ({
+      path: `/araclar/${tool.slug}`,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    })),
   ];
 
   const staticEntries: MetadataRoute.Sitemap = staticPages.flatMap((page) => [

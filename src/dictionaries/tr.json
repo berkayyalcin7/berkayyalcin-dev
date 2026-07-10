@@ -17,7 +17,8 @@
     "openMenu": "Menüyü aç",
     "closeMenu": "Menüyü kapat",
     "themeToggle": "Temayı değiştir",
-    "switchLocale": "Dil seç"
+    "switchLocale": "Dil seç",
+    "mainNav": "Ana menü"
   },
   "profile": {
     "role": "Bilgisayar Mühendisi & .NET Full Stack Developer",
@@ -134,20 +135,19 @@
       "backend": "Backend & .NET Ekosistemi",
       "database": "Veritabanı",
       "devops": "DevOps & Kurumsal Araçlar"
-    }
+    },
+    "pauseMarquee": "Kaydırmayı duraklat",
+    "playMarquee": "Kaydırmayı sürdür"
   },
   "projects": {
     "heading": "Projeler",
     "subtitle": "Geliştirdiğim Yazılımlar & Çalışmalar",
     "descriptionHasProjects": "Açık kaynaklı projelerim, kişisel araçlarım ve geliştirdiğim kurumsal uygulamalar.",
-    "descriptionFallback": "Buradaki projeler zamanla güncellenecek olup paylaşılanlar örnek olarak yer almaktadır.",
     "githubAria": "{title} GitHub Adresi",
     "liveAria": "{title} Canlı Demo",
-    "fallback": {
-      "microservices": "CQRS ve Event-Driven Design mimarileri kullanılarak .NET 8 ile geliştirilmiş ölçeklenebilir e-ticaret mikroservis yapısı.",
-      "portfolio": "Ziyaretçi sayaçları, dinamik içerik yönetimi ve modern karanlık tema estetiğine sahip Next.js portfolyo projesi.",
-      "chat": "WebSocket protokolü üzerinden anlık mesajlaşma ve oda sistemini destekleyen yüksek performanslı Go backend motoru."
-    }
+    "emptyTitle": "Projeler çok yakında burada olacak.",
+    "emptyBody": "Projeler veritabanına eklendikçe bu alanda otomatik listelenecek. Bu arada GitHub profilime göz atabilirsiniz.",
+    "emptyCta": "GitHub'da Gör"
   },
   "featuredPackages": {
     "heading": "Açık Kaynak",
@@ -197,7 +197,8 @@
     "relatedPosts": "İlgili Yazılar",
     "notFoundTitle": "Yazı Bulunamadı",
     "readingTime": "{minutes} dk okuma",
-    "fallbackNotice": "Bu yazının İngilizce çevirisi henüz yayınlanmadı — Türkçe orijinalini okuyorsunuz."
+    "fallbackNotice": "Bu yazının İngilizce çevirisi henüz yayınlanmadı — Türkçe orijinalini okuyorsunuz.",
+    "views": "okunma"
   },
   "toolsPage": {
     "metaTitle": "Araçlar",
@@ -339,5 +340,6 @@
     "title": "Sayfa bulunamadı",
     "body": "Aradığınız sayfa taşınmış veya hiç var olmamış olabilir.",
     "backHome": "Ana Sayfaya Dön"
-  }
+  },
+  "skipToContent": "İçeriğe atla"
 }

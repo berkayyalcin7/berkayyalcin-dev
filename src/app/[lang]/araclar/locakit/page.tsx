@@ -44,13 +44,13 @@ export default async function LocakitPage({ params }: PageParams) {
         <div className="mx-auto max-w-5xl">
           <Link
             href={localeHref(lang, "/araclar")}
-            className="mb-8 inline-flex items-center gap-2 text-sm text-zinc-500 transition hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400"
+            className="mb-8 inline-flex items-center gap-2 text-sm text-zinc-500 transition hover:text-emerald-700 dark:text-zinc-400 dark:hover:text-emerald-400"
           >
             <HiArrowLeft className="h-4 w-4" />
             {dict.toolsPage.backToTools}
           </Link>
 
-          <h1 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+          <h1 className="text-sm font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
             {dict.toolsPage.heading} / locakit
           </h1>
           <p className="mt-4 max-w-2xl text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
@@ -66,7 +66,7 @@ export default async function LocakitPage({ params }: PageParams) {
             {dict.locakit.features.map((feature) => (
               <span
                 key={feature}
-                className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400"
+                className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-700 dark:text-emerald-400"
               >
                 {feature}
               </span>
@@ -79,7 +79,7 @@ export default async function LocakitPage({ params }: PageParams) {
               href="https://www.npmjs.com/package/locakit"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 px-4 py-2.5 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-600 dark:border-white/10 dark:text-zinc-300 dark:hover:border-emerald-400/40 dark:hover:text-emerald-400"
+              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 px-4 py-2.5 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-700 dark:border-white/10 dark:text-zinc-300 dark:hover:border-emerald-400/40 dark:hover:text-emerald-400"
             >
               <FaNpm className="h-5 w-5 text-[#cb3837]" />
               npm
@@ -89,7 +89,7 @@ export default async function LocakitPage({ params }: PageParams) {
               href="https://github.com/berkayyalcin7/locakit"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 px-4 py-2.5 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-600 dark:border-white/10 dark:text-zinc-300 dark:hover:border-emerald-400/40 dark:hover:text-emerald-400"
+              className="inline-flex items-center gap-2 rounded-xl border border-zinc-200 px-4 py-2.5 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-700 dark:border-white/10 dark:text-zinc-300 dark:hover:border-emerald-400/40 dark:hover:text-emerald-400"
             >
               <FaGithub className="h-4 w-4" />
               GitHub
@@ -105,7 +105,7 @@ export default async function LocakitPage({ params }: PageParams) {
                 className="rounded-2xl border border-zinc-200 bg-zinc-100/50 p-5 backdrop-blur-sm dark:border-white/5 dark:bg-white/[0.01]"
               >
                 <div className="flex items-center justify-between gap-2">
-                  <code className="font-mono text-[13px] font-semibold text-emerald-600 dark:text-emerald-400">
+                  <code className="font-mono text-[13px] font-semibold text-emerald-700 dark:text-emerald-400">
                     {index + 1}. {item.step}
                   </code>
                   <span className="rounded-full bg-zinc-200/60 px-2 py-0.5 text-[10px] font-medium text-zinc-600 dark:bg-white/5 dark:text-zinc-400">
@@ -125,7 +125,7 @@ export default async function LocakitPage({ params }: PageParams) {
             </h2>
             <p className="mt-2 max-w-2xl text-sm text-zinc-600 dark:text-zinc-400">
               {dict.locakit.liveIntroBefore}{" "}
-              <code className="font-mono text-emerald-600 dark:text-emerald-400">
+              <code className="font-mono text-emerald-700 dark:text-emerald-400">
                 locakit check
               </code>{" "}
               {dict.locakit.liveIntroAfter}

@@ -1,4 +1,5 @@
 import { getProjects, localizeProjects, type Project } from "@/lib/projects";
+import { siteConfig } from "@/lib/site-config";
 import Link from "next/link";
 import { FaGithub } from "react-icons/fa";
 import { HiArrowUpRight, HiCodeBracket } from "react-icons/hi2";
@@ -7,40 +8,10 @@ import { fill } from "@/lib/locale-link";
 
 type ProjectsDict = Dictionary["projects"];
 
-// Supabase'de proje yokken gösterilen örnek içerik; açıklamalar sözlükten gelir
-function fallbackProjects(dict: ProjectsDict): Pick<
+type ProjectItem = Pick<
   Project,
   "id" | "title" | "description" | "github_url" | "live_url" | "technologies"
->[] {
-  return [
-    {
-      id: "mock-1",
-      title: "E-Commerce Microservices",
-      description: dict.fallback.microservices,
-      github_url: "https://github.com/berkayyalcin7",
-      live_url: null,
-      technologies: [".NET 8", "RabbitMQ", "Docker", "PostgreSQL", "Redis"],
-    },
-    {
-      id: "mock-2",
-      title: "Personal Portfolio & Blog",
-      description: dict.fallback.portfolio,
-      github_url: "https://github.com/berkayyalcin7",
-      live_url: "https://berkayyalcin.dev",
-      technologies: ["Next.js", "Tailwind CSS", "Supabase", "TypeScript"],
-    },
-    {
-      id: "mock-3",
-      title: "Real-time Chat Engine",
-      description: dict.fallback.chat,
-      github_url: "https://github.com/berkayyalcin7",
-      live_url: null,
-      technologies: ["Go", "WebSockets", "Redis", "Docker"],
-    },
-  ];
-}
-
-type ProjectItem = ReturnType<typeof fallbackProjects>[number];
+>;
 
 type ProjectCardProps = {
   project: ProjectItem;
@@ -67,7 +38,7 @@ function ProjectLinks({ project, dict }: { project: ProjectItem; dict: ProjectsD
           href={project.live_url}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
+          className="text-zinc-500 hover:text-emerald-700 dark:text-zinc-400 dark:hover:text-emerald-400 transition-colors"
           aria-label={fill(dict.liveAria, { title: project.title })}
         >
           <HiArrowUpRight className="h-5 w-5" />
@@ -87,10 +58,10 @@ function FeaturedProjectCard({ project, index, dict }: ProjectCardProps) {
         <div className="flex flex-col justify-between p-6 sm:p-8">
           <div>
             <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 transition-colors duration-300 group-hover:border-emerald-400/40">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 transition-colors duration-300 group-hover:border-emerald-400/40">
                 <HiCodeBracket className="h-5 w-5" />
               </span>
-              <h3 className="text-2xl font-semibold leading-snug text-zinc-900 transition group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400">
+              <h3 className="text-2xl font-semibold leading-snug text-zinc-900 transition group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
                 {project.title}
               </h3>
             </div>
@@ -105,7 +76,7 @@ function FeaturedProjectCard({ project, index, dict }: ProjectCardProps) {
               {project.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-3 py-0.5 text-[11px] font-medium text-emerald-600 dark:text-emerald-400"
+                  className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-3 py-0.5 text-[11px] font-medium text-emerald-700 dark:text-emerald-400"
                 >
                   {tech}
                 </span>
@@ -149,10 +120,10 @@ function ProjectCard({ project, index, dict }: ProjectCardProps) {
       <div>
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 transition-colors duration-300 group-hover:border-emerald-400/40">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 transition-colors duration-300 group-hover:border-emerald-400/40">
               <HiCodeBracket className="h-5 w-5" />
             </span>
-            <h3 className="text-lg font-semibold leading-snug text-zinc-900 transition group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400">
+            <h3 className="text-lg font-semibold leading-snug text-zinc-900 transition group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
               {project.title}
             </h3>
           </div>
@@ -168,7 +139,7 @@ function ProjectCard({ project, index, dict }: ProjectCardProps) {
         {project.technologies.map((tech) => (
           <span
             key={tech}
-            className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-medium text-emerald-600 dark:text-emerald-400 border border-emerald-500/10"
+            className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-medium text-emerald-700 dark:text-emerald-400 border border-emerald-500/10"
           >
             {tech}
           </span>
@@ -181,12 +152,11 @@ function ProjectCard({ project, index, dict }: ProjectCardProps) {
 export default async function Projects({ lang, dict }: { lang: string; dict: ProjectsDict }) {
   const projects = localizeProjects(await getProjects(), lang);
   const hasProjects = projects.length > 0;
-  const visibleProjects = hasProjects ? projects : fallbackProjects(dict);
 
   return (
     <section id="projeler" className="scroll-mt-24 border-t border-zinc-200 dark:border-white/10 px-6 py-20">
       <div className="mx-auto max-w-5xl">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
           {dict.heading}
         </h2>
 
@@ -194,18 +164,36 @@ export default async function Projects({ lang, dict }: { lang: string; dict: Pro
           {dict.subtitle}
         </p>
         <p className="mt-3 max-w-xl text-base text-zinc-600 dark:text-zinc-400">
-          {hasProjects ? dict.descriptionHasProjects : dict.descriptionFallback}
+          {dict.descriptionHasProjects}
         </p>
 
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {visibleProjects.map((project, index) =>
-            index === 0 ? (
-              <FeaturedProjectCard key={project.id} project={project} index={index} dict={dict} />
-            ) : (
-              <ProjectCard key={project.id} project={project} index={index} dict={dict} />
-            )
-          )}
-        </div>
+        {/* Supabase boş dönerse (veya sorgu hata verirse) uydurma proje göstermek yerine
+            boş durum gösterilir — CV sitesinde yapılmamış iş sergilemek güven riskidir. */}
+        {hasProjects ? (
+          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {projects.map((project, index) =>
+              index === 0 ? (
+                <FeaturedProjectCard key={project.id} project={project} index={index} dict={dict} />
+              ) : (
+                <ProjectCard key={project.id} project={project} index={index} dict={dict} />
+              )
+            )}
+          </div>
+        ) : (
+          <div className="mt-8 rounded-2xl border border-dashed border-zinc-200 bg-zinc-100/40 p-12 text-center dark:border-white/10 dark:bg-white/[0.02]">
+            <p className="text-lg font-medium text-zinc-900 dark:text-white">{dict.emptyTitle}</p>
+            <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">{dict.emptyBody}</p>
+            <a
+              href={siteConfig.social.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-zinc-200 px-5 py-2.5 text-sm font-semibold text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-700 dark:border-white/15 dark:text-white dark:hover:border-emerald-400/60 dark:hover:text-emerald-400"
+            >
+              <FaGithub className="h-4 w-4" />
+              {dict.emptyCta}
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );

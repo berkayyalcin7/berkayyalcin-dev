@@ -34,7 +34,7 @@ export function DemoCard({
     <div className="flex flex-col rounded-2xl border border-zinc-200 bg-zinc-100/50 p-5 backdrop-blur-sm transition-colors dark:border-white/5 dark:bg-white/[0.01]">
       <div className="mb-4 flex items-center justify-between gap-2">
         <h3 className="text-sm font-semibold text-zinc-900 dark:text-white">{title}</h3>
-        <code className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] text-emerald-600 dark:text-emerald-400">
+        <code className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 font-mono text-[10px] text-emerald-700 dark:text-emerald-400">
           {fn}
         </code>
       </div>
@@ -64,12 +64,12 @@ export function InstallCommand({ command }: { command: string }) {
       className="group inline-flex items-center gap-3 rounded-xl border border-zinc-200 bg-zinc-100/60 px-4 py-2.5 font-mono text-sm text-zinc-800 transition hover:border-emerald-500/40 dark:border-white/10 dark:bg-white/[0.03] dark:text-zinc-200"
       aria-label={`${command} komutunu kopyala`}
     >
-      <span className="select-none text-emerald-500">$</span>
+      <span className="select-none text-emerald-700 dark:text-emerald-400">$</span>
       {command}
       {copied ? (
-        <HiClipboardDocumentCheck className="h-4 w-4 text-emerald-500" />
+        <HiClipboardDocumentCheck className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
       ) : (
-        <HiClipboard className="h-4 w-4 text-zinc-400 transition group-hover:text-emerald-500" />
+        <HiClipboard className="h-4 w-4 text-zinc-400 transition group-hover:text-emerald-600 dark:group-hover:text-emerald-400" />
       )}
     </button>
   );

@@ -4,10 +4,8 @@ import dynamic from "next/dynamic";
 
 // Sadece dekoratif olduğu için ilk yüklemeyi bloklamaması adına
 // ana içerik render olduktan sonra, istemci tarafında yükleniyor.
-const AnimatedBackground = dynamic(() => import("./AnimatedBackground"), {
-  ssr: false,
-});
+const NetworkCanvas = dynamic(() => import("./NetworkCanvas"), { ssr: false });
 
-export default function BackgroundLoader() {
-  return <AnimatedBackground />;
+export default function NetworkCanvasLoader() {
+  return <NetworkCanvas />;
 }

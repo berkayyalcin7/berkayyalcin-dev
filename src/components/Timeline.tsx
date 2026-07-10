@@ -12,7 +12,7 @@ export default function Timeline({ dict }: { dict: Dictionary["timeline"] }) {
     <section id="deneyim" className="scroll-mt-24 border-t border-zinc-200 dark:border-white/10 px-6 py-20 overflow-hidden">
       <div className="mx-auto max-w-5xl">
         <div>
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
             {dict.heading}
           </h2>
           <p className="mt-4 text-2xl font-medium text-zinc-900 dark:text-white">
@@ -33,10 +33,10 @@ export default function Timeline({ dict }: { dict: Dictionary["timeline"] }) {
                 {/* Nokta Göstergesi */}
                 <div className="flex items-center mb-6 pl-4">
                   <div className="relative flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 transition-all duration-300 group-hover:border-emerald-500/40 group-hover:shadow-[0_0_12px_rgba(16,185,129,0.15)] dark:group-hover:shadow-[0_0_12px_rgba(16,185,129,0.25)]">
-                    <span className="absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-0 group-hover:animate-ping group-hover:opacity-20"></span>
+                    <span className="absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-0 motion-safe:group-hover:animate-ping group-hover:opacity-20"></span>
                     <span className="h-2 w-2 rounded-full bg-zinc-400 dark:bg-zinc-600 transition-colors duration-300 group-hover:bg-emerald-500 shadow-sm" />
                   </div>
-                  <div className="ml-3 text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider bg-zinc-100/80 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 px-2 py-0.5 rounded-full transition group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:border-emerald-500/20">
+                  <div className="ml-3 text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider bg-zinc-100/80 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 px-2 py-0.5 rounded-full transition group-hover:text-emerald-700 dark:group-hover:text-emerald-400 group-hover:border-emerald-500/20">
                     {exp.period}
                   </div>
                 </div>
@@ -46,10 +46,10 @@ export default function Timeline({ dict }: { dict: Dictionary["timeline"] }) {
                   <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   
                   <div>
-                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-white transition group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
+                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-white transition group-hover:text-emerald-700 dark:group-hover:text-emerald-400">
                       {exp.company}
                     </h3>
-                    <p className="text-xs text-emerald-600 dark:text-emerald-400/80 font-medium mt-1">
+                    <p className="text-xs text-emerald-700 dark:text-emerald-400/80 font-medium mt-1">
                       {exp.role}
                     </p>
                     
@@ -74,12 +74,12 @@ export default function Timeline({ dict }: { dict: Dictionary["timeline"] }) {
               
               {/* Zaman Çizgisi Noktası */}
               <div className="-ml-[35px] absolute top-1 flex h-[20px] w-[20px] items-center justify-center rounded-full border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 transition-all duration-300 group-hover:border-emerald-500/40 group-hover:shadow-[0_0_12px_rgba(16,185,129,0.15)]">
-                <span className="absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-0 group-hover:animate-ping group-hover:opacity-20"></span>
+                <span className="absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-0 motion-safe:group-hover:animate-ping group-hover:opacity-20"></span>
                 <span className="h-1.5 w-1.5 rounded-full bg-zinc-400 dark:bg-zinc-600 transition-colors duration-300 group-hover:bg-emerald-500 shadow-sm" />
               </div>
 
               {/* Dönem Bilgisi */}
-              <div className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider bg-zinc-100/80 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 px-2.5 py-0.5 rounded-full inline-block transition group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:border-emerald-500/20">
+              <div className="text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider bg-zinc-100/80 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 px-2.5 py-0.5 rounded-full inline-block transition group-hover:text-emerald-700 dark:group-hover:text-emerald-400 group-hover:border-emerald-500/20">
                 {exp.period}
               </div>
 
@@ -87,10 +87,10 @@ export default function Timeline({ dict }: { dict: Dictionary["timeline"] }) {
               <div className="mt-3 relative rounded-2xl border border-zinc-200 bg-zinc-100/50 dark:border-white/5 dark:bg-white/[0.01] p-5 backdrop-blur-sm transition-all duration-300 group-hover:border-emerald-500/30 group-hover:bg-zinc-150/60 dark:group-hover:bg-white/[0.02]">
                 <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                 
-                <h3 className="text-sm font-semibold text-zinc-900 dark:text-white transition group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
+                <h3 className="text-sm font-semibold text-zinc-900 dark:text-white transition group-hover:text-emerald-700 dark:group-hover:text-emerald-400">
                   {exp.company}
                 </h3>
-                <p className="text-xs text-emerald-600 dark:text-emerald-400/80 font-medium mt-1">
+                <p className="text-xs text-emerald-700 dark:text-emerald-400/80 font-medium mt-1">
                   {exp.role}
                 </p>
                 

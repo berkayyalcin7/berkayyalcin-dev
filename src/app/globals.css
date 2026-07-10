@@ -4,10 +4,32 @@
 
 @theme inline {
   --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Tailwind'in zinc paleti 100'lük adımlarla ilerler. Kartların yüzey/hover
+   ayrımı için gereken ara tonlar burada tanımlanır; komşu adımlar arasında
+   lineer interpolasyonla türetilmiştir. */
+@theme {
+  --color-zinc-150: oklch(94.4% 0.003 286.35);
+  --color-zinc-250: oklch(89.6% 0.005 286.3);
+  --color-zinc-650: oklch(40.6% 0.015 285.8);
+  --color-zinc-750: oklch(32.2% 0.01 285.9);
+  --color-zinc-850: oklch(24.2% 0.006 285.96);
 }
 
 html {
   scroll-behavior: smooth;
+}
+
+/* Tarayıcının kendi kontrollerini (form alanları, kaydırma çubuğu) aktif temaya
+   uydurur; aksi halde koyu temada açık renk UA widget'ları görünür. */
+html.light {
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
@@ -15,8 +37,38 @@ body {
 }
 
 ::selection {
+  background: rgba(16, 185, 129, 0.25);
+  color: #09090b;
+}
+
+html.dark ::selection {
   background: rgba(16, 185, 129, 0.35);
-  color: white;
+  color: #ffffff;
+}
+
+/* Klavye odağı için görünür halka. Açık temada emerald-700 (5.3:1), koyu temada
+   emerald-400 — ikisi de WCAG 2.4.11 için gereken 3:1 kontrastı sağlar. */
+:focus-visible {
+  outline: 2px solid #047857;
+  outline-offset: 2px;
+}
+
+html.dark :focus-visible {
+  outline-color: #34d399;
+}
+
+/* İçeriğe atla: yalnızca klavye odağı aldığında görünür. */
+.skip-link {
+  position: absolute;
+  left: 50%;
+  top: 0.75rem;
+  z-index: 100;
+  transform: translate(-50%, -200%);
+  transition: transform 0.2s ease-out;
+}
+
+.skip-link:focus-visible {
+  transform: translate(-50%, 0);
 }
 
 @keyframes aurora-drift-1 {
@@ -107,6 +159,12 @@ body {
   to {
     transform: translateX(0);
   }
+}
+
+/* Duraklatma butonu sarmalayıcıya .marquee-paused ekler; şeritler sunucu
+   bileşeni olarak kalabilsin diye animasyon durumu CSS'ten yönetilir. */
+.marquee-paused .marquee-track {
+  animation-play-state: paused;
 }
 
 /* Contact "final scene": arka plan ışıması nabız gibi büyüyüp küçülür. */

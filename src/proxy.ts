@@ -23,8 +23,25 @@ function rememberLocale(response: NextResponse, request: NextRequest, locale: st
   return response;
 }
 
+/**
+ * Next, og:image URL'lerini rotanın kendi dil prefix'iyle üretir (/en/opengraph-image).
+ * Bunlar aşağıdaki "/en → /" yönlendirmesine takılırsa crawler fazladan bir hop atar
+ * ve /opengraph-image coğrafyaya göre /tr'ye gidebildiği için İngilizce sayfa
+ * Türkçe kartla paylaşılır. Bu yüzden dil prefix'li metadata görselleri dokunulmadan geçer.
+ */
+function isLocalePrefixedMetadataImage(pathname: string): boolean {
+  return (
+    pathname.endsWith("/opengraph-image") &&
+    LOCALES.some((locale) => pathname.startsWith(`/${locale}/`))
+  );
+}
+
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  if (isLocalePrefixedMetadataImage(pathname)) {
+    return NextResponse.next();
+  }
 
   // Varsayılan dilin prefix'li halini kanonik (prefix'siz) URL'ye yönlendir
   if (pathname === `/${DEFAULT_LOCALE}` || pathname.startsWith(`/${DEFAULT_LOCALE}/`)) {

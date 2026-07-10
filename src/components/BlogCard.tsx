@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { HiEye, HiClock, HiArrowRight } from "react-icons/hi2";
-import { getReadingTime, type LocalizedPost } from "@/lib/blog";
+import type { PostCard as PostCardData } from "@/lib/blog";
 import { localeHref, fill } from "@/lib/locale-link";
 
 export type BlogCardDict = {
@@ -11,14 +11,14 @@ export type BlogCardDict = {
 };
 
 type BlogCardProps = {
-  post: LocalizedPost;
+  post: PostCardData;
   featured?: boolean;
   lang: string;
   dict: BlogCardDict;
 };
 
 /** Yazının mevcut olduğu diller; aktif dil dolgun, diğeri çerçeveli rozet. */
-function LanguageBadges({ post, lang, ariaLabel }: { post: LocalizedPost; lang: string; ariaLabel: string }) {
+function LanguageBadges({ post, lang, ariaLabel }: { post: PostCardData; lang: string; ariaLabel: string }) {
   const badges = [
     { code: "TR", available: true },
     { code: "EN", available: post.hasEnglish },
@@ -54,8 +54,6 @@ function formatDate(date: string, lang: string) {
 }
 
 export default function BlogCard({ post, featured = false, lang, dict }: BlogCardProps) {
-  const readingTime = getReadingTime(post.content);
-
   return (
     <Link
       href={localeHref(lang, `/blog/${post.slug}`)}
@@ -99,7 +97,7 @@ export default function BlogCard({ post, featured = false, lang, dict }: BlogCar
         <div>
           <div className="flex flex-wrap items-center gap-2">
             {post.category && (
-              <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+              <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
                 {post.category}
               </span>
             )}
@@ -110,7 +108,7 @@ export default function BlogCard({ post, featured = false, lang, dict }: BlogCar
           </div>
 
           <h3
-            className={`mt-4 font-semibold leading-snug text-zinc-900 group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400 transition ${
+            className={`mt-4 font-semibold leading-snug text-zinc-900 group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400 transition ${
               featured ? "text-2xl" : "text-lg"
             }`}
           >
@@ -142,14 +140,14 @@ export default function BlogCard({ post, featured = false, lang, dict }: BlogCar
           <div className="flex items-center gap-2.5 shrink-0">
             <span className="inline-flex items-center gap-1">
               <HiClock className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-600" />
-              {fill(dict.readingTime, { minutes: readingTime })}
+              {fill(dict.readingTime, { minutes: post.readingMinutes })}
             </span>
             <span className="inline-flex items-center gap-1">
               <HiEye className="h-3.5 w-3.5 text-zinc-400 dark:text-zinc-600" />
-              {post.views ?? 0}
+              {post.views}
             </span>
           </div>
-          <span className="inline-flex items-center gap-1 font-semibold text-zinc-500 transition-colors group-hover:text-emerald-600 dark:text-zinc-400 dark:group-hover:text-emerald-400">
+          <span className="inline-flex items-center gap-1 font-semibold text-zinc-500 transition-colors group-hover:text-emerald-700 dark:text-zinc-400 dark:group-hover:text-emerald-400">
             <span className="hidden sm:inline lg:hidden xl:inline">{dict.readMore}</span>
             <HiArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
           </span>

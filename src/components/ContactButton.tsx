@@ -23,6 +23,9 @@ type ContactButtonProps = {
   dict: ContactModalDict;
 };
 
+const FOCUSABLE_SELECTOR =
+  'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export default function ContactButton({
   className,
   children,
@@ -30,27 +33,55 @@ export default function ContactButton({
 }: ContactButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     if (!isOpen) return;
 
+    // Cleanup'ta ref.current değişmiş olabilir; açan buton şimdi yakalanır.
+    const trigger = triggerRef.current;
     closeButtonRef.current?.focus();
     document.body.style.overflow = "hidden";
 
+    // aria-modal tek başına Tab'ı hapsetmez; odak döngüsü elle kapatılır.
     function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setIsOpen(false);
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        return;
+      }
+      if (event.key !== "Tab" || !dialogRef.current) return;
+
+      const focusable = Array.from(
+        dialogRef.current.querySelectorAll<HTMLElement>(FOCUSABLE_SELECTOR)
+      ).filter((element) => element.offsetParent !== null);
+      if (focusable.length === 0) return;
+
+      const first = focusable[0]!;
+      const last = focusable[focusable.length - 1]!;
+      const active = document.activeElement;
+
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus();
+      }
     }
 
     window.addEventListener("keydown", handleKeyDown);
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("keydown", handleKeyDown);
+      // Modal kapanınca odak, açan butona döner.
+      trigger?.focus();
     };
   }, [isOpen]);
 
   return (
     <>
-      <button type="button" onClick={() => setIsOpen(true)} className={className}>
+      <button ref={triggerRef} type="button" onClick={() => setIsOpen(true)} className={className}>
         {children}
       </button>
 
@@ -58,6 +89,7 @@ export default function ContactButton({
         typeof document !== "undefined" &&
         createPortal(
           <div
+            ref={dialogRef}
             role="dialog"
             aria-modal="true"
             aria-labelledby="contact-modal-title"
@@ -96,7 +128,7 @@ export default function ContactButton({
                   href={siteConfig.social.email}
                   className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 transition hover:border-emerald-400/40 hover:bg-zinc-100/50 dark:border-white/10 dark:bg-white/[0.03] dark:hover:bg-white/[0.06]"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
                     <HiEnvelope className="h-5 w-5" />
                   </span>
                   <span>
@@ -134,7 +166,7 @@ export default function ContactButton({
                   rel="noopener noreferrer"
                   className="flex items-center gap-3 rounded-xl border border-zinc-200 bg-zinc-50/50 p-4 transition hover:border-emerald-500/40 hover:bg-zinc-100/50 dark:border-white/10 dark:bg-white/[0.03] dark:hover:bg-white/[0.06]"
                 >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-700 dark:text-emerald-400">
                     <HiArrowDownTray className="h-5 w-5" />
                   </span>
                   <span>

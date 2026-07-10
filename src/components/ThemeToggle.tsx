@@ -42,8 +42,9 @@ export default function ThemeToggle({ ariaLabel }: { ariaLabel: string }) {
     <button
       type="button"
       onClick={toggleTheme}
-      className="relative flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200/60 bg-zinc-100/50 text-zinc-600 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-emerald-500/40 hover:text-emerald-500 dark:border-white/5 dark:bg-white/[0.01] dark:text-zinc-400 dark:hover:border-emerald-500/30 dark:hover:text-emerald-400 shadow-sm"
+      className="relative flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200/60 bg-zinc-100/50 text-zinc-600 backdrop-blur-sm transition-all duration-300 hover:scale-105 hover:border-emerald-500/40 hover:text-emerald-600 dark:border-white/5 dark:bg-white/[0.01] dark:text-zinc-400 dark:hover:border-emerald-500/30 dark:hover:text-emerald-400 shadow-sm"
       aria-label={ariaLabel}
+      aria-pressed={theme === "dark"}
     >
       <div className="relative h-5 w-5 overflow-hidden">
         {/* Güneş İkonu (Light Mode aktifken görünür) */}

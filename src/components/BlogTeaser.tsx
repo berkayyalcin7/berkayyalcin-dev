@@ -1,4 +1,4 @@
-import { getPublishedPosts, localizePosts } from "@/lib/blog";
+import { getPostCards } from "@/lib/blog";
 import Link from "next/link";
 import { HiArrowRight } from "react-icons/hi2";
 import BlogCard, { type BlogCardDict } from "@/components/BlogCard";
@@ -14,7 +14,7 @@ type BlogTeaserProps = {
 };
 
 export default async function BlogTeaser({ lang, dict, cardDict }: BlogTeaserProps) {
-  const posts = localizePosts(await getPublishedPosts(TEASER_POST_COUNT), lang);
+  const posts = await getPostCards(lang, TEASER_POST_COUNT);
   const [featuredPost, ...otherPosts] = posts;
   const hasUntranslated = lang === "en" && posts.some((post) => !post.hasEnglish);
 
@@ -22,13 +22,13 @@ export default async function BlogTeaser({ lang, dict, cardDict }: BlogTeaserPro
     <section id="blog" className="scroll-mt-24 border-t border-zinc-200 dark:border-white/10 px-6 py-20">
       <div className="mx-auto max-w-5xl">
         <div className="flex items-end justify-between gap-4">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
             {dict.heading}
           </h2>
           {posts.length > 0 && (
             <Link
               href={localeHref(lang, "/blog")}
-              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 hover:text-emerald-600 dark:text-zinc-400 dark:hover:text-emerald-400"
+              className="group inline-flex items-center gap-1.5 text-sm font-semibold text-zinc-500 hover:text-emerald-700 dark:text-zinc-400 dark:hover:text-emerald-400"
             >
               {dict.allPosts}
               <HiArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />

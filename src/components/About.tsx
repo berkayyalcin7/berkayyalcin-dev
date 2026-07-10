@@ -26,7 +26,7 @@ const expertiseIcons: { key: keyof Dictionary["about"]["expertise"]; icon: IconT
 const accentClasses: Record<string, { card: string; icon: string }> = {
   emerald: {
     card: "hover:border-emerald-500/30",
-    icon: "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 group-hover:bg-emerald-500/20",
+    icon: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 group-hover:bg-emerald-500/20",
   },
   blue: {
     card: "hover:border-blue-500/30",
@@ -53,7 +53,7 @@ export default function About({ dict }: AboutProps) {
   return (
     <section id="hakkimda" className="scroll-mt-24 px-6 py-20">
       <div className="mx-auto max-w-5xl">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
           {dict.heading}
         </h2>
 
@@ -83,7 +83,7 @@ export default function About({ dict }: AboutProps) {
             </div>
 
             <div className="mt-8 border-t border-zinc-200 dark:border-white/10 pt-6">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400">
                 {dict.expertiseHeading}
               </h3>
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -117,7 +117,7 @@ export default function About({ dict }: AboutProps) {
                 key={label}
                 className="group flex items-center gap-4 rounded-2xl border border-zinc-200 bg-zinc-100/50 p-4 transition hover:border-emerald-500/40 hover:bg-zinc-150/60 dark:border-white/10 dark:bg-white/[0.03] dark:hover:bg-white/[0.05]"
               >
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 transition group-hover:bg-emerald-500/20">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 transition group-hover:bg-emerald-500/20">
                   <Icon className="h-5 w-5" />
                 </span>
                 <div>

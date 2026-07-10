@@ -13,6 +13,7 @@ import {
 import { VscAzureDevops } from "react-icons/vsc";
 import { HiCube, HiDatabase, HiShare } from "react-icons/hi";
 
+import SkillsMarquee from "@/components/SkillsMarquee";
 import type { Dictionary } from "@/lib/i18n";
 
 type Skill = {
@@ -68,10 +69,13 @@ export const SKILLS_COUNT = skillCategories.reduce((sum, c) => sum + c.skills.le
 const webRow = [...skillCategories[0]!.skills, ...skillCategories[2]!.skills];
 const enterpriseRow = [...skillCategories[1]!.skills, ...skillCategories[3]!.skills];
 
-function SkillPill({ name, icon: Icon }: Skill) {
+function SkillPill({ name, icon: Icon, ariaHidden = false }: Skill & { ariaHidden?: boolean }) {
   return (
-    <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-zinc-200 bg-zinc-100/50 px-4 py-2 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-zinc-950 dark:border-white/10 dark:bg-white/5 dark:text-zinc-300 dark:hover:border-emerald-400/40 dark:hover:text-white">
-      <Icon className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
+    <span
+      aria-hidden={ariaHidden || undefined}
+      className="inline-flex shrink-0 items-center gap-2 rounded-full border border-zinc-200 bg-zinc-100/50 px-4 py-2 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-zinc-950 dark:border-white/10 dark:bg-white/5 dark:text-zinc-300 dark:hover:border-emerald-400/40 dark:hover:text-white"
+    >
+      <Icon className="h-4 w-4 text-emerald-700 dark:text-emerald-400" />
       {name}
     </span>
   );
@@ -79,6 +83,7 @@ function SkillPill({ name, icon: Icon }: Skill) {
 
 function MarqueeRow({ skills, direction }: { skills: Skill[]; direction: "left" | "right" }) {
   // İçerik iki kez tekrarlanır ki %50 kaydırmada döngü kesintisiz görünsün.
+  // İkinci kopya yalnızca görseldir; ekran okuyucu her yeteneği bir kez okumalı.
   const doubled = [...skills, ...skills];
   const animation =
     direction === "left"
@@ -87,9 +92,15 @@ function MarqueeRow({ skills, direction }: { skills: Skill[]; direction: "left" 
 
   return (
     <div className="group overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
-      <div className={`flex w-max gap-3 ${animation} group-hover:[animation-play-state:paused]`}>
+      <div
+        className={`marquee-track flex w-max gap-3 ${animation} group-hover:[animation-play-state:paused]`}
+      >
         {doubled.map((skill, i) => (
-          <SkillPill key={`${skill.name}-${i}`} {...skill} />
+          <SkillPill
+            key={`${skill.name}-${i}`}
+            {...skill}
+            ariaHidden={i >= skills.length}
+          />
         ))}
       </div>
     </div>
@@ -103,7 +114,7 @@ export default function Skills({ dict }: { dict: Dictionary["skills"] }) {
       className="scroll-mt-24 border-t border-zinc-200 dark:border-white/10 px-6 py-20"
     >
       <div className="mx-auto max-w-5xl">
-        <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+        <h2 className="text-sm font-semibold uppercase tracking-widest text-emerald-700 dark:text-emerald-400">
           {dict.heading}
         </h2>
 
@@ -123,10 +134,13 @@ export default function Skills({ dict }: { dict: Dictionary["skills"] }) {
           ))}
         </div>
 
-        {/* Kayan logo şeridi: iki sıra ters yönde, üzerine gelince duraklar */}
-        <div className="hidden motion-safe:block mt-8 space-y-4">
-          <MarqueeRow skills={webRow} direction="left" />
-          <MarqueeRow skills={enterpriseRow} direction="right" />
+        {/* Kayan logo şeridi: iki sıra ters yönde. Hover duraklatır; buton klavye
+            ve dokunmatik kullanıcılar için açık bir duraklatma yolu sunar. */}
+        <div className="hidden motion-safe:block">
+          <SkillsMarquee pauseLabel={dict.pauseMarquee} playLabel={dict.playMarquee}>
+            <MarqueeRow skills={webRow} direction="left" />
+            <MarqueeRow skills={enterpriseRow} direction="right" />
+          </SkillsMarquee>
         </div>
       </div>
     </section>

@@ -30,7 +30,7 @@ export default function BackToTop({ ariaLabel }: { ariaLabel: string }) {
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label={ariaLabel}
-      className={`fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 bg-white/80 text-zinc-600 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:text-emerald-500 dark:border-white/10 dark:bg-zinc-900/80 dark:text-zinc-400 dark:hover:border-emerald-400/40 dark:hover:text-emerald-400 ${
+      className={`fixed bottom-6 right-6 z-40 flex h-11 w-11 items-center justify-center rounded-full border border-zinc-200 bg-white/80 text-zinc-600 shadow-lg backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-500/40 hover:text-emerald-600 dark:border-white/10 dark:bg-zinc-900/80 dark:text-zinc-400 dark:hover:border-emerald-400/40 dark:hover:text-emerald-400 ${
         isVisible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-4 opacity-0"

@@ -27,6 +27,18 @@ const SPRITE_GLOW_SCALE = 4;
 const SPRITE_CORE_RADIUS = 8;
 
 /**
+ * Izgarada bir hücre işlenirken yalnızca "ileri" komşulara bakılır; böylece her
+ * parçacık çifti tam olarak bir kez değerlendirilir. Satırlar yukarıdan aşağıya,
+ * sütunlar soldan sağa tarandığı için geri komşular zaten işlenmiştir.
+ */
+const FORWARD_NEIGHBORS = [
+  [1, 0],
+  [-1, 1],
+  [0, 1],
+  [1, 1],
+] as const;
+
+/**
  * Parçacık başına canvas shadowBlur çok pahalı olduğundan, ışıltılı nokta her
  * renk için bir kez offscreen canvas'a çizilir ve karede drawImage ile kopyalanır.
  */
@@ -62,7 +74,7 @@ function requestIdle(callback: () => void) {
   }
 }
 
-export default function AnimatedBackground() {
+export default function NetworkCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -70,24 +82,27 @@ export default function AnimatedBackground() {
     const ctx = canvas?.getContext("2d");
     if (!canvas || !ctx) return;
 
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    ).matches;
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     let width = 0;
     let height = 0;
     let dpr = 1;
+    let linkDistance = MAX_LINK_DISTANCE;
     let particles: Particle[] = [];
     let animationFrameId = 0;
-    let isVisible = true;
+    let running = false;
     let pointer = { x: 0, y: 0, active: false };
     let time = 0;
 
-    function resize() {
-      dpr = Math.min(window.devicePixelRatio || 1, 2);
-      width = canvas!.width = canvas!.offsetWidth * dpr;
-      height = canvas!.height = canvas!.offsetHeight * dpr;
-    }
+    // Uzamsal hash ızgarası. Bağlantı araması, tüm çiftleri gezmek yerine (O(n²))
+    // yalnızca komşu hücrelere bakar. Tamponlar resize'da bir kez ayrılır.
+    let cols = 0;
+    let rows = 0;
+    let cellCounts = new Int32Array(0);
+    let cellStart = new Int32Array(0);
+    let cellCursor = new Int32Array(0);
+    let cellOf = new Int32Array(0);
+    let order = new Int32Array(0);
 
     const sprites = new Map<string, HTMLCanvasElement>();
     for (const color of COLORS) {
@@ -95,9 +110,24 @@ export default function AnimatedBackground() {
       sprites.set(key, createParticleSprite(key));
     }
 
+    function resize() {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      width = canvas!.width = canvas!.offsetWidth * dpr;
+      height = canvas!.height = canvas!.offsetHeight * dpr;
+      linkDistance = MAX_LINK_DISTANCE * dpr;
+
+      // Hücre kenarı = bağlantı mesafesi ⇒ menzildeki her çift komşu hücrelerdedir.
+      cols = Math.max(1, Math.ceil(width / linkDistance));
+      rows = Math.max(1, Math.ceil(height / linkDistance));
+      const cellCount = cols * rows;
+      cellCounts = new Int32Array(cellCount);
+      cellStart = new Int32Array(cellCount + 1);
+      cellCursor = new Int32Array(cellCount);
+    }
+
     function createParticles() {
       particles = Array.from({ length: particleCountFor(width, height, dpr) }, () => {
-        const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+        const color = COLORS[Math.floor(Math.random() * COLORS.length)]!;
         const baseRadius = Math.random() * 1.4 + 1;
         return {
           x: Math.random() * width,
@@ -110,38 +140,103 @@ export default function AnimatedBackground() {
           color: `${color.r}, ${color.g}, ${color.b}`,
         };
       });
+      cellOf = new Int32Array(particles.length);
+      order = new Int32Array(particles.length);
+    }
+
+    /** Parçacıkları hücrelere sayarak sıralar (counting sort); `order` hücre hücre gruplanır. */
+    function buildGrid() {
+      cellCounts.fill(0);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i]!;
+        const cx = Math.min(cols - 1, Math.max(0, Math.floor(p.x / linkDistance)));
+        const cy = Math.min(rows - 1, Math.max(0, Math.floor(p.y / linkDistance)));
+        const cell = cy * cols + cx;
+        cellOf[i] = cell;
+        cellCounts[cell]!++;
+      }
+
+      cellStart[0] = 0;
+      for (let c = 0; c < cellCounts.length; c++) {
+        cellStart[c + 1] = cellStart[c]! + cellCounts[c]!;
+        cellCursor[c] = cellStart[c]!;
+      }
+
+      for (let i = 0; i < particles.length; i++) {
+        order[cellCursor[cellOf[i]!]!++] = i;
+      }
+    }
+
+    function strokeLink(p: Particle, q: Particle) {
+      const dx = p.x - q.x;
+      const dy = p.y - q.y;
+      const dist = Math.hypot(dx, dy);
+      if (dist >= linkDistance) return;
+
+      const opacity = 0.22 * (1 - dist / linkDistance);
+      ctx!.strokeStyle = `rgba(${p.color}, ${opacity})`;
+      ctx!.lineWidth = dpr * 0.7;
+      ctx!.beginPath();
+      ctx!.moveTo(p.x, p.y);
+      ctx!.lineTo(q.x, q.y);
+      ctx!.stroke();
+    }
+
+    function drawLinks() {
+      for (let cy = 0; cy < rows; cy++) {
+        for (let cx = 0; cx < cols; cx++) {
+          const cell = cy * cols + cx;
+          const from = cellStart[cell]!;
+          const to = cellStart[cell + 1]!;
+
+          for (let k = from; k < to; k++) {
+            const p = particles[order[k]!]!;
+
+            // Aynı hücredeki sonraki parçacıklar
+            for (let k2 = k + 1; k2 < to; k2++) {
+              strokeLink(p, particles[order[k2]!]!);
+            }
+
+            // İleri komşu hücrelerin tamamı
+            for (const [ox, oy] of FORWARD_NEIGHBORS) {
+              const nx = cx + ox;
+              const ny = cy + oy;
+              if (nx < 0 || nx >= cols || ny >= rows) continue;
+
+              const neighbor = ny * cols + nx;
+              const nFrom = cellStart[neighbor]!;
+              const nTo = cellStart[neighbor + 1]!;
+              for (let k2 = nFrom; k2 < nTo; k2++) {
+                strokeLink(p, particles[order[k2]!]!);
+              }
+            }
+          }
+        }
+      }
     }
 
     function draw() {
       ctx!.clearRect(0, 0, width, height);
-      const linkDistance = MAX_LINK_DISTANCE * dpr;
       time += 1;
 
-      // Parallax values based on cursor position
+      // İmleç konumuna göre parallax
       const normX = pointer.active ? pointer.x / width : 0.5;
       const normY = pointer.active ? pointer.y / height : 0.5;
       const parallaxX = pointer.active ? (normX - 0.5) * 16 * dpr : 0;
       const parallaxY = pointer.active ? (normY - 0.5) * 16 * dpr : 0;
 
-      // Cursor position within the translated context
       const cursorX = pointer.x - parallaxX;
       const cursorY = pointer.y - parallaxY;
 
       ctx!.save();
       ctx!.translate(parallaxX, parallaxY);
 
-      // 1. Draw glowing aura under the cursor
+      // 1. İmlecin altındaki ışıma
       if (pointer.active) {
-        const glowGrad = ctx!.createRadialGradient(
-          cursorX,
-          cursorY,
-          0,
-          cursorX,
-          cursorY,
-          150 * dpr
-        );
-        glowGrad.addColorStop(0, "rgba(16, 185, 129, 0.18)"); // Emerald glow at center
-        glowGrad.addColorStop(0.5, "rgba(59, 130, 246, 0.06)"); // Soft blue transition
+        const glowGrad = ctx!.createRadialGradient(cursorX, cursorY, 0, cursorX, cursorY, 150 * dpr);
+        glowGrad.addColorStop(0, "rgba(16, 185, 129, 0.18)");
+        glowGrad.addColorStop(0.5, "rgba(59, 130, 246, 0.06)");
         glowGrad.addColorStop(1, "rgba(0, 0, 0, 0)");
         ctx!.fillStyle = glowGrad;
         ctx!.beginPath();
@@ -149,29 +244,23 @@ export default function AnimatedBackground() {
         ctx!.fill();
       }
 
-      // 2. Update and draw particles and their inter-connections
-      for (let i = 0; i < particles.length; i++) {
-        const p = particles[i];
-
-        // Apply velocities
+      // 2. Konum güncellemesi, imleç itmesi, kenar sekmesi, titreşim
+      for (const p of particles) {
         p.x += p.vx;
         p.y += p.vy;
 
-        // Interactive mouse repulsion/push force
         if (pointer.active) {
           const dx = p.x - cursorX;
           const dy = p.y - cursorY;
           const dist = Math.hypot(dx, dy);
           const activeRadius = 140 * dpr;
-          if (dist < activeRadius) {
+          if (dist > 0 && dist < activeRadius) {
             const force = (activeRadius - dist) / activeRadius;
-            // Gently nudge particles away from the cursor
             p.x += (dx / dist) * force * 1.6 * dpr;
             p.y += (dy / dist) * force * 1.6 * dpr;
           }
         }
 
-        // Keep within canvas bounds
         if (p.x <= 0) {
           p.x = 0;
           p.vx *= -1;
@@ -187,42 +276,25 @@ export default function AnimatedBackground() {
           p.vy *= -1;
         }
 
-        p.radius =
-          p.baseRadius +
-          Math.sin(time * 0.02 + p.twinkleSeed) * p.baseRadius * 0.4;
-
-        // Draw links between nearby particles
-        for (let j = i + 1; j < particles.length; j++) {
-          const q = particles[j];
-          const dx = p.x - q.x;
-          const dy = p.y - q.y;
-          const dist = Math.hypot(dx, dy);
-
-          if (dist < linkDistance) {
-            const opacity = 0.22 * (1 - dist / linkDistance);
-            ctx!.strokeStyle = `rgba(${p.color}, ${opacity})`;
-            ctx!.lineWidth = dpr * 0.7;
-            ctx!.beginPath();
-            ctx!.moveTo(p.x, p.y);
-            ctx!.lineTo(q.x, q.y);
-            ctx!.stroke();
-          }
-        }
+        p.radius = p.baseRadius + Math.sin(time * 0.02 + p.twinkleSeed) * p.baseRadius * 0.4;
       }
 
-      // 3. Draw links from cursor to nearest particles
+      // 3. Parçacıklar arası bağlantılar (uzamsal ızgara üzerinden)
+      buildGrid();
+      drawLinks();
+
+      // 4. İmleçten yakın parçacıklara bağlantılar
       if (pointer.active) {
-        const linkDistance = MAX_LINK_DISTANCE * 1.1 * dpr;
-        for (let i = 0; i < particles.length; i++) {
-          const p = particles[i];
+        const cursorLinkDistance = linkDistance * 1.1;
+        for (const p of particles) {
           const dx = p.x - cursorX;
           const dy = p.y - cursorY;
           const dist = Math.hypot(dx, dy);
 
-          if (dist < linkDistance) {
-            const opacity = 0.35 * (1 - dist / linkDistance);
+          if (dist < cursorLinkDistance) {
+            const opacity = 0.35 * (1 - dist / cursorLinkDistance);
             ctx!.strokeStyle = `rgba(${p.color}, ${opacity})`;
-            ctx!.lineWidth = dpr * 1.0;
+            ctx!.lineWidth = dpr;
             ctx!.beginPath();
             ctx!.moveTo(cursorX, cursorY);
             ctx!.lineTo(p.x, p.y);
@@ -231,7 +303,7 @@ export default function AnimatedBackground() {
         }
       }
 
-      // 4. Draw actual particles (sprite kopyalama; shadowBlur'a göre kat kat ucuz)
+      // 5. Parçacıklar (sprite kopyalama; shadowBlur'a göre kat kat ucuz)
       for (const p of particles) {
         const sprite = sprites.get(p.color)!;
         const drawSize = p.radius * SPRITE_GLOW_SCALE * 2;
@@ -242,18 +314,31 @@ export default function AnimatedBackground() {
     }
 
     function loop() {
-      if (isVisible) draw();
+      draw();
       animationFrameId = requestAnimationFrame(loop);
+    }
+
+    /** Döngü yalnızca sekme görünürken ve hareket tercih edildiğinde çalışır. */
+    function start() {
+      if (running || document.hidden || motionQuery.matches) return;
+      running = true;
+      animationFrameId = requestAnimationFrame(loop);
+    }
+
+    function stop() {
+      if (!running) return;
+      running = false;
+      cancelAnimationFrame(animationFrameId);
     }
 
     function handleResize() {
       resize();
       createParticles();
+      if (!running) draw(); // duraklatılmışken de yeni boyuta göre tek kare çiz
     }
 
     function handlePointerMove(event: PointerEvent) {
-      if (!canvas) return;
-      const rect = canvas.getBoundingClientRect();
+      const rect = canvas!.getBoundingClientRect();
       pointer = {
         x: (event.clientX - rect.left) * dpr,
         y: (event.clientY - rect.top) * dpr,
@@ -266,75 +351,48 @@ export default function AnimatedBackground() {
     }
 
     function handleVisibilityChange() {
-      isVisible = document.visibilityState === "visible";
+      if (document.hidden) stop();
+      else start();
+    }
+
+    function handleMotionChange() {
+      if (motionQuery.matches) {
+        stop();
+        draw();
+      } else {
+        start();
+      }
     }
 
     resize();
     createParticles();
 
-    if (prefersReducedMotion) {
+    if (motionQuery.matches) {
       draw();
     } else {
-      requestIdle(() => {
-        animationFrameId = requestAnimationFrame(loop);
-      });
+      requestIdle(start);
     }
 
     window.addEventListener("resize", handleResize);
     window.addEventListener("pointermove", handlePointerMove, { passive: true });
     window.addEventListener("pointerleave", handlePointerLeave, { passive: true });
     document.addEventListener("visibilitychange", handleVisibilityChange);
+    motionQuery.addEventListener("change", handleMotionChange);
 
     return () => {
       window.removeEventListener("resize", handleResize);
       window.removeEventListener("pointermove", handlePointerMove);
       window.removeEventListener("pointerleave", handlePointerLeave);
       document.removeEventListener("visibilitychange", handleVisibilityChange);
+      motionQuery.removeEventListener("change", handleMotionChange);
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
 
   return (
-    <div
-      aria-hidden
-      className="pointer-events-none fixed inset-0 -z-10 overflow-hidden bg-slate-50 dark:bg-black transition-colors duration-300"
-    >
-      {/* Yavaşça hareket eden ışık lekeleri (aurora efekti) */}
-      <div
-        className="motion-safe:[animation:aurora-drift-1_22s_ease-in-out_infinite] absolute -top-32 -left-32 h-[32rem] w-[32rem] rounded-full bg-emerald-500/8 dark:bg-emerald-500/20 blur-3xl transition-colors duration-300"
-      />
-      <div
-        className="motion-safe:[animation:aurora-drift-2_26s_ease-in-out_infinite] absolute top-1/3 -right-40 h-[36rem] w-[36rem] rounded-full bg-blue-500/6 dark:bg-blue-500/15 blur-3xl transition-colors duration-300"
-      />
-      <div
-        className="motion-safe:[animation:aurora-drift-3_30s_ease-in-out_infinite] absolute bottom-[-10rem] left-1/3 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-violet-500/5 dark:bg-violet-500/10 blur-3xl transition-colors duration-300"
-      />
-
-      {/* İnce nokta ızgarası — Açık Tema. -inset-16: grid-pan transform'u 64px kaydırdığı için taşma payı */}
-      <div
-        className="motion-safe:[animation:grid-pan_14s_linear_infinite] absolute -inset-16 opacity-[0.7] dark:hidden"
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
-
-      {/* İnce nokta ızgarası — Koyu Tema. -inset-16: grid-pan transform'u 64px kaydırdığı için taşma payı */}
-      <div
-        className="motion-safe:[animation:grid-pan_14s_linear_infinite] absolute -inset-16 hidden opacity-[0.15] dark:block"
-        style={{
-          backgroundImage:
-            "radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
-
-      {/* Canlı bağlantı ağı */}
-      <canvas ref={canvasRef} className="h-full w-full opacity-60 dark:opacity-90 transition-opacity duration-300" />
-
-      {/* Kenarlarda hafif vinyet */}
-      <div className="absolute inset-0 bg-gradient-to-b from-slate-50/20 via-transparent to-slate-50/40 dark:from-black/40 dark:via-transparent dark:to-black/60 transition-all duration-300" />
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="h-full w-full opacity-60 transition-opacity duration-300 dark:opacity-90"
+    />
   );
 }

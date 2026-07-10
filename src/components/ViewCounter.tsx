@@ -7,9 +7,11 @@ import { HiEye } from "react-icons/hi2";
 type ViewCounterProps = {
   slug: string;
   initialViews: number;
+  /** "okunma" / "views" — sözlükten gelir, aksi halde EN sayfada TR metin görünür. */
+  label: string;
 };
 
-export default function ViewCounter({ slug, initialViews }: ViewCounterProps) {
+export default function ViewCounter({ slug, initialViews, label }: ViewCounterProps) {
   const [views, setViews] = useState<number>(initialViews);
   const [hasIncremented, setHasIncremented] = useState(false);
 
@@ -59,10 +61,10 @@ export default function ViewCounter({ slug, initialViews }: ViewCounterProps) {
 
   return (
     <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-500 dark:text-zinc-400 select-none">
-      <span className={`h-1.5 w-1.5 rounded-full animate-pulse transition-colors duration-300 ${hasIncremented ? 'bg-emerald-500' : 'bg-zinc-400 dark:bg-zinc-600'}`} />
-      <HiEye className={`h-4 w-4 transition-colors duration-300 ${hasIncremented ? 'text-emerald-600 dark:text-emerald-400' : 'text-zinc-400 dark:text-zinc-500'}`} />
+      <span className={`h-1.5 w-1.5 rounded-full motion-safe:animate-pulse transition-colors duration-300 ${hasIncremented ? 'bg-emerald-500' : 'bg-zinc-400 dark:bg-zinc-600'}`} />
+      <HiEye className={`h-4 w-4 transition-colors duration-300 ${hasIncremented ? 'text-emerald-700 dark:text-emerald-400' : 'text-zinc-400 dark:text-zinc-500'}`} />
       <span className={`transition-all duration-500 ease-out ${hasIncremented ? 'text-zinc-800 dark:text-zinc-200' : 'text-zinc-500 dark:text-zinc-400'}`}>
-        {views} okunma
+        {views} {label}
       </span>
     </div>
   );

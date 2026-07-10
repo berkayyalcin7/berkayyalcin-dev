@@ -17,7 +17,8 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "themeToggle": "Toggle theme",
-    "switchLocale": "Change language"
+    "switchLocale": "Change language",
+    "mainNav": "Main navigation"
   },
   "profile": {
     "role": "Computer Engineer & .NET Full Stack Developer",
@@ -134,20 +135,19 @@
       "backend": "Backend & .NET Ecosystem",
       "database": "Databases",
       "devops": "DevOps & Enterprise Tools"
-    }
+    },
+    "pauseMarquee": "Pause scrolling",
+    "playMarquee": "Resume scrolling"
   },
   "projects": {
     "heading": "Projects",
     "subtitle": "Software & Work I've Built",
     "descriptionHasProjects": "My open-source projects, personal tools and the enterprise applications I've built.",
-    "descriptionFallback": "The projects here will be updated over time; the ones shown are examples.",
     "githubAria": "{title} on GitHub",
     "liveAria": "{title} live demo",
-    "fallback": {
-      "microservices": "A scalable e-commerce microservice architecture built with .NET 8 using CQRS and event-driven design.",
-      "portfolio": "A Next.js portfolio project with visitor counters, dynamic content management and a modern dark-theme aesthetic.",
-      "chat": "A high-performance Go backend engine supporting real-time messaging and rooms over the WebSocket protocol."
-    }
+    "emptyTitle": "Projects are coming very soon.",
+    "emptyBody": "Projects will be listed here automatically as they are added to the database. In the meantime, take a look at my GitHub profile.",
+    "emptyCta": "View on GitHub"
   },
   "featuredPackages": {
     "heading": "Open Source",
@@ -197,7 +197,8 @@
     "relatedPosts": "Related Posts",
     "notFoundTitle": "Post Not Found",
     "readingTime": "{minutes} min read",
-    "fallbackNotice": "This post hasn't been translated into English yet — you're reading the Turkish original."
+    "fallbackNotice": "This post hasn't been translated into English yet — you're reading the Turkish original.",
+    "views": "views"
   },
   "toolsPage": {
     "metaTitle": "Tools",
@@ -339,5 +340,6 @@
     "title": "Page not found",
     "body": "The page you're looking for may have been moved or never existed.",
     "backHome": "Back to Home"
-  }
+  },
+  "skipToContent": "Skip to content"
 }

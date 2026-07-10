@@ -14,6 +14,7 @@ import Footer from "@/components/Footer";
 import Reveal from "@/components/Reveal";
 import { siteConfig } from "@/lib/site-config";
 import { getDictionary, hasLocale, buildHeaderDict } from "@/lib/i18n";
+import { canonicalPath } from "@/lib/locale-link";
 
 export const revalidate = 1800; // Blog sayfalarıyla aynı ISR aralığı; on-demand /api/revalidate'e ek emniyet ağı
 
@@ -28,6 +29,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
     title: dict.meta.homeTitle,
     description: dict.meta.homeDescription,
     alternates: {
+      canonical: canonicalPath(lang, "/"),
       languages: { en: "/", tr: "/tr", "x-default": "/" },
     },
     openGraph: {
@@ -37,14 +39,8 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
       siteName: siteConfig.name,
       locale: lang === "tr" ? "tr_TR" : "en_US",
       type: "website",
-      images: [
-        {
-          url: `${siteConfig.url}/icon.png`,
-          width: 512,
-          height: 512,
-          alt: siteConfig.name,
-        },
-      ],
+      // images bilinçli olarak yok: opengraph-image.tsx dosya konvansiyonu
+      // 1200x630 kartı üretir. Burada images vermek onu ezer.
     },
   };
 }
@@ -101,7 +97,7 @@ export default async function Home({ params }: PageParams) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }}
       />
       <Header lang={lang} dict={headerDict} />
-      <main className="flex-1">
+      <main id="main-content" className="flex-1">
         <Hero lang={lang} dict={dict.hero} profile={dict.profile} />
         <Reveal>
           <Stats dict={dict.stats} />
