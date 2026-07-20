@@ -141,7 +141,7 @@ export default async function LocakitPage({ params }: PageParams) {
           </div>
         </div>
       </main>
-      <Footer dict={dict.footer} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} />
     </>
   );
 }

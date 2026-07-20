@@ -154,7 +154,6 @@
     "title": "npm'de yayınladığım paketler",
     "body": "Sıfır bağımlılıklı, TypeScript-first ve test kapsamı yüksek geliştirici araçları. Kurmadan önce tarayıcında canlı deneyebilirsin.",
     "installLabel": "kurulum",
-    "outputAdded": "added 1 package · 0 dependencies",
     "zeroDeps": "0 bağımlılık",
     "tryLive": "Canlı Dene",
     "npmAria": "{name} npm paket sayfası",
@@ -331,7 +330,10 @@
     "downloadCv": "CV'mi İndir (PDF)"
   },
   "footer": {
-    "rights": "Tüm hakları saklıdır."
+    "tagline": "Web ve .NET ekosisteminde uçtan uca ürünler geliştiriyorum.",
+    "navAria": "Site içi bağlantılar",
+    "rights": "Tüm hakları saklıdır.",
+    "builtWith": "Next.js, Supabase ve Vercel ile geliştirildi."
   },
   "backToTop": {
     "aria": "Sayfanın başına dön"

@@ -154,7 +154,6 @@
     "title": "Packages I've published on npm",
     "body": "Zero-dependency, TypeScript-first developer tools with high test coverage. Try each one live in your browser before installing.",
     "installLabel": "install",
-    "outputAdded": "added 1 package · 0 dependencies",
     "zeroDeps": "0 dependencies",
     "tryLive": "Try It Live",
     "npmAria": "{name} on npm",
@@ -331,7 +330,10 @@
     "downloadCv": "Download My CV (PDF)"
   },
   "footer": {
-    "rights": "All rights reserved."
+    "tagline": "I build end-to-end products across the web and .NET ecosystem.",
+    "navAria": "Site links",
+    "rights": "All rights reserved.",
+    "builtWith": "Built with Next.js, Supabase and Vercel."
   },
   "backToTop": {
     "aria": "Back to top"

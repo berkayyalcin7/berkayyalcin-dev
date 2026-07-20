@@ -102,20 +102,11 @@ function FeaturedProjectCard({ project, index, dict }: ProjectCardProps) {
   );
 }
 
-function ProjectCard({ project, index, dict }: ProjectCardProps) {
+function ProjectCard({ project, dict }: ProjectCardProps) {
   return (
-    <div className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100/50 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30 hover:bg-zinc-150/60 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03] hover:shadow-lg dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-emerald-500/5">
-      {/* Hover'da beliren ışıma */}
-      <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/5 dark:to-emerald-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      {/* Üst kenarda incecik vurgu çizgisi */}
-      <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      {/* Arka planda büyük sıra numarası */}
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -right-2 -top-4 select-none text-7xl font-bold text-zinc-900/[0.03] dark:text-white/[0.03] transition-colors duration-300 group-hover:text-emerald-500/[0.06]"
-      >
-        {String(index + 1).padStart(2, "0")}
-      </span>
+    <div className="group relative flex flex-col justify-between rounded-2xl border border-zinc-200 bg-zinc-100/50 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30 hover:bg-zinc-150/60 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03] hover:shadow-lg dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-emerald-500/5">
+      {/* Üst kenarda incecik vurgu çizgisi — "öne çıkan" karttaki devasa numara burada tekrarlanmaz */}
+      <div className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       <div>
         <div className="flex items-start justify-between gap-3">

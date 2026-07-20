@@ -84,7 +84,7 @@ export default async function BlogIndexPage({ params }: PageParams) {
           )}
         </div>
       </main>
-      <Footer dict={dict.footer} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} />
     </>
   );
 }

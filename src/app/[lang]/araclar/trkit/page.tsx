@@ -104,7 +104,7 @@ export default async function TrkitPage({ params }: PageParams) {
           </p>
         </div>
       </main>
-      <Footer dict={dict.footer} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} />
     </>
   );
 }

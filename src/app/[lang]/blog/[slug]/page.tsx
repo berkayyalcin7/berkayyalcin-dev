@@ -157,23 +157,38 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
               <p>{dict.blogPost.fallbackNotice}</p>
             </div>
           )}
+        </div>
 
+        {/* Kapak: metin kolonundan biraz daha geniş; 16:9 kapaklarla birebir uyumlu (21/9 kırpmıyordu) */}
+        {post.cover_image && (
+          <div className="mx-auto mb-10 max-w-4xl">
+            <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-zinc-200/80 bg-zinc-100 shadow-[0_20px_50px_-24px_rgba(0,0,0,0.35)] dark:border-white/10 dark:bg-zinc-900 dark:shadow-[0_24px_60px_-20px_rgba(0,0,0,0.75)]">
+              <Image
+                src={post.cover_image}
+                alt={post.title}
+                fill
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 896px"
+                className="object-cover object-center"
+              />
+              {/* İnce kenar geçişi — görsel içeriğini örtmez */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/5 dark:ring-white/10"
+              />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/15 to-transparent dark:from-black/35"
+              />
+            </div>
+          </div>
+        )}
+
+        <div className="mx-auto max-w-3xl">
           {/* Article Header */}
           <article>
-            {post.cover_image && (
-              <div className="relative w-full aspect-video md:aspect-[21/9] mb-8 overflow-hidden rounded-2xl border border-zinc-200 shadow-xl bg-zinc-100 dark:border-white/10 dark:shadow-2xl dark:bg-zinc-900">
-                <Image
-                  src={post.cover_image}
-                  alt={post.title}
-                  fill
-                  priority
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 768px"
-                  className="object-cover"
-                />
-              </div>
-            )}
-            <header className="mb-8">
-              <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <header className="mb-10">
+              <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
                 {post.category && (
                   <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-emerald-700 dark:text-emerald-400 border border-emerald-500/20">
                     {post.category}
@@ -208,10 +223,10 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                 <span className="text-zinc-300 dark:text-zinc-700 select-none">•</span>
                 <ViewCounter slug={post.slug} initialViews={post.views || 0} label={dict.blogPost.views} />
               </div>
-              <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl mt-3">
+              <h1 className="mt-4 text-3xl font-bold tracking-tight text-zinc-900 dark:text-white sm:text-4xl sm:leading-tight">
                 {post.title}
               </h1>
-              <p className="mt-4 text-base text-zinc-600 dark:text-zinc-400 italic">
+              <p className="mt-4 max-w-2xl text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
                 {post.excerpt}
               </p>
               {(post.tags?.length ?? 0) > 0 && (
@@ -219,14 +234,14 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
                   {post.tags!.map((tag) => (
                     <span
                       key={tag}
-                      className="rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-medium text-zinc-600 border border-zinc-200 transition hover:border-emerald-500/40 hover:text-emerald-700 dark:bg-white/5 dark:text-zinc-400 dark:border-white/10 dark:transition dark:hover:border-emerald-400/40 dark:hover:text-emerald-400"
+                      className="rounded-full bg-zinc-100 px-2.5 py-1 text-[11px] font-medium text-zinc-600 border border-zinc-200 transition hover:border-emerald-500/40 hover:text-emerald-700 dark:bg-white/5 dark:text-zinc-400 dark:border-white/10 dark:hover:border-emerald-400/40 dark:hover:text-emerald-400"
                     >
                       #{tag}
                     </span>
                   ))}
                 </div>
               )}
-              <div className="mt-6 border-b border-zinc-200 dark:border-white/10" />
+              <div className="mt-8 h-px w-full bg-gradient-to-r from-transparent via-zinc-300 to-transparent dark:via-white/15" />
             </header>
 
             {/* Markdown Content with Premium Styles */}
@@ -362,7 +377,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
           )}
         </div>
       </main>
-      <Footer dict={dict.footer} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} />
     </>
   );
 }

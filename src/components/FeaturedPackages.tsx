@@ -42,16 +42,10 @@ function PackageCard({
             {dict.installLabel}
           </span>
         </div>
-        <div className="space-y-1.5 px-5 py-5 font-mono text-[13px] leading-6">
+        <div className="space-y-1.5 px-5 py-4 font-mono text-[13px] leading-6">
           <div className="flex items-center gap-2 text-zinc-300">
             <span className="select-none text-emerald-400">$</span>
             <span>{tool.installCommand}</span>
-          </div>
-          <div className="text-zinc-500">
-            <span className="text-emerald-400">+</span> {tool.name}
-          </div>
-          <div className="flex items-center gap-2 text-zinc-500">
-            <span>{dict.outputAdded}</span>
             <span className="inline-block h-3.5 w-[7px] translate-y-[1px] bg-emerald-400 motion-safe:animate-pulse" />
           </div>
         </div>
@@ -59,15 +53,12 @@ function PackageCard({
 
       <div className="flex flex-1 flex-col p-6">
         <div className="flex items-start justify-between gap-3">
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2">
             <h3 className="font-mono text-lg font-semibold text-zinc-900 transition group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
               {tool.name}
             </h3>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#cb3837]/20 bg-[#cb3837]/10 px-2.5 py-0.5 text-[11px] font-medium text-[#cb3837] dark:text-red-400">
-              <FaNpm className="h-3.5 w-3.5" /> npm
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2.5 py-0.5 text-[11px] font-medium text-emerald-700 dark:text-emerald-400">
-              {dict.zeroDeps}
+            <span className="inline-flex items-center gap-1 text-[11px] font-medium text-zinc-500 dark:text-zinc-400">
+              <FaNpm className="h-3.5 w-3.5 text-[#cb3837] dark:text-red-400" /> {dict.zeroDeps}
             </span>
           </div>
           <div className="flex items-center gap-3 pt-1">
@@ -97,7 +88,7 @@ function PackageCard({
         </p>
 
         <div className="mt-4 flex flex-wrap gap-1.5">
-          {text.features.slice(0, 4).map((feature) => (
+          {text.features.slice(0, 3).map((feature) => (
             <span
               key={feature}
               className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-medium text-emerald-700 dark:text-emerald-400"
