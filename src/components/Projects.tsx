@@ -51,32 +51,32 @@ function ProjectLinks({ project, dict }: { project: ProjectItem; dict: ProjectsD
 // Asimetrik grid'in "kahraman" kartı: iki kolon kaplar, sağında dekoratif panel taşır.
 function FeaturedProjectCard({ project, index, dict }: ProjectCardProps) {
   return (
-    <div className="group relative overflow-hidden rounded-2xl border border-zinc-200 bg-zinc-100/50 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30 hover:shadow-lg hover:shadow-emerald-500/5 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03] sm:col-span-2 lg:col-span-2 lg:row-span-2">
-      <div className="absolute inset-x-0 top-0 z-10 h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+    <div className="group relative overflow-hidden rounded-2xl border border-zinc-200/80 bg-white/60 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-500/10 dark:border-white/10 dark:bg-white/[0.02] dark:hover:bg-white/[0.04] dark:hover:border-white/20 sm:col-span-2 lg:col-span-2 lg:row-span-2">
+      <div className="absolute inset-x-0 top-0 z-10 h-0.5 bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       <div className="grid h-full sm:grid-cols-[1.35fr_1fr]">
         <div className="flex flex-col justify-between p-6 sm:p-8">
           <div>
             <div className="flex items-center gap-3">
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 transition-colors duration-300 group-hover:border-emerald-400/40">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 transition-all duration-300 group-hover:bg-emerald-500/20 group-hover:scale-105">
                 <HiCodeBracket className="h-5 w-5" />
               </span>
-              <h3 className="text-2xl font-semibold leading-snug text-zinc-900 transition group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+              <h3 className="text-2xl font-bold leading-snug text-zinc-900 transition group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400">
                 {project.title}
               </h3>
             </div>
 
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-zinc-600 dark:text-zinc-400">
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-zinc-600 dark:text-zinc-300">
               {project.description}
             </p>
           </div>
 
           <div className="mt-8">
-            <div className="flex flex-wrap gap-1.5">
+            <div className="flex flex-wrap gap-2">
               {project.technologies.map((tech) => (
                 <span
                   key={tech}
-                  className="rounded-full border border-emerald-500/10 bg-emerald-500/10 px-3 py-0.5 text-[11px] font-medium text-emerald-700 dark:text-emerald-400"
+                  className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-semibold text-emerald-800 dark:text-emerald-300"
                 >
                   {tech}
                 </span>
@@ -89,10 +89,10 @@ function FeaturedProjectCard({ project, index, dict }: ProjectCardProps) {
         </div>
 
         {/* Dekoratif panel: devasa sıra numarası + gradient — asimetriye görsel ağırlık katar */}
-        <div className="relative hidden items-center justify-center overflow-hidden border-l border-zinc-200/60 bg-gradient-to-br from-emerald-500/[0.06] to-blue-500/[0.06] sm:flex dark:border-white/5 dark:from-emerald-500/10 dark:to-blue-500/10">
+        <div className="relative hidden items-center justify-center overflow-hidden border-l border-zinc-200/80 bg-gradient-to-br from-emerald-500/[0.08] to-blue-500/[0.08] sm:flex dark:border-white/10 dark:from-emerald-500/15 dark:to-blue-500/15">
           <span
             aria-hidden
-            className="select-none font-mono text-[9rem] font-bold leading-none text-zinc-900/[0.04] transition-colors duration-300 group-hover:text-emerald-500/[0.12] dark:text-white/[0.05]"
+            className="select-none font-mono text-[9rem] font-black leading-none text-zinc-900/[0.05] transition-colors duration-300 group-hover:text-emerald-500/[0.18] dark:text-white/[0.06]"
           >
             {String(index + 1).padStart(2, "0")}
           </span>
@@ -104,24 +104,24 @@ function FeaturedProjectCard({ project, index, dict }: ProjectCardProps) {
 
 function ProjectCard({ project, dict }: ProjectCardProps) {
   return (
-    <div className="group relative flex flex-col justify-between rounded-2xl border border-zinc-200 bg-zinc-100/50 p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/30 hover:bg-zinc-150/60 dark:border-white/5 dark:bg-white/[0.01] dark:hover:bg-white/[0.03] hover:shadow-lg dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-emerald-500/5">
-      {/* Üst kenarda incecik vurgu çizgisi — "öne çıkan" karttaki devasa numara burada tekrarlanmaz */}
-      <div className="absolute inset-x-0 top-0 h-px rounded-t-2xl bg-gradient-to-r from-transparent via-emerald-500/40 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+    <div className="group relative flex flex-col justify-between rounded-2xl border border-zinc-200/80 bg-white/60 p-6 backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:border-emerald-500/40 hover:bg-white dark:border-white/10 dark:bg-white/[0.02] dark:hover:bg-white/[0.04] dark:hover:border-white/20 hover:shadow-xl hover:shadow-emerald-500/10">
+      {/* Üst kenarda incecik vurgu çizgisi */}
+      <div className="absolute inset-x-0 top-0 h-0.5 rounded-t-2xl bg-gradient-to-r from-transparent via-emerald-500 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
       <div>
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-emerald-500/20 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 transition-colors duration-300 group-hover:border-emerald-400/40">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 transition-all duration-300 group-hover:bg-emerald-500/20 group-hover:scale-105">
               <HiCodeBracket className="h-5 w-5" />
             </span>
-            <h3 className="text-lg font-semibold leading-snug text-zinc-900 transition group-hover:text-emerald-700 dark:text-white dark:group-hover:text-emerald-400">
+            <h3 className="text-lg font-bold leading-snug text-zinc-900 transition group-hover:text-emerald-600 dark:text-white dark:group-hover:text-emerald-400">
               {project.title}
             </h3>
           </div>
           <ProjectLinks project={project} dict={dict} />
         </div>
 
-        <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400 line-clamp-4">
+        <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-300 line-clamp-4">
           {project.description}
         </p>
       </div>
@@ -130,7 +130,7 @@ function ProjectCard({ project, dict }: ProjectCardProps) {
         {project.technologies.map((tech) => (
           <span
             key={tech}
-            className="rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-[10px] font-medium text-emerald-700 dark:text-emerald-400 border border-emerald-500/10"
+            className="rounded-full bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 text-[11px] font-semibold text-emerald-800 dark:text-emerald-300"
           >
             {tech}
           </span>

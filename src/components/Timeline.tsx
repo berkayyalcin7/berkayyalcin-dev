@@ -32,30 +32,30 @@ export default function Timeline({ dict }: { dict: Dictionary["timeline"] }) {
                 
                 {/* Nokta Göstergesi */}
                 <div className="flex items-center mb-6 pl-4">
-                  <div className="relative flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-950 transition-all duration-300 group-hover:border-emerald-500/40 group-hover:shadow-[0_0_12px_rgba(16,185,129,0.15)] dark:group-hover:shadow-[0_0_12px_rgba(16,185,129,0.25)]">
-                    <span className="absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-0 motion-safe:group-hover:animate-ping group-hover:opacity-20"></span>
-                    <span className="h-2 w-2 rounded-full bg-zinc-400 dark:bg-zinc-600 transition-colors duration-300 group-hover:bg-emerald-500 shadow-sm" />
+                  <div className="relative flex h-10 w-10 items-center justify-center rounded-full border border-emerald-500/30 bg-white dark:border-emerald-400/30 dark:bg-zinc-950 transition-all duration-300 group-hover:border-emerald-500 group-hover:shadow-[0_0_16px_rgba(16,185,129,0.3)]">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-20 motion-safe:animate-ping"></span>
+                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-500 shadow-sm" />
                   </div>
-                  <div className="ml-3 text-[10px] font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider bg-zinc-100/80 dark:bg-zinc-900/50 border border-zinc-200 dark:border-white/5 px-2 py-0.5 rounded-full transition group-hover:text-emerald-700 dark:group-hover:text-emerald-400 group-hover:border-emerald-500/20">
+                  <div className="ml-3 text-[10px] font-extrabold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full transition-all group-hover:border-emerald-500/40">
                     {exp.period}
                   </div>
                 </div>
 
                 {/* Kart İçeriği */}
-                <div className="flex-1 flex flex-col justify-between rounded-2xl border border-zinc-200 bg-zinc-100/50 dark:border-white/5 dark:bg-white/[0.01] p-5 backdrop-blur-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-emerald-500/30 group-hover:bg-zinc-150/60 dark:group-hover:bg-white/[0.02] hover:shadow-lg dark:hover:shadow-[0_8px_30px_rgb(0,0,0,0.4)] hover:shadow-emerald-500/5 min-h-[240px] relative">
-                  <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                <div className="flex-1 flex flex-col justify-between rounded-2xl border border-zinc-200/80 bg-white/60 dark:border-white/10 dark:bg-white/[0.02] p-5 backdrop-blur-md transition-all duration-300 group-hover:-translate-y-1 group-hover:border-emerald-500/40 group-hover:bg-white dark:group-hover:bg-white/[0.04] hover:shadow-xl hover:shadow-emerald-500/10 min-h-[240px] relative">
+                  <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-emerald-500/0 via-emerald-500/0 to-emerald-500/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   
                   <div>
-                    <h3 className="text-sm font-semibold text-zinc-900 dark:text-white transition group-hover:text-emerald-700 dark:group-hover:text-emerald-400">
+                    <h3 className="text-sm font-bold text-zinc-900 dark:text-white transition group-hover:text-emerald-600 dark:group-hover:text-emerald-400">
                       {exp.company}
                     </h3>
-                    <p className="text-xs text-emerald-700 dark:text-emerald-400/80 font-medium mt-1">
+                    <p className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold mt-1">
                       {exp.role}
                     </p>
                     
-                    <ul className="mt-4 space-y-1.5 text-xs text-zinc-600 dark:text-zinc-400 list-disc pl-4 leading-relaxed">
+                    <ul className="mt-4 space-y-1.5 text-xs text-zinc-600 dark:text-zinc-300 list-disc pl-4 leading-relaxed">
                       {exp.points.map((point, pIdx) => (
-                        <li key={pIdx} className="hover:text-zinc-900 dark:hover:text-zinc-300 transition-colors">
+                        <li key={pIdx} className="hover:text-zinc-900 dark:hover:text-white transition-colors">
                           {point}
                         </li>
                       ))}

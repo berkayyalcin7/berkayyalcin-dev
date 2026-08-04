@@ -179,3 +179,36 @@ html.dark :focus-visible {
     transform: translate(-50%, -33%) scale(1.2);
   }
 }
+
+/* Ambient glow pulse for featured cards and badges */
+@keyframes ambient-glow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.75;
+    transform: scale(1.05);
+  }
+}
+
+.animate-ambient-glow {
+  animation: ambient-glow 6s ease-in-out infinite;
+}
+
+/* Subtle Shimmer for primary buttons and cards */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 4s infinite;
+}
+
