@@ -48,7 +48,6 @@ export default async function Home({ params }: PageParams) {
       description: services.metaDescription,
       url: pageUrl,
       image: `${siteConfig.url}/icon.png`,
-      telephone: siteConfig.phone,
       email: siteConfig.social.emailAddress,
       priceRange: "₺₺",
       address: {
@@ -64,10 +63,9 @@ export default async function Home({ params }: PageParams) {
       ],
       contactPoint: {
         "@type": "ContactPoint",
-        telephone: siteConfig.phone,
         contactType: "customer service",
         availableLanguage: ["Turkish", "English"],
-        url: whatsappUrl(),
+        url: `${siteConfig.url}${whatsappUrl()}`,
       },
       hasOfferCatalog: {
         "@type": "OfferCatalog",

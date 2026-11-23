@@ -9,7 +9,6 @@ import {
   HiShoppingBag,
   HiWrenchScrewdriver,
   HiCheck,
-  HiPhone,
   HiArrowRight,
   HiMagnifyingGlass,
   HiLockClosed,
@@ -17,7 +16,7 @@ import {
   HiPlus,
 } from "react-icons/hi2";
 import Reveal from "@/components/Reveal";
-import { siteConfig, whatsappUrl } from "@/lib/site-config";
+import { whatsappUrl } from "@/lib/site-config";
 import { localeHref, fill } from "@/lib/locale-link";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -49,7 +48,6 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
 
 export default function ServicesLanding({ lang, dict }: Props) {
   const wa = whatsappUrl(dict.whatsappGreeting);
-  const tel = `tel:${siteConfig.phone}`;
 
   return (
     <>
@@ -88,9 +86,8 @@ export default function ServicesLanding({ lang, dict }: Props) {
                 {dict.whatsappCta}
                 <HiArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" />
               </a>
-              <a href={tel} className={ghostBtn}>
-                <HiPhone className="h-4 w-4" />
-                <span className="tabular-nums">{siteConfig.phoneDisplay}</span>
+              <a href="#paketler" className={ghostBtn}>
+                {dict.final.secondaryCta}
               </a>
             </div>
 
@@ -358,13 +355,6 @@ export default function ServicesLanding({ lang, dict }: Props) {
               <a href={wa} target="_blank" rel="noopener noreferrer" className={primaryBtn}>
                 <FaWhatsapp className="h-5 w-5" />
                 {dict.whatsappCta}
-              </a>
-              <a
-                href={tel}
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-6 py-3.5 text-base font-semibold text-white transition hover:border-emerald-400 hover:text-emerald-300"
-              >
-                <HiPhone className="h-4 w-4" />
-                <span className="tabular-nums">{siteConfig.phoneDisplay}</span>
               </a>
             </div>
           </div>

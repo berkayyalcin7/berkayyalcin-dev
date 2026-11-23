@@ -350,7 +350,7 @@
   "skipToContent": "İçeriğe atla",
   "services": {
     "metaTitle": "Tekirdağ Web Tasarım | Uygun Fiyatlı Web Sitesi, Domain & Hosting",
-    "metaDescription": "Tekirdağ, Çorlu, Çerkezköy ve çevresinde uygun fiyatlı web sitesi tasarımı, domain ve hosting hizmeti. Mobil uyumlu, Google'da bulunabilir siteler. WhatsApp: 0538 528 22 34",
+    "metaDescription": "Tekirdağ, Çorlu, Çerkezköy ve çevresinde uygun fiyatlı web sitesi tasarımı, domain ve hosting hizmeti. Mobil uyumlu, Google'da bulunabilir siteler.",
     "keywords": [
       "Tekirdağ web tasarım",
       "Çorlu web tasarım",
@@ -365,7 +365,6 @@
     ],
     "whatsappCta": "WhatsApp'tan Yaz",
     "whatsappGreeting": "Merhaba Berkay Bey, web sitesi hakkında bilgi almak istiyorum.",
-    "callCta": "Hemen Ara",
     "hero": {
       "badge": "Tekirdağ · Çorlu · Çerkezköy · Tüm Türkiye",
       "titleLead": "Tekirdağ'da",
@@ -547,7 +546,7 @@
     "final": {
       "title": "Sitenizi konuşalım",
       "subtitle": "Bir mesaj kadar uzağız. WhatsApp'tan yazın, ücretsiz ön görüşme ve net teklif alın.",
-      "phoneLabel": "Telefon"
+      "secondaryCta": "Paketleri İncele"
     },
     "footer": {
       "tagline": "Tekirdağ web tasarım, domain ve hosting hizmetleri.",

@@ -66,7 +66,7 @@ export default async function Image({ params }: Params) {
             {dict.services.hero.badge}
           </div>
           <div style={{ marginTop: 14, fontSize: 28, color: "#71717a" }}>
-            {siteConfig.name} · WhatsApp {siteConfig.phoneDisplay}
+            {siteConfig.name} · berkayyalcin.dev
           </div>
         </div>
 

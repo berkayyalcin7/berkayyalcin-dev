@@ -350,7 +350,7 @@
   "skipToContent": "Skip to content",
   "services": {
     "metaTitle": "Tekirdağ Web Design | Affordable Websites, Domain & Hosting",
-    "metaDescription": "Affordable website design, domain and hosting in Tekirdağ, Çorlu, Çerkezköy and across Turkey. Mobile-friendly sites people can find on Google. WhatsApp: +90 538 528 22 34",
+    "metaDescription": "Affordable website design, domain and hosting in Tekirdağ, Çorlu, Çerkezköy and across Turkey. Mobile-friendly sites people can find on Google.",
     "keywords": [
       "Tekirdağ web design",
       "Çorlu web design",
@@ -360,7 +360,6 @@
     ],
     "whatsappCta": "Message on WhatsApp",
     "whatsappGreeting": "Hi Berkay, I'd like to get information about a website.",
-    "callCta": "Call Now",
     "hero": {
       "badge": "Tekirdağ · Çorlu · Çerkezköy · All of Turkey",
       "titleLead": "Tekirdağ's",
@@ -542,7 +541,7 @@
     "final": {
       "title": "Let's talk about your site",
       "subtitle": "Just one message away. Write on WhatsApp for a free consultation and a clear quote.",
-      "phoneLabel": "Phone"
+      "secondaryCta": "See Packages"
     },
     "footer": {
       "tagline": "Web design, domain and hosting services in Tekirdağ.",

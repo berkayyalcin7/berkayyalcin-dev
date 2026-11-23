@@ -2,8 +2,6 @@
 export const siteConfig = {
   name: "Berkay Yalçın",
   url: "https://berkayyalcin.dev",
-  phone: "+905385282234",
-  phoneDisplay: "+90 538 528 22 34",
   social: {
     github: "https://github.com/berkayyalcin7",
     linkedin: "https://tr.linkedin.com/in/berkay-yalçın-59289b145",
@@ -36,8 +34,10 @@ export type NavItem =
   | (typeof siteConfig.servicesNav)[number];
 export type NavKey = NavItem["key"];
 
-/** WhatsApp sohbet linki; text verilirse mesaj kutusu önceden doldurulur. */
+/**
+ * WhatsApp sohbet linki; text verilirse mesaj kutusu önceden doldurulur.
+ * Numara spam botlarından saklanır: link /api/whatsapp üzerinden sunucuda yönlenir.
+ */
 export function whatsappUrl(text?: string): string {
-  const base = `https://wa.me/${siteConfig.phone.slice(1)}`;
-  return text ? `${base}?text=${encodeURIComponent(text)}` : base;
+  return text ? `/api/whatsapp?text=${encodeURIComponent(text)}` : "/api/whatsapp";
 }

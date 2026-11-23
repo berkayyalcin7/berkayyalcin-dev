@@ -29,7 +29,7 @@ export default function Footer({ lang, dict, services }: FooterProps) {
             className="inline-flex items-center gap-1.5 font-medium text-emerald-700 transition hover:text-emerald-600 dark:text-emerald-400 dark:hover:text-emerald-300"
           >
             <FaWhatsapp className="h-4 w-4" />
-            <span className="tabular-nums">{siteConfig.phoneDisplay}</span>
+            WhatsApp
           </a>
           <Link href={localeHref(lang, "/")} className={linkClass}>
             {services.footer.servicesLink}
