@@ -15,7 +15,7 @@ function escapeXml(value: string): string {
 }
 
 /**
- * Kanonik (EN, prefix'siz) URL'ler üzerinden tek bir besleme. Çevirisi olmayan
+ * Kanonik (TR, prefix'siz) URL'ler üzerinden tek bir besleme. Çevirisi olmayan
  * yazılar Türkçe orijinaliyle listelenir — localizePost'un fallback davranışı.
  */
 export async function GET() {

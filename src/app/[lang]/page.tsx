@@ -1,46 +1,31 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Header from "@/components/Header";
-import Hero from "@/components/Hero";
-import Stats from "@/components/Stats";
-import About from "@/components/About";
-import Timeline from "@/components/Timeline";
-import Skills from "@/components/Skills";
-import FeaturedPackages from "@/components/FeaturedPackages";
-import Projects from "@/components/Projects";
-import BlogTeaser from "@/components/BlogTeaser";
-import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import Reveal from "@/components/Reveal";
-import { siteConfig } from "@/lib/site-config";
+import ServicesLanding from "@/components/services/ServicesLanding";
+import { siteConfig, whatsappUrl } from "@/lib/site-config";
 import { getDictionary, hasLocale, buildHeaderDict } from "@/lib/i18n";
-import { canonicalPath } from "@/lib/locale-link";
-
-export const revalidate = 1800; // Blog sayfalarıyla aynı ISR aralığı; on-demand /api/revalidate'e ek emniyet ağı
+import { alternatesFor, canonicalPath } from "@/lib/locale-link";
 
 type PageParams = { params: Promise<{ lang: string }> };
 
 export async function generateMetadata({ params }: PageParams): Promise<Metadata> {
   const { lang } = await params;
   if (!hasLocale(lang)) return {};
-  const dict = await getDictionary(lang);
+  const { services } = await getDictionary(lang);
 
   return {
-    title: dict.meta.homeTitle,
-    description: dict.meta.homeDescription,
-    alternates: {
-      canonical: canonicalPath(lang, "/"),
-      languages: { en: "/", tr: "/tr", "x-default": "/" },
-    },
+    title: services.metaTitle,
+    description: services.metaDescription,
+    keywords: services.keywords,
+    alternates: alternatesFor(lang, "/"),
     openGraph: {
-      title: dict.meta.homeTitle,
-      description: dict.meta.homeDescription,
-      url: siteConfig.url,
+      title: services.metaTitle,
+      description: services.metaDescription,
+      url: `${siteConfig.url}${canonicalPath(lang, "/")}`,
       siteName: siteConfig.name,
       locale: lang === "tr" ? "tr_TR" : "en_US",
       type: "website",
-      // images bilinçli olarak yok: opengraph-image.tsx dosya konvansiyonu
-      // 1200x630 kartı üretir. Burada images vermek onu ezer.
     },
   };
 }
@@ -49,42 +34,62 @@ export default async function Home({ params }: PageParams) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
   const dict = await getDictionary(lang);
-  const headerDict = buildHeaderDict(dict);
+  const { services } = dict;
+  const pageUrl = `${siteConfig.url}${canonicalPath(lang, "/")}`;
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Berkay Yalçın",
-    "jobTitle": "Full Stack .NET Developer",
-    "url": "https://berkayyalcin.dev",
-    "sameAs": [
-      "https://github.com/berkayyalcin7",
-      "https://tr.linkedin.com/in/berkay-yalçın-59289b145"
-    ],
-    "worksFor": {
-      "@type": "Organization",
-      "name": "YKK Türkiye A.Ş"
+  // Yerel SEO: Google'ın "Tekirdağ web tasarım" gibi aramalarda işletmeyi
+  // tanıması için ProfessionalService + hizmet bölgeleri + SSS şeması.
+  const jsonLd = [
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "@id": `${siteConfig.url}/#business`,
+      name: `${siteConfig.name} — ${lang === "tr" ? "Web Tasarım" : "Web Design"}`,
+      description: services.metaDescription,
+      url: pageUrl,
+      image: `${siteConfig.url}/icon.png`,
+      telephone: siteConfig.phone,
+      email: siteConfig.social.emailAddress,
+      priceRange: "₺₺",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Çorlu",
+        addressRegion: "Tekirdağ",
+        addressCountry: "TR",
+      },
+      areaServed: [
+        { "@type": "AdministrativeArea", name: "Tekirdağ" },
+        ...services.area.districts.map((name) => ({ "@type": "City", name })),
+        { "@type": "Country", name: "Türkiye" },
+      ],
+      contactPoint: {
+        "@type": "ContactPoint",
+        telephone: siteConfig.phone,
+        contactType: "customer service",
+        availableLanguage: ["Turkish", "English"],
+        url: whatsappUrl(),
+      },
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: services.offer.title,
+        itemListElement: services.offer.items.map((item) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: item.title, description: item.body },
+        })),
+      },
+      founder: { "@type": "Person", name: siteConfig.name, url: `${siteConfig.url}/dev` },
+      sameAs: [siteConfig.social.github, siteConfig.social.linkedin],
     },
-    "address": {
-      "@type": "PostalAddress",
-      "addressCountry": "TR",
-      "addressLocality": "Tekirdağ / Çorlu"
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: services.faq.items.map((item) => ({
+        "@type": "Question",
+        name: item.q,
+        acceptedAnswer: { "@type": "Answer", text: item.a },
+      })),
     },
-    "description": dict.meta.homeDescription
-  };
-
-  const profilePageJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ProfilePage",
-    "mainEntity": {
-      "@type": "Person",
-      "name": "Berkay Yalçın",
-      "alternateName": "berkayyalcin",
-      "identifier": "berkayyalcin7",
-      "description": dict.profile.role,
-      "image": "https://berkayyalcin.dev/icon.png"
-    }
-  };
+  ];
 
   return (
     <>
@@ -92,43 +97,16 @@ export default async function Home({ params }: PageParams) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }}
+      <Header
+        lang={lang}
+        dict={buildHeaderDict(dict)}
+        nav={siteConfig.servicesNav}
+        whatsapp={{ href: whatsappUrl(services.whatsappGreeting), label: services.whatsappCta }}
       />
-      <Header lang={lang} dict={headerDict} />
       <main id="main-content" className="flex-1">
-        <Hero lang={lang} dict={dict.hero} profile={dict.profile} />
-        <Reveal>
-          <Stats dict={dict.stats} />
-        </Reveal>
-        <Reveal>
-          <About dict={dict.about} />
-        </Reveal>
-        <Reveal>
-          <Timeline dict={dict.timeline} />
-        </Reveal>
-        <Reveal>
-          <Skills dict={dict.skills} />
-        </Reveal>
-        <Reveal>
-          <FeaturedPackages
-            lang={lang}
-            dict={dict.featuredPackages}
-            packageTexts={{ trkit: dict.trkit, locakit: dict.locakit, utilkit: dict.utilkit }}
-          />
-        </Reveal>
-        <Reveal>
-          <Projects lang={lang} dict={dict.projects} />
-        </Reveal>
-        <Reveal>
-          <BlogTeaser lang={lang} dict={dict.blogTeaser} cardDict={dict.blogCard} />
-        </Reveal>
-        <Reveal>
-          <Contact dict={dict.contact} modalDict={dict.contactModal} />
-        </Reveal>
+        <ServicesLanding lang={lang} dict={services} />
       </main>
-      <Footer dict={dict.footer} />
+      <Footer lang={lang} dict={dict.footer} services={services} />
     </>
   );
 }

@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { siteConfig } from "@/lib/site-config";
 import { getDictionary, hasLocale, defaultLocale } from "@/lib/i18n";
 
-export const alt = "Berkay Yalçın — Full Stack .NET Developer";
+export const alt = "Tekirdağ Web Tasarım — Web Sitesi, Domain & Hosting";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -53,7 +53,7 @@ export default async function Image({ params }: Params) {
               lineHeight: 1.05,
             }}
           >
-            {siteConfig.name}
+            {dict.services.metaTitle.split(" | ")[0]}
           </div>
           <div
             style={{
@@ -63,10 +63,10 @@ export default async function Image({ params }: Params) {
               lineHeight: 1.3,
             }}
           >
-            {dict.profile.role}
+            {dict.services.hero.badge}
           </div>
           <div style={{ marginTop: 14, fontSize: 28, color: "#71717a" }}>
-            {dict.profile.location}
+            {siteConfig.name} · WhatsApp {siteConfig.phoneDisplay}
           </div>
         </div>
 

@@ -13,8 +13,15 @@ import {
   HiBars3,
   HiXMark,
   HiLanguage,
+  HiGlobeAlt,
+  HiSquares2X2,
+  HiTag,
+  HiArrowPath,
+  HiQuestionMarkCircle,
+  HiCodeBracket,
 } from "react-icons/hi2";
-import { siteConfig, type NavKey } from "@/lib/site-config";
+import { FaWhatsapp } from "react-icons/fa";
+import { siteConfig, type NavItem, type NavKey } from "@/lib/site-config";
 import { localeHref } from "@/lib/locale-link";
 import ContactButton, { type ContactModalDict } from "@/components/ContactButton";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -33,19 +40,29 @@ export type HeaderDict = {
 type HeaderProps = {
   lang: string;
   dict: HeaderDict;
+  /** Verilmezse portfolyo menüsü (siteConfig.nav) kullanılır. */
+  nav?: readonly NavItem[];
+  /** Verilirse sağdaki CTA, e-posta modalı yerine WhatsApp linki olur. */
+  whatsapp?: { href: string; label: string };
 };
 
-const navIcons: Record<string, IconType> = {
-  "/#hakkimda": HiUser,
-  "/#projeler": HiFolder,
-  "/araclar": HiWrenchScrewdriver,
-  "/#blog": HiNewspaper,
-  "/#iletisim": HiChatBubbleLeftRight,
+const navIcons: Record<NavKey, IconType> = {
+  services: HiGlobeAlt,
+  about: HiUser,
+  projects: HiFolder,
+  tools: HiWrenchScrewdriver,
+  blog: HiNewspaper,
+  contact: HiChatBubbleLeftRight,
+  offer: HiSquares2X2,
+  packages: HiTag,
+  process: HiArrowPath,
+  faq: HiQuestionMarkCircle,
+  dev: HiCodeBracket,
 };
 
 const MOBILE_MENU_ID = "mobile-nav";
 
-export default function Header({ lang, dict }: HeaderProps) {
+export default function Header({ lang, dict, nav = siteConfig.nav, whatsapp }: HeaderProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -70,16 +87,19 @@ export default function Header({ lang, dict }: HeaderProps) {
   // değiştirici hedefi için dil prefix'i soyulmuş normalize yol kullanılır.
   const basePath = pathname.replace(/^\/(tr|en)(?=\/|$)/, "") || "/";
 
-  const homePath = lang === "en" ? "/" : `/${lang}`;
-  const isHome = basePath === "/";
+  const homePath = localeHref(lang, "/");
 
-  // Scrollspy: ana sayfada görünür bölümün nav linkini vurgula
+  // "/dev#blog" gibi bir link mevcut sayfaya aitse hash'ini döndürür (scrollspy için).
+  const pageHash = (href: string) => {
+    const [path, hash] = href.split("#");
+    return hash && (path || "/") === basePath ? hash : null;
+  };
+  const sectionKey = nav.map((item) => pageHash(item.href) ?? "").join(",");
+
+  // Scrollspy: görünür bölümün nav linkini vurgula
   useEffect(() => {
-    if (!isHome) return;
-
-    const sectionIds = siteConfig.nav
-      .filter((item) => item.href.startsWith("/#"))
-      .map((item) => item.href.slice(2));
+    const sectionIds = sectionKey.split(",").filter(Boolean);
+    if (sectionIds.length === 0) return;
 
     const sections = sectionIds
       .map((id) => document.getElementById(id))
@@ -101,21 +121,26 @@ export default function Header({ lang, dict }: HeaderProps) {
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, [isHome]);
+  }, [sectionKey]);
 
-  const isActive = (href: string) =>
-    (isHome && href === `/#${activeSection}`) ||
-    basePath === href ||
-    (!href.startsWith("/#") && href !== "/" && basePath.startsWith(`${href}/`));
+  const isActive = (href: string) => {
+    const hash = pageHash(href);
+    if (hash) return hash === activeSection;
+    if (href.includes("#")) return false;
+    return basePath === href || (href !== "/" && basePath.startsWith(`${href}/`));
+  };
 
   // Dil değiştirici: mevcut yolun diğer dildeki karşılığı.
-  // EN prefix'siz kanoniktir; TR /tr prefix'i alır.
-  const trTarget = basePath === "/" ? "/tr" : `/tr${basePath}`;
-  const enTarget = basePath;
+  // TR prefix'siz kanoniktir; EN /en prefix'i alır.
   const localeSegments = [
-    { code: "TR", href: trTarget, active: lang === "tr" },
-    { code: "EN", href: enTarget, active: lang !== "tr" },
+    { code: "TR", href: basePath, active: lang === "tr" },
+    { code: "EN", href: localeHref("en", basePath), active: lang !== "tr" },
   ];
+
+  const ctaClass =
+    "hidden sm:inline-flex items-center gap-1.5 rounded-full border border-zinc-200 px-4 py-1.5 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-700 dark:border-white/15 dark:text-white dark:hover:border-emerald-400/60 dark:hover:text-emerald-400";
+  const mobileCtaClass =
+    "flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-3 py-2.5 text-sm font-semibold text-black transition hover:bg-emerald-400";
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/80 dark:border-white/10 dark:bg-black/60 backdrop-blur-md transition-colors duration-300">
@@ -127,9 +152,9 @@ export default function Header({ lang, dict }: HeaderProps) {
           berkayyalcin<span className="text-emerald-700 dark:text-emerald-400">.dev</span>
         </Link>
 
-        <nav aria-label={dict.mainNav} className="hidden items-center gap-8 sm:flex">
-          {siteConfig.nav.map((item) => {
-            const Icon = navIcons[item.href];
+        <nav aria-label={dict.mainNav} className="hidden items-center gap-6 lg:flex">
+          {nav.map((item) => {
+            const Icon = navIcons[item.key];
             return (
               <Link
                 key={item.href}
@@ -180,12 +205,16 @@ export default function Header({ lang, dict }: HeaderProps) {
             )}
           </div>
           <ThemeToggle ariaLabel={dict.themeToggle} />
-          <ContactButton
-            dict={dict.contactModal}
-            className="hidden sm:inline-flex rounded-full border border-zinc-200 px-4 py-1.5 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-700 dark:border-white/15 dark:text-white dark:hover:border-emerald-400/60 dark:hover:text-emerald-400"
-          >
-            {dict.contactCta}
-          </ContactButton>
+          {whatsapp ? (
+            <a href={whatsapp.href} target="_blank" rel="noopener noreferrer" className={ctaClass}>
+              <FaWhatsapp className="h-4 w-4" />
+              {whatsapp.label}
+            </a>
+          ) : (
+            <ContactButton dict={dict.contactModal} className={ctaClass}>
+              {dict.contactCta}
+            </ContactButton>
+          )}
 
           {/* Mobil menü butonu */}
           <button
@@ -195,7 +224,7 @@ export default function Header({ lang, dict }: HeaderProps) {
             aria-label={isMenuOpen ? dict.closeMenu : dict.openMenu}
             aria-expanded={isMenuOpen}
             aria-controls={MOBILE_MENU_ID}
-            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200/60 bg-zinc-100/50 text-zinc-600 transition hover:border-emerald-500/40 hover:text-emerald-600 dark:border-white/5 dark:bg-white/[0.01] dark:text-zinc-400 dark:hover:border-emerald-500/30 dark:hover:text-emerald-400 sm:hidden"
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-zinc-200/60 bg-zinc-100/50 text-zinc-600 transition hover:border-emerald-500/40 hover:text-emerald-600 dark:border-white/5 dark:bg-white/[0.01] dark:text-zinc-400 dark:hover:border-emerald-500/30 dark:hover:text-emerald-400 lg:hidden"
           >
             {isMenuOpen ? <HiXMark className="h-5 w-5" /> : <HiBars3 className="h-5 w-5" />}
           </button>
@@ -207,11 +236,11 @@ export default function Header({ lang, dict }: HeaderProps) {
         <nav
           id={MOBILE_MENU_ID}
           aria-label={dict.mainNav}
-          className="border-t border-zinc-200 bg-white/95 px-6 py-4 backdrop-blur-md dark:border-white/10 dark:bg-black/90 sm:hidden"
+          className="border-t border-zinc-200 bg-white/95 px-6 py-4 backdrop-blur-md dark:border-white/10 dark:bg-black/90 lg:hidden"
         >
           <ul className="flex flex-col gap-1">
-            {siteConfig.nav.map((item) => {
-              const Icon = navIcons[item.href];
+            {nav.map((item) => {
+              const Icon = navIcons[item.key];
               return (
                 <li key={item.href}>
                   <Link
@@ -226,12 +255,16 @@ export default function Header({ lang, dict }: HeaderProps) {
               );
             })}
             <li className="mt-2 border-t border-zinc-200 pt-3 dark:border-white/10">
-              <ContactButton
-                dict={dict.contactModal}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-3 py-2.5 text-sm font-semibold text-black transition hover:bg-emerald-400"
-              >
-                {dict.contactCta}
-              </ContactButton>
+              {whatsapp ? (
+                <a href={whatsapp.href} target="_blank" rel="noopener noreferrer" className={mobileCtaClass}>
+                  <FaWhatsapp className="h-4 w-4" />
+                  {whatsapp.label}
+                </a>
+              ) : (
+                <ContactButton dict={dict.contactModal} className={mobileCtaClass}>
+                  {dict.contactCta}
+                </ContactButton>
+              )}
             </li>
           </ul>
         </nav>

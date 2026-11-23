@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
 import { tools, type ToolPackage } from "@/lib/tools";
 import { getDictionary, hasLocale, buildHeaderDict, type Dictionary } from "@/lib/i18n";
-import { localeHref, fill, canonicalPath } from "@/lib/locale-link";
+import { localeHref, fill, alternatesFor } from "@/lib/locale-link";
 
 type PageParams = { params: Promise<{ lang: string }> };
 
@@ -22,10 +22,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   return {
     title: `${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
     description: dict.toolsPage.metaDescription,
-    alternates: {
-      canonical: canonicalPath(lang, "/araclar"),
-      languages: { en: "/araclar", tr: "/tr/araclar", "x-default": "/araclar" },
-    },
+    alternates: alternatesFor(lang, "/araclar"),
   };
 }
 
@@ -170,7 +167,7 @@ export default async function ToolsHubPage({ params }: PageParams) {
           </div>
         </div>
       </main>
-      <Footer dict={dict.footer} />
+      <Footer lang={lang} dict={dict.footer} services={dict.services} />
     </>
   );
 }

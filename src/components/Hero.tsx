@@ -55,13 +55,13 @@ export default function Hero({ lang, dict, profile }: HeroProps) {
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <a
-                href={localeHref(lang, "/#blog")}
+                href={localeHref(lang, "/dev#blog")}
                 className="rounded-full bg-emerald-500 px-6 py-3 text-sm font-semibold text-black transition hover:bg-emerald-400 hover:shadow-lg hover:shadow-emerald-500/10"
               >
                 {dict.ctaBlog}
               </a>
               <a
-                href={localeHref(lang, "/#iletisim")}
+                href={localeHref(lang, "/dev#iletisim")}
                 className="rounded-full border border-zinc-200 px-6 py-3 text-sm font-semibold text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-700 dark:border-white/15 dark:text-white dark:hover:border-emerald-400/60 dark:hover:text-emerald-400"
               >
                 {dict.ctaContact}

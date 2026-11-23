@@ -9,7 +9,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
 import { getDictionary, hasLocale, buildHeaderDict } from "@/lib/i18n";
-import { localeHref } from "@/lib/locale-link";
+import { localeHref, alternatesFor } from "@/lib/locale-link";
 
 type PageParams = { params: Promise<{ lang: string }> };
 
@@ -20,9 +20,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   return {
     title: `trkit | ${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
     description: dict.trkit.metaDescription,
-    alternates: {
-      languages: { en: "/araclar/trkit", tr: "/tr/araclar/trkit", "x-default": "/araclar/trkit" },
-    },
+    alternates: alternatesFor(lang, "/araclar/trkit"),
   };
 }
 
@@ -104,7 +102,7 @@ export default async function TrkitPage({ params }: PageParams) {
           </p>
         </div>
       </main>
-      <Footer dict={dict.footer} />
+      <Footer lang={lang} dict={dict.footer} services={dict.services} />
     </>
   );
 }

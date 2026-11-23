@@ -1,16 +1,22 @@
 {
   "meta": {
-    "siteTitle": "Berkay Yalçın - Blog",
-    "siteDescription": "Yazılım geliştirici Berkay Yalçın'ın kişisel portfolyo ve blog sitesi. Projeler, yazılar ve deneyimler.",
+    "siteTitle": "Berkay Yalçın | Tekirdağ Web Tasarım & Yazılım",
+    "siteDescription": "Tekirdağ ve Çorlu merkezli web tasarım, domain, hosting ve yazılım geliştirme hizmetleri. Berkay Yalçın kişisel blog ve portfolyo.",
     "homeTitle": "Berkay Yalçın | Full Stack .NET Developer",
     "homeDescription": "Berkay Yalçın'ın kişisel portfolyosu, .NET Core, mikroservis mimarileri ve yazılım geliştirme üzerine teknik blog yazıları."
   },
   "nav": {
+    "services": "Web Hizmetleri",
     "about": "Hakkımda",
     "projects": "Projeler",
     "tools": "Araçlar",
     "blog": "Blog",
-    "contact": "İletişim"
+    "contact": "İletişim",
+    "offer": "Hizmetler",
+    "packages": "Paketler",
+    "process": "Süreç",
+    "faq": "SSS",
+    "dev": "Geliştirici"
   },
   "header": {
     "contactCta": "İletişime Geç",
@@ -341,5 +347,213 @@
     "body": "Aradığınız sayfa taşınmış veya hiç var olmamış olabilir.",
     "backHome": "Ana Sayfaya Dön"
   },
-  "skipToContent": "İçeriğe atla"
+  "skipToContent": "İçeriğe atla",
+  "services": {
+    "metaTitle": "Tekirdağ Web Tasarım | Uygun Fiyatlı Web Sitesi, Domain & Hosting",
+    "metaDescription": "Tekirdağ, Çorlu, Çerkezköy ve çevresinde uygun fiyatlı web sitesi tasarımı, domain ve hosting hizmeti. Mobil uyumlu, Google'da bulunabilir siteler. WhatsApp: 0538 528 22 34",
+    "keywords": [
+      "Tekirdağ web tasarım",
+      "Çorlu web tasarım",
+      "Çerkezköy web sitesi",
+      "Tekirdağ web sitesi yaptırma",
+      "uygun fiyatlı web sitesi",
+      "domain hosting Tekirdağ",
+      "kurumsal web sitesi",
+      "Süleymanpaşa web tasarım",
+      "Kapaklı web tasarım",
+      "e-ticaret sitesi"
+    ],
+    "whatsappCta": "WhatsApp'tan Yaz",
+    "whatsappGreeting": "Merhaba Berkay Bey, web sitesi hakkında bilgi almak istiyorum.",
+    "callCta": "Hemen Ara",
+    "hero": {
+      "badge": "Tekirdağ · Çorlu · Çerkezköy · Tüm Türkiye",
+      "titleLead": "Tekirdağ'da",
+      "titleHighlight": " uygun fiyatlı web sitesi",
+      "titleTail": ", domain ve hosting tek elden.",
+      "subtitle": "İşletmenize mobil uyumlu, hızlı ve Google'da bulunabilen profesyonel bir web sitesi kuruyorum. Alan adı, hosting, SSL ve kurumsal e-posta dahil — size sadece WhatsApp'tan yazmak kalıyor.",
+      "trust": [
+        "Ücretsiz ön görüşme & net teklif",
+        "Mobil uyumlu + SEO altyapısı",
+        "Domain, hosting & SSL dahil"
+      ],
+      "mockUrl": "www.isletmeniz.com",
+      "mockName": "İşletmeniz",
+      "mockTagline": "Çorlu'nun en sevilen mekânı",
+      "mockCta": "Rezervasyon",
+      "mockSearch": "çorlu kafe",
+      "mockRank": "Google'da ilk sayfa",
+      "mockSpeed": "Hız skoru",
+      "mockMobile": "Mobil uyumlu"
+    },
+    "offer": {
+      "eyebrow": "Hizmetler",
+      "title": "İnternette var olmanız için gereken her şey",
+      "subtitle": "Ayrı ayrı firmalarla uğraşmayın. Tasarımdan yayına, alan adından e-postaya kadar tüm süreci tek kişi olarak ben yönetiyorum.",
+      "items": [
+        {
+          "title": "Kurumsal Web Sitesi",
+          "body": "Firmanızı, hizmetlerinizi ve referanslarınızı anlatan; telefonda ve bilgisayarda kusursuz görünen modern site."
+        },
+        {
+          "title": "Domain (Alan Adı)",
+          "body": ".com, .com.tr, .net — işletmenize uygun alan adını bulup adınıza tescil ediyorum."
+        },
+        {
+          "title": "Hosting & SSL",
+          "body": "Hızlı ve güvenli sunucu, ücretsiz SSL sertifikası (https) ve düzenli yedekleme."
+        },
+        {
+          "title": "Yerel SEO & Google Haritalar",
+          "body": "Google İşletme Profili kurulumu; \"Tekirdağ + hizmetiniz\" aramalarında öne çıkmanız için optimizasyon."
+        },
+        {
+          "title": "E-Ticaret & Katalog",
+          "body": "Ürünlerinizi listeleyin, WhatsApp'tan sipariş alın ya da online ödeme ile satış yapın."
+        },
+        {
+          "title": "Bakım & Destek",
+          "body": "İçerik güncelleme, teknik destek ve güvenlik bakımı. Sorun olduğunda muhatabınız belli."
+        }
+      ]
+    },
+    "packages": {
+      "eyebrow": "Paketler",
+      "title": "İhtiyacınıza göre net paketler",
+      "subtitle": "Fiyatlar işletmenizin ihtiyacına göre belirlenir; WhatsApp'tan yazın, aynı gün net teklif gönderelim. Gizli ücret yok.",
+      "priceLabel": "Uygun fiyat — teklif alın",
+      "cta": "Bu Paketi Sor",
+      "popular": "En çok tercih edilen",
+      "askTemplate": "Merhaba, \"{name}\" paketi için fiyat bilgisi almak istiyorum.",
+      "items": [
+        {
+          "name": "Başlangıç",
+          "desc": "Esnaf ve yeni işletmeler için tek sayfalık tanıtım sitesi.",
+          "features": [
+            "Tek sayfa, mobil uyumlu tasarım",
+            "WhatsApp & arama butonları",
+            "Google Haritalar konumu",
+            "1 yıl domain + hosting + SSL",
+            "Temel SEO ayarları"
+          ]
+        },
+        {
+          "name": "İşletme",
+          "desc": "Kurumsal kimliğini güçlendirmek isteyen firmalar için.",
+          "features": [
+            "5 sayfaya kadar kurumsal site",
+            "Hizmet / ürün / galeri sayfaları",
+            "İletişim formu & kurumsal e-posta",
+            "Google İşletme Profili kurulumu",
+            "Yerel SEO optimizasyonu",
+            "1 yıl domain + hosting + SSL"
+          ]
+        },
+        {
+          "name": "Pro / E-Ticaret",
+          "desc": "Online satış veya özel yazılım ihtiyacı olanlar için.",
+          "features": [
+            "Sınırsız sayfa & ürün",
+            "Online ödeme veya WhatsApp sipariş",
+            "Yönetim paneli",
+            "Gelişmiş SEO & hız optimizasyonu",
+            "Özel entegrasyonlar",
+            "3 ay ücretsiz bakım"
+          ]
+        }
+      ]
+    },
+    "process": {
+      "eyebrow": "Süreç",
+      "title": "4 adımda siteniz yayında",
+      "steps": [
+        {
+          "title": "WhatsApp'tan yazın",
+          "body": "İşinizi ve ne istediğinizi kısaca anlatın. Yüz yüze görüşme de olur."
+        },
+        {
+          "title": "Net teklif",
+          "body": "Aynı gün içinde kapsamı ve fiyatı net bir teklif gönderiyorum."
+        },
+        {
+          "title": "Tasarım & geliştirme",
+          "body": "Taslağı birlikte inceliyor, onayınızla siteyi hazırlıyorum."
+        },
+        {
+          "title": "Yayın & destek",
+          "body": "Domain ve hosting ayarlanır, siteniz yayına girer. Sonrasında da yanınızdayım."
+        }
+      ]
+    },
+    "why": {
+      "eyebrow": "Neden ben?",
+      "title": "Ajans fiyatı değil, mühendis kalitesi",
+      "body": "Ben Berkay Yalçın, Tekirdağ'da yaşayan bir bilgisayar mühendisiyim. Gün içinde kurumsal yazılımlar geliştiriyorum; aynı kaliteyi yerel işletmelere uygun fiyatla sunuyorum. Hazır şablon satmıyorum; hızlı, güvenli ve sizin olan bir site teslim ediyorum.",
+      "points": [
+        "Bölgedesiniz, yüz yüze görüşebiliriz",
+        "Muhatabınız tek kişi, aracı yok",
+        "Site ve domain sizin adınıza kayıtlı",
+        "Modern teknoloji: Next.js, hızlı ve güvenli"
+      ],
+      "devLink": "Geliştirici portfolyomu incele"
+    },
+    "area": {
+      "title": "Hizmet bölgeleri",
+      "body": "Tekirdağ'ın tüm ilçelerinde yüz yüze, Türkiye genelinde uzaktan hizmet veriyorum:",
+      "districts": [
+        "Süleymanpaşa",
+        "Çorlu",
+        "Çerkezköy",
+        "Kapaklı",
+        "Ergene",
+        "Saray",
+        "Malkara",
+        "Hayrabolu",
+        "Muratlı",
+        "Şarköy",
+        "Marmaraereğlisi"
+      ]
+    },
+    "faq": {
+      "eyebrow": "SSS",
+      "title": "Sıkça sorulan sorular",
+      "items": [
+        {
+          "q": "Web sitesi yaptırmak ne kadar sürer?",
+          "a": "Tek sayfalık tanıtım siteleri genellikle 3–7 gün, kurumsal siteler 1–2 hafta içinde yayına girer. Süre, içeriklerin (metin, fotoğraf) hazır olmasına bağlıdır."
+        },
+        {
+          "q": "Fiyatlar neye göre belirleniyor?",
+          "a": "Sayfa sayısı, istenen özellikler (e-ticaret, form, yönetim paneli) ve içerik desteğine göre. WhatsApp'tan yazdığınızda ihtiyacınızı dinleyip net bir fiyat veriyorum; sonradan sürpriz ücret çıkmaz."
+        },
+        {
+          "q": "Domain ve hosting dahil mi?",
+          "a": "Evet. Paketlerde ilk yıl domain (alan adı), hosting ve SSL sertifikası dahildir. Alan adı sizin adınıza tescil edilir."
+        },
+        {
+          "q": "Siteyi sonradan kendim güncelleyebilir miyim?",
+          "a": "İsterseniz yönetim paneli kuruyorum; isterseniz güncellemeleri bakım hizmetiyle ben yapıyorum."
+        },
+        {
+          "q": "Google'da çıkacak mıyım?",
+          "a": "Sitenizi Google'a kaydediyor, teknik SEO ve yerel SEO ayarlarını yapıyor, Google İşletme Profilinizi kuruyorum. Böylece \"Tekirdağ + hizmetiniz\" aramalarında bulunma şansınız ciddi şekilde artar."
+        },
+        {
+          "q": "Sadece Tekirdağ'a mı hizmet veriyorsunuz?",
+          "a": "Tekirdağ ve ilçelerinde yüz yüze görüşebiliyoruz; Türkiye'nin her yerinden uzaktan da çalışıyorum."
+        }
+      ]
+    },
+    "final": {
+      "title": "Sitenizi konuşalım",
+      "subtitle": "Bir mesaj kadar uzağız. WhatsApp'tan yazın, ücretsiz ön görüşme ve net teklif alın.",
+      "phoneLabel": "Telefon"
+    },
+    "footer": {
+      "tagline": "Tekirdağ web tasarım, domain ve hosting hizmetleri.",
+      "servicesLink": "Web Hizmetleri",
+      "devLink": "Geliştirici Portfolyosu"
+    },
+    "floatingLabel": "WhatsApp ile iletişime geçin"
+  }
 }

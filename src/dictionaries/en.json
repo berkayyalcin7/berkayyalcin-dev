@@ -6,11 +6,17 @@
     "homeDescription": "Berkay Yalçın's personal portfolio with technical blog posts on .NET Core, microservice architectures and software development."
   },
   "nav": {
+    "services": "Web Services",
     "about": "About",
     "projects": "Projects",
     "tools": "Tools",
     "blog": "Blog",
-    "contact": "Contact"
+    "contact": "Contact",
+    "offer": "Services",
+    "packages": "Packages",
+    "process": "Process",
+    "faq": "FAQ",
+    "dev": "Developer"
   },
   "header": {
     "contactCta": "Get in Touch",
@@ -341,5 +347,208 @@
     "body": "The page you're looking for may have been moved or never existed.",
     "backHome": "Back to Home"
   },
-  "skipToContent": "Skip to content"
+  "skipToContent": "Skip to content",
+  "services": {
+    "metaTitle": "Tekirdağ Web Design | Affordable Websites, Domain & Hosting",
+    "metaDescription": "Affordable website design, domain and hosting in Tekirdağ, Çorlu, Çerkezköy and across Turkey. Mobile-friendly sites people can find on Google. WhatsApp: +90 538 528 22 34",
+    "keywords": [
+      "Tekirdağ web design",
+      "Çorlu web design",
+      "website Tekirdağ",
+      "affordable website Turkey",
+      "domain hosting Tekirdağ"
+    ],
+    "whatsappCta": "Message on WhatsApp",
+    "whatsappGreeting": "Hi Berkay, I'd like to get information about a website.",
+    "callCta": "Call Now",
+    "hero": {
+      "badge": "Tekirdağ · Çorlu · Çerkezköy · All of Turkey",
+      "titleLead": "Tekirdağ's",
+      "titleHighlight": " affordable websites",
+      "titleTail": ", domain and hosting in one place.",
+      "subtitle": "I build fast, mobile-friendly professional websites that people can find on Google. Domain, hosting, SSL and business e-mail included — all you need to do is message me on WhatsApp.",
+      "trust": [
+        "Free consultation & clear quote",
+        "Mobile-friendly + SEO-ready",
+        "Domain, hosting & SSL included"
+      ],
+      "mockUrl": "www.yourbusiness.com",
+      "mockName": "Your Business",
+      "mockTagline": "Çorlu's favourite spot",
+      "mockCta": "Book a table",
+      "mockSearch": "çorlu cafe",
+      "mockRank": "First page on Google",
+      "mockSpeed": "Speed score",
+      "mockMobile": "Mobile-ready"
+    },
+    "offer": {
+      "eyebrow": "Services",
+      "title": "Everything you need to be online",
+      "subtitle": "No juggling several companies. I handle the whole thing — from design to launch, from domain to e-mail.",
+      "items": [
+        {
+          "title": "Business Website",
+          "body": "A modern site that presents your company, services and references — flawless on phone and desktop."
+        },
+        {
+          "title": "Domain Name",
+          "body": ".com, .com.tr, .net — I find the right domain and register it in your name."
+        },
+        {
+          "title": "Hosting & SSL",
+          "body": "Fast, secure hosting with a free SSL certificate (https) and regular backups."
+        },
+        {
+          "title": "Local SEO & Google Maps",
+          "body": "Google Business Profile setup and optimisation so you show up for local searches."
+        },
+        {
+          "title": "E-Commerce & Catalogue",
+          "body": "List your products, take orders on WhatsApp or sell online with payments."
+        },
+        {
+          "title": "Maintenance & Support",
+          "body": "Content updates, technical support and security maintenance — one clear contact."
+        }
+      ]
+    },
+    "packages": {
+      "eyebrow": "Packages",
+      "title": "Clear packages for your needs",
+      "subtitle": "Pricing depends on what your business needs; message me on WhatsApp and get a clear quote the same day. No hidden fees.",
+      "priceLabel": "Affordable — get a quote",
+      "cta": "Ask About This",
+      "popular": "Most popular",
+      "askTemplate": "Hi, I'd like pricing for the \"{name}\" package.",
+      "items": [
+        {
+          "name": "Starter",
+          "desc": "A one-page site for small shops and new businesses.",
+          "features": [
+            "One-page, mobile-friendly design",
+            "WhatsApp & call buttons",
+            "Google Maps location",
+            "1 year domain + hosting + SSL",
+            "Basic SEO setup"
+          ]
+        },
+        {
+          "name": "Business",
+          "desc": "For companies that want a stronger brand presence.",
+          "features": [
+            "Up to 5 pages",
+            "Service / product / gallery pages",
+            "Contact form & business e-mail",
+            "Google Business Profile setup",
+            "Local SEO optimisation",
+            "1 year domain + hosting + SSL"
+          ]
+        },
+        {
+          "name": "Pro / E-Commerce",
+          "desc": "For online sales or custom software needs.",
+          "features": [
+            "Unlimited pages & products",
+            "Online payments or WhatsApp orders",
+            "Admin panel",
+            "Advanced SEO & speed optimisation",
+            "Custom integrations",
+            "3 months free maintenance"
+          ]
+        }
+      ]
+    },
+    "process": {
+      "eyebrow": "Process",
+      "title": "Live in 4 steps",
+      "steps": [
+        {
+          "title": "Message on WhatsApp",
+          "body": "Briefly tell me about your business. We can meet in person too."
+        },
+        {
+          "title": "Clear quote",
+          "body": "Same day, you get a quote with a clear scope and price."
+        },
+        {
+          "title": "Design & build",
+          "body": "We review the draft together and I build the site once you approve."
+        },
+        {
+          "title": "Launch & support",
+          "body": "Domain and hosting are set up and your site goes live. I stay with you after."
+        }
+      ]
+    },
+    "why": {
+      "eyebrow": "Why me?",
+      "title": "Engineer quality, not agency prices",
+      "body": "I'm Berkay Yalçın, a computer engineer based in Tekirdağ. By day I build enterprise software; I bring the same quality to local businesses at a fair price. No off-the-shelf templates — a fast, secure site that's yours.",
+      "points": [
+        "Local — we can meet in person",
+        "One contact, no middlemen",
+        "Site and domain registered in your name",
+        "Modern stack: Next.js, fast and secure"
+      ],
+      "devLink": "See my developer portfolio"
+    },
+    "area": {
+      "title": "Service area",
+      "body": "In person across every district of Tekirdağ, remotely across Turkey:",
+      "districts": [
+        "Süleymanpaşa",
+        "Çorlu",
+        "Çerkezköy",
+        "Kapaklı",
+        "Ergene",
+        "Saray",
+        "Malkara",
+        "Hayrabolu",
+        "Muratlı",
+        "Şarköy",
+        "Marmaraereğlisi"
+      ]
+    },
+    "faq": {
+      "eyebrow": "FAQ",
+      "title": "Frequently asked questions",
+      "items": [
+        {
+          "q": "How long does a website take?",
+          "a": "One-page sites usually go live in 3–7 days, business sites in 1–2 weeks, depending on how ready your content is."
+        },
+        {
+          "q": "How is pricing decided?",
+          "a": "By page count, features (e-commerce, forms, admin panel) and content support. Message me and you'll get a clear price — no surprise fees later."
+        },
+        {
+          "q": "Are domain and hosting included?",
+          "a": "Yes. Packages include the first year of domain, hosting and SSL. The domain is registered in your name."
+        },
+        {
+          "q": "Can I update the site myself?",
+          "a": "I can set up an admin panel, or handle updates for you through maintenance."
+        },
+        {
+          "q": "Will I show up on Google?",
+          "a": "I submit your site to Google, set up technical and local SEO, and create your Google Business Profile."
+        },
+        {
+          "q": "Do you only work in Tekirdağ?",
+          "a": "We can meet in person anywhere in Tekirdağ; I also work remotely with clients across Turkey."
+        }
+      ]
+    },
+    "final": {
+      "title": "Let's talk about your site",
+      "subtitle": "Just one message away. Write on WhatsApp for a free consultation and a clear quote.",
+      "phoneLabel": "Phone"
+    },
+    "footer": {
+      "tagline": "Web design, domain and hosting services in Tekirdağ.",
+      "servicesLink": "Web Services",
+      "devLink": "Developer Portfolio"
+    },
+    "floatingLabel": "Contact on WhatsApp"
+  }
 }
