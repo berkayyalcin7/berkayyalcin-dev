@@ -43,5 +43,5 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   // Statik dosyalar, Next iç yolları, API ve metadata rotaları dışında her şey
-  matcher: ["/((?!_next|api|sitemap\\.xml|robots\\.txt|icon\\.png|favicon\\.ico|.*\\..*).*)"],
+  matcher: ["/((?!_next|api|demo/|sitemap\\.xml|robots\\.txt|icon\\.png|favicon\\.ico|.*\\..*).*)"],
 };

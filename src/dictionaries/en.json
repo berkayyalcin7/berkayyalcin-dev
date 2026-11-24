@@ -13,6 +13,7 @@
     "blog": "Blog",
     "contact": "Contact",
     "offer": "Services",
+    "work": "Work",
     "packages": "Packages",
     "process": "Process",
     "faq": "FAQ",
@@ -548,6 +549,15 @@
       "servicesLink": "Web Services",
       "devLink": "Developer Portfolio"
     },
-    "floatingLabel": "Contact on WhatsApp"
+    "floatingLabel": "Contact on WhatsApp",
+    "work": {
+      "eyebrow": "Sample Work",
+      "title": "Sample sites I designed for Tekirdağ businesses",
+      "subtitle": "From a köfte restaurant to a dental clinic, a real-estate office to a Çorlu OSB factory: open a live sample for your sector. Your site is designed from scratch for your business.",
+      "liveDemo": "Open live demo",
+      "badge": "sample design",
+      "ctaText": "Your sector isn’t listed? Let’s prepare a custom draft.",
+      "ctaMessage": "Hi, I’d like to see a sample website draft for my business."
+    }
   }
 }

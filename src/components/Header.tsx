@@ -19,6 +19,7 @@ import {
   HiArrowPath,
   HiQuestionMarkCircle,
   HiCodeBracket,
+  HiPhoto,
 } from "react-icons/hi2";
 import { FaWhatsapp } from "react-icons/fa";
 import { siteConfig, type NavItem, type NavKey } from "@/lib/site-config";
@@ -54,6 +55,7 @@ const navIcons: Record<NavKey, IconType> = {
   blog: HiNewspaper,
   contact: HiChatBubbleLeftRight,
   offer: HiSquares2X2,
+  work: HiPhoto,
   packages: HiTag,
   process: HiArrowPath,
   faq: HiQuestionMarkCircle,
@@ -138,13 +140,13 @@ export default function Header({ lang, dict, nav = siteConfig.nav, whatsapp }: H
   ];
 
   const ctaClass =
-    "hidden sm:inline-flex items-center gap-1.5 rounded-full border border-zinc-200 px-4 py-1.5 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-700 dark:border-white/15 dark:text-white dark:hover:border-emerald-400/60 dark:hover:text-emerald-400";
+    "hidden sm:inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-zinc-200 px-4 py-1.5 text-sm text-zinc-700 transition hover:border-emerald-500/40 hover:text-emerald-700 dark:border-white/15 dark:text-white dark:hover:border-emerald-400/60 dark:hover:text-emerald-400";
   const mobileCtaClass =
     "flex w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-3 py-2.5 text-sm font-semibold text-black transition hover:bg-emerald-400";
 
   return (
     <header className="sticky top-0 z-50 border-b border-zinc-200 bg-white/80 dark:border-white/10 dark:bg-black/60 backdrop-blur-md transition-colors duration-300">
-      <div className="mx-auto flex max-w-5xl items-center justify-between gap-3 px-6 py-4">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-6 py-4">
         <Link
           href={homePath}
           className="text-sm font-semibold tracking-tight text-zinc-900 dark:text-white transition hover:text-emerald-700 dark:hover:text-emerald-400"
@@ -152,7 +154,7 @@ export default function Header({ lang, dict, nav = siteConfig.nav, whatsapp }: H
           berkayyalcin<span className="text-emerald-700 dark:text-emerald-400">.dev</span>
         </Link>
 
-        <nav aria-label={dict.mainNav} className="hidden items-center gap-6 lg:flex">
+        <nav aria-label={dict.mainNav} className="hidden items-center gap-5 lg:flex">
           {nav.map((item) => {
             const Icon = navIcons[item.key];
             return (

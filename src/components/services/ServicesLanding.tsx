@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { IconType } from "react-icons";
 import { FaWhatsapp } from "react-icons/fa";
@@ -14,9 +15,12 @@ import {
   HiLockClosed,
   HiDevicePhoneMobile,
   HiPlus,
+  HiArrowUpRight,
+  HiSparkles,
 } from "react-icons/hi2";
 import Reveal from "@/components/Reveal";
 import { whatsappUrl } from "@/lib/site-config";
+import { demos } from "@/lib/demos";
 import { localeHref, fill } from "@/lib/locale-link";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -31,12 +35,27 @@ const offerIcons: IconType[] = [
   HiWrenchScrewdriver,
 ];
 
+// Her hizmete kendi rengi: ikon zemini, köşe ışıması ve hover çerçevesi.
+// Tailwind sınıfları statik kalmalı (JIT dinamik birleştirmeyi göremez).
+const tones = [
+  { icon: "from-emerald-400 to-teal-600", glow: "bg-emerald-400/25", ring: "hover:border-emerald-400/60", text: "text-emerald-600 dark:text-emerald-400" },
+  { icon: "from-sky-400 to-blue-600", glow: "bg-sky-400/25", ring: "hover:border-sky-400/60", text: "text-sky-600 dark:text-sky-400" },
+  { icon: "from-violet-400 to-purple-600", glow: "bg-violet-400/25", ring: "hover:border-violet-400/60", text: "text-violet-600 dark:text-violet-400" },
+  { icon: "from-amber-300 to-orange-500", glow: "bg-amber-400/25", ring: "hover:border-amber-400/60", text: "text-amber-600 dark:text-amber-400" },
+  { icon: "from-rose-400 to-pink-600", glow: "bg-rose-400/25", ring: "hover:border-rose-400/60", text: "text-rose-600 dark:text-rose-400" },
+  { icon: "from-cyan-400 to-sky-600", glow: "bg-cyan-400/25", ring: "hover:border-cyan-400/60", text: "text-cyan-600 dark:text-cyan-400" },
+];
+
 const POPULAR_PACKAGE = 1;
 
 const primaryBtn =
   "group inline-flex items-center justify-center gap-2.5 rounded-full bg-emerald-500 px-7 py-3.5 text-base font-semibold text-black shadow-lg shadow-emerald-500/25 transition hover:-translate-y-0.5 hover:bg-emerald-400 hover:shadow-xl hover:shadow-emerald-500/30 active:translate-y-0";
 const ghostBtn =
   "inline-flex items-center justify-center gap-2 rounded-full border border-zinc-300 px-6 py-3.5 text-base font-semibold text-zinc-800 transition hover:border-emerald-500/50 hover:text-emerald-700 dark:border-white/15 dark:text-white dark:hover:border-emerald-400/60 dark:hover:text-emerald-400";
+
+const ASCII: Record<string, string> = { ç: "c", ğ: "g", ı: "i", ö: "o", ş: "s", ü: "u" };
+const toDomain = (name: string) =>
+  name.toLocaleLowerCase("tr").replace(/[çğıöşü]/g, (c) => ASCII[c]).replace(/\s+/g, "") + ".com";
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -58,7 +77,7 @@ export default function ServicesLanding({ lang, dict }: Props) {
           className="pointer-events-none absolute inset-0 -z-10"
           style={{
             backgroundImage:
-              "radial-gradient(circle at 15% 25%, rgba(16,185,129,0.18), transparent 42%), radial-gradient(circle at 85% 10%, rgba(59,130,246,0.12), transparent 40%)",
+              "radial-gradient(circle at 15% 25%, rgba(16,185,129,0.22), transparent 42%), radial-gradient(circle at 85% 10%, rgba(59,130,246,0.18), transparent 40%), radial-gradient(circle at 70% 85%, rgba(168,85,247,0.16), transparent 40%), radial-gradient(circle at 35% 95%, rgba(244,114,182,0.12), transparent 35%)",
           }}
         />
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
@@ -121,19 +140,26 @@ export default function ServicesLanding({ lang, dict }: Props) {
               </p>
             </div>
 
-            <ul className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-zinc-200 bg-zinc-200 sm:grid-cols-2 lg:grid-cols-3 dark:border-white/10 dark:bg-white/10">
+            <ul className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {dict.offer.items.map((item, i) => {
                 const Icon = offerIcons[i] ?? HiCheck;
+                const tone = tones[i % tones.length];
                 return (
                   <li
                     key={item.title}
-                    className="group relative bg-white p-7 transition-colors hover:bg-emerald-50/60 dark:bg-zinc-950 dark:hover:bg-emerald-500/[0.06]"
+                    className={`group relative overflow-hidden rounded-3xl border border-zinc-200 bg-white p-7 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-zinc-950 ${tone.ring}`}
                   >
-                    <span className="absolute right-6 top-6 font-mono text-xs text-zinc-400 dark:text-zinc-600">
+                    <span
+                      aria-hidden
+                      className={`pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full blur-2xl transition duration-500 group-hover:scale-125 ${tone.glow}`}
+                    />
+                    <span className={`absolute right-6 top-6 font-mono text-xs font-bold ${tone.text}`}>
                       0{i + 1}
                     </span>
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-700 ring-1 ring-emerald-500/20 transition group-hover:scale-105 group-hover:bg-emerald-500 group-hover:text-black dark:text-emerald-400">
-                      <Icon className="h-5 w-5" />
+                    <span
+                      className={`relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br text-white shadow-lg transition group-hover:rotate-6 group-hover:scale-110 ${tone.icon}`}
+                    >
+                      <Icon className="h-6 w-6" />
                     </span>
                     <h3 className="mt-5 text-lg font-semibold text-zinc-900 dark:text-white">
                       {item.title}
@@ -144,6 +170,109 @@ export default function ServicesLanding({ lang, dict }: Props) {
                   </li>
                 );
               })}
+            </ul>
+          </div>
+        </Reveal>
+      </section>
+
+      {/* ÖRNEK ÇALIŞMALAR */}
+      <section
+        id="ornekler"
+        className="relative scroll-mt-24 overflow-hidden bg-zinc-950 px-6 py-24 text-white"
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(circle at 10% 0%, rgba(16,185,129,0.25), transparent 35%), radial-gradient(circle at 90% 30%, rgba(168,85,247,0.22), transparent 35%), radial-gradient(circle at 40% 100%, rgba(244,63,94,0.18), transparent 40%)",
+          }}
+        />
+        <Reveal>
+          <div className="relative mx-auto max-w-6xl">
+            <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end">
+              <div>
+                <p className="font-mono text-xs font-semibold uppercase tracking-[0.2em] text-emerald-400">
+                  {dict.work.eyebrow}
+                </p>
+                <h2 className="mt-3 text-3xl font-semibold tracking-tight sm:text-5xl">{dict.work.title}</h2>
+              </div>
+              <p className="text-base leading-relaxed text-zinc-300">{dict.work.subtitle}</p>
+            </div>
+
+            <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {demos.map((demo, i) => {
+                const SectorIcon = demo.icon;
+                const wide = i === 0 || i === demos.length - 1;
+                return (
+                  <li key={demo.slug} className={wide ? "lg:col-span-2" : ""}>
+                    <a
+                      href={`/demo/${demo.slug}`}
+                      target="_blank"
+                      rel="noopener"
+                      className="group flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] transition duration-300 hover:-translate-y-1 hover:border-white/25 hover:shadow-2xl"
+                      style={{ boxShadow: `0 30px 60px -30px ${demo.palette.accent}66` }}
+                    >
+                      {/* Tarayıcı çerçevesi + ekran görüntüsü */}
+                      <div className="relative">
+                        <div className="flex items-center gap-1.5 border-b border-white/10 bg-zinc-900 px-4 py-2.5">
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
+                          <span className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
+                          <span className="ml-3 truncate font-mono text-[10px] text-zinc-500">
+                            {toDomain(demo.name)}
+                          </span>
+                        </div>
+                        <div className={`relative aspect-[16/10] overflow-hidden ${wide ? "lg:aspect-[16/6.5]" : ""}`}>
+                          <Image
+                            src={`/ornekler/${demo.slug}.png`}
+                            alt={`${demo.sector} için örnek web sitesi tasarımı: ${demo.name}`}
+                            fill
+                            sizes={wide ? "(min-width: 1024px) 760px, 100vw" : "(min-width: 1024px) 370px, (min-width: 768px) 50vw, 100vw"}
+                            className="object-cover object-top transition duration-700 group-hover:scale-[1.04]"
+                          />
+                          <span className="absolute right-3 top-3 inline-flex items-center gap-1 rounded-full bg-black/60 px-3 py-1 text-[11px] font-semibold text-white opacity-0 backdrop-blur transition group-hover:opacity-100">
+                            {dict.work.liveDemo}
+                            <HiArrowUpRight className="h-3 w-3" />
+                          </span>
+                        </div>
+                      </div>
+                      <div className="flex flex-1 items-start gap-4 p-6">
+                        <span
+                          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl"
+                          style={{ backgroundColor: demo.palette.accent, color: demo.palette.onAccent }}
+                        >
+                          <SectorIcon className="h-6 w-6" />
+                        </span>
+                        <div>
+                          <h3 className="text-lg font-semibold">{demo.sector}</h3>
+                          <p className="mt-1 text-sm leading-relaxed text-zinc-400">{demo.pitch}</p>
+                          <p className="mt-2 text-xs text-zinc-500">
+                            {demo.district} · {dict.work.badge}
+                          </p>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                );
+              })}
+              <li>
+                <a
+                  href={whatsappUrl(dict.work.ctaMessage)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex h-full flex-col justify-between gap-8 rounded-3xl bg-gradient-to-br from-emerald-400 via-teal-500 to-sky-600 p-8 text-black transition duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/30"
+                >
+                  <HiSparkles className="h-10 w-10 transition group-hover:rotate-12 group-hover:scale-110" />
+                  <div>
+                    <p className="text-2xl font-semibold leading-snug">{dict.work.ctaText}</p>
+                    <span className="mt-6 inline-flex items-center gap-2 rounded-full bg-black px-5 py-3 text-sm font-semibold text-white">
+                      <FaWhatsapp className="h-5 w-5 text-[#25D366]" />
+                      {dict.whatsappCta}
+                    </span>
+                  </div>
+                </a>
+              </li>
             </ul>
           </div>
         </Reveal>
@@ -240,14 +369,21 @@ export default function ServicesLanding({ lang, dict }: Props) {
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-4xl">
               {dict.process.title}
             </h2>
-            <ol className="relative mt-14 grid gap-10 md:grid-cols-4 md:gap-6">
-              <span
-                aria-hidden
-                className="absolute left-0 right-0 top-6 hidden h-px bg-gradient-to-r from-emerald-500/60 via-emerald-500/30 to-transparent md:block"
-              />
+            <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
               {dict.process.steps.map((step, i) => (
-                <li key={step.title} className="relative">
-                  <span className="relative flex h-12 w-12 items-center justify-center rounded-full border border-emerald-500/40 bg-slate-50 font-mono text-sm font-bold text-emerald-700 dark:bg-black dark:text-emerald-400">
+                <li
+                  key={step.title}
+                  className={`group relative overflow-hidden rounded-3xl border border-zinc-200 bg-white p-7 transition duration-300 hover:-translate-y-1 hover:shadow-xl dark:border-white/10 dark:bg-zinc-950 ${tones[i].ring}`}
+                >
+                  <span
+                    aria-hidden
+                    className={`pointer-events-none absolute -bottom-6 -right-2 text-[7rem] font-black leading-none opacity-15 transition group-hover:opacity-30 ${tones[i].text}`}
+                  >
+                    {i + 1}
+                  </span>
+                  <span
+                    className={`relative flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br font-mono text-base font-bold text-white shadow-lg ${tones[i].icon}`}
+                  >
                     {i + 1}
                   </span>
                   <h3 className="mt-5 text-lg font-semibold text-zinc-900 dark:text-white">

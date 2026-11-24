@@ -13,6 +13,7 @@
     "blog": "Blog",
     "contact": "İletişim",
     "offer": "Hizmetler",
+    "work": "Örnekler",
     "packages": "Paketler",
     "process": "Süreç",
     "faq": "SSS",
@@ -553,6 +554,15 @@
       "servicesLink": "Web Hizmetleri",
       "devLink": "Geliştirici Portfolyosu"
     },
-    "floatingLabel": "WhatsApp ile iletişime geçin"
+    "floatingLabel": "WhatsApp ile iletişime geçin",
+    "work": {
+      "eyebrow": "Örnek Çalışmalar",
+      "title": "Tekirdağ işletmeleri için hazırladığım örnek siteler",
+      "subtitle": "Köfteciden diş kliniğine, emlak ofisinden Çorlu OSB fabrikasına: sektörünüze uygun tasarımın canlı örneğini açıp inceleyin. Sizin siteniz de işletmenize özel olarak sıfırdan tasarlanır.",
+      "liveDemo": "Canlı demoyu aç",
+      "badge": "örnek tasarım",
+      "ctaText": "Sektörünüz listede yok mu? Size özel bir taslak hazırlayalım.",
+      "ctaMessage": "Merhaba, işletmem için örnek bir web sitesi taslağı görmek istiyorum."
+    }
   }
 }

@@ -22,6 +22,7 @@ export const siteConfig = {
   // Ana sayfa (web hizmetleri) menüsü:
   servicesNav: [
     { key: "offer", href: "/#hizmetler" },
+    { key: "work", href: "/#ornekler" },
     { key: "packages", href: "/#paketler" },
     { key: "process", href: "/#surec" },
     { key: "faq", href: "/#sss" },
