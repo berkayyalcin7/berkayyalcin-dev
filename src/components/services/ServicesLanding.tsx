@@ -19,6 +19,7 @@ import {
   HiSparkles,
 } from "react-icons/hi2";
 import Reveal from "@/components/Reveal";
+import AdminPanelShowcase from "@/components/services/AdminPanelShowcase";
 import { whatsappUrl } from "@/lib/site-config";
 import { demos } from "@/lib/demos";
 import { localeHref, fill } from "@/lib/locale-link";
@@ -283,6 +284,8 @@ export default function ServicesLanding({ lang, dict }: Props) {
           </div>
         </Reveal>
       </section>
+
+      <AdminPanelShowcase dict={dict.panel} />
 
       {/* PAKETLER */}
       <section

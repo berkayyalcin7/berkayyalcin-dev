@@ -423,9 +423,9 @@
       "items": [
         {
           "name": "Starter",
-          "desc": "A one-page site for small shops and new businesses.",
+          "desc": "A quick, stylish showcase site for small shops and new businesses.",
           "features": [
-            "One-page, mobile-friendly design",
+            "Modern mobile-friendly design",
             "WhatsApp & call buttons",
             "Google Maps location",
             "1 year domain + hosting + SSL",
@@ -436,11 +436,11 @@
           "name": "Business",
           "desc": "For companies that want a stronger brand presence.",
           "features": [
-            "Up to 5 pages",
-            "Service / product / gallery pages",
+            "Page structure tailored to you",
+            "Image & content admin panel",
+            "Service / product / gallery sections",
             "Contact form & business e-mail",
-            "Google Business Profile setup",
-            "Local SEO optimisation",
+            "Google Business Profile + local SEO",
             "1 year domain + hosting + SSL"
           ]
         },
@@ -448,9 +448,9 @@
           "name": "Pro / E-Commerce",
           "desc": "For online sales or custom software needs.",
           "features": [
-            "Unlimited pages & products",
+            "Unlimited products & categories",
             "Online payments or WhatsApp orders",
-            "Admin panel",
+            "Advanced admin panel (orders, stock)",
             "Advanced SEO & speed optimisation",
             "Custom integrations",
             "3 months free maintenance"
@@ -515,11 +515,11 @@
       "items": [
         {
           "q": "How long does a website take?",
-          "a": "One-page sites usually go live in 3–7 days, business sites in 1–2 weeks, depending on how ready your content is."
+          "a": "Showcase sites usually go live in 3–7 days, business sites in 1–2 weeks, depending on how ready your content is."
         },
         {
           "q": "How is pricing decided?",
-          "a": "By page count, features (e-commerce, forms, admin panel) and content support. Message me and you'll get a clear price — no surprise fees later."
+          "a": "By the scope of your project and features (e-commerce, forms, admin panel). Message me and you'll get a clear price — no surprise fees later."
         },
         {
           "q": "Are domain and hosting included?",
@@ -527,7 +527,7 @@
         },
         {
           "q": "Can I update the site myself?",
-          "a": "I can set up an admin panel, or handle updates for you through maintenance."
+          "a": "Yes. With your own admin panel you can update photos, text, menus and prices yourself — even from your phone. I can also handle updates for you through maintenance."
         },
         {
           "q": "Will I show up on Google?",
@@ -558,6 +558,76 @@
       "badge": "sample design",
       "ctaText": "Your sector isn’t listed? Let’s prepare a custom draft.",
       "ctaMessage": "Hi, I’d like to see a sample website draft for my business."
+    },
+    "panel": {
+      "eyebrow": "Admin Panel",
+      "title": "Manage your site yourself, no developer needed",
+      "subtitle": "Every site comes with a simple admin panel built for you. No technical skills required — update it from your phone in a few taps.",
+      "points": [
+        {
+          "title": "Photos & gallery",
+          "text": "Drag and drop images, reorder them, pick a cover."
+        },
+        {
+          "title": "Menu, products & prices",
+          "text": "Price changed? Update it yourself in seconds."
+        },
+        {
+          "title": "Announcements & offers",
+          "text": "Add a campaign banner that disappears on its end date."
+        },
+        {
+          "title": "Visits & WhatsApp stats",
+          "text": "See how many people visited and messaged you."
+        }
+      ],
+      "mock": {
+        "url": "panel.yourbusiness.com",
+        "nav": [
+          "Overview",
+          "Pages",
+          "Gallery",
+          "Menu & Prices",
+          "Campaigns",
+          "Messages",
+          "Settings"
+        ],
+        "activeNav": 2,
+        "heading": "Gallery",
+        "upload": "Upload Image",
+        "drop": "Drag your photos here",
+        "stats": [
+          {
+            "label": "Visits this month",
+            "value": "1,284"
+          },
+          {
+            "label": "WhatsApp clicks",
+            "value": "96"
+          },
+          {
+            "label": "New messages",
+            "value": "3"
+          }
+        ],
+        "images": [
+          "Cover",
+          "Dining room",
+          "Grill",
+          "Desserts",
+          "Team",
+          "Terrace"
+        ],
+        "coverBadge": "Cover",
+        "editTitle": "Edit image",
+        "fieldTitle": "Title",
+        "fieldTitleValue": "Grill",
+        "fieldAlt": "Description (for Google)",
+        "fieldAltValue": "Tekirdağ köfte on a wood fire",
+        "toggle": "Show on homepage",
+        "save": "Save",
+        "saved": "Changes are live"
+      }
     }
   }
 }

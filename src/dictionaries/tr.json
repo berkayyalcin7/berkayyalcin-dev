@@ -428,9 +428,9 @@
       "items": [
         {
           "name": "Başlangıç",
-          "desc": "Esnaf ve yeni işletmeler için tek sayfalık tanıtım sitesi.",
+          "desc": "Esnaf ve yeni işletmeler için hızlı ve şık bir tanıtım sitesi.",
           "features": [
-            "Tek sayfa, mobil uyumlu tasarım",
+            "Mobil uyumlu modern tasarım",
             "WhatsApp & arama butonları",
             "Google Haritalar konumu",
             "1 yıl domain + hosting + SSL",
@@ -441,11 +441,11 @@
           "name": "İşletme",
           "desc": "Kurumsal kimliğini güçlendirmek isteyen firmalar için.",
           "features": [
-            "5 sayfaya kadar kurumsal site",
-            "Hizmet / ürün / galeri sayfaları",
+            "İhtiyacınıza göre kurumsal sayfa yapısı",
+            "Görsel & içerik yönetim paneli",
+            "Hizmet / ürün / galeri bölümleri",
             "İletişim formu & kurumsal e-posta",
-            "Google İşletme Profili kurulumu",
-            "Yerel SEO optimizasyonu",
+            "Google İşletme Profili + yerel SEO",
             "1 yıl domain + hosting + SSL"
           ]
         },
@@ -453,9 +453,9 @@
           "name": "Pro / E-Ticaret",
           "desc": "Online satış veya özel yazılım ihtiyacı olanlar için.",
           "features": [
-            "Sınırsız sayfa & ürün",
+            "Sınırsız ürün & kategori",
             "Online ödeme veya WhatsApp sipariş",
-            "Yönetim paneli",
+            "Gelişmiş yönetim paneli (sipariş, stok)",
             "Gelişmiş SEO & hız optimizasyonu",
             "Özel entegrasyonlar",
             "3 ay ücretsiz bakım"
@@ -520,11 +520,11 @@
       "items": [
         {
           "q": "Web sitesi yaptırmak ne kadar sürer?",
-          "a": "Tek sayfalık tanıtım siteleri genellikle 3–7 gün, kurumsal siteler 1–2 hafta içinde yayına girer. Süre, içeriklerin (metin, fotoğraf) hazır olmasına bağlıdır."
+          "a": "Tanıtım siteleri genellikle 3–7 gün, kurumsal siteler 1–2 hafta içinde yayına girer. Süre, içeriklerin (metin, fotoğraf) hazır olmasına bağlıdır."
         },
         {
           "q": "Fiyatlar neye göre belirleniyor?",
-          "a": "Sayfa sayısı, istenen özellikler (e-ticaret, form, yönetim paneli) ve içerik desteğine göre. WhatsApp'tan yazdığınızda ihtiyacınızı dinleyip net bir fiyat veriyorum; sonradan sürpriz ücret çıkmaz."
+          "a": "İşinizin kapsamına ve istenen özelliklere (e-ticaret, form, yönetim paneli) göre. WhatsApp'tan yazdığınızda ihtiyacınızı dinleyip net bir fiyat veriyorum; sonradan sürpriz ücret çıkmaz."
         },
         {
           "q": "Domain ve hosting dahil mi?",
@@ -532,7 +532,7 @@
         },
         {
           "q": "Siteyi sonradan kendim güncelleyebilir miyim?",
-          "a": "İsterseniz yönetim paneli kuruyorum; isterseniz güncellemeleri bakım hizmetiyle ben yapıyorum."
+          "a": "Evet. Size özel yönetim paneliyle fotoğraf, metin, menü ve fiyatları telefondan bile kendiniz güncelleyebilirsiniz. Dilerseniz güncellemeleri bakım hizmetiyle ben de yapabilirim."
         },
         {
           "q": "Google'da çıkacak mıyım?",
@@ -563,6 +563,76 @@
       "badge": "örnek tasarım",
       "ctaText": "Sektörünüz listede yok mu? Size özel bir taslak hazırlayalım.",
       "ctaMessage": "Merhaba, işletmem için örnek bir web sitesi taslağı görmek istiyorum."
+    },
+    "panel": {
+      "eyebrow": "Yönetim Paneli",
+      "title": "Sitenizi başkasına muhtaç olmadan kendiniz yönetin",
+      "subtitle": "Teslim ettiğim sitelerle birlikte size özel, sade bir yönetim paneli veriyorum. Teknik bilgi gerekmez; telefonunuzdan bile birkaç dokunuşla güncelleyin.",
+      "points": [
+        {
+          "title": "Fotoğraf & galeri",
+          "text": "Sürükle-bırak ile görsel yükleyin, sıralayın, kapak seçin."
+        },
+        {
+          "title": "Menü, ürün & fiyat",
+          "text": "Fiyat değişti mi? Kendiniz saniyeler içinde güncelleyin."
+        },
+        {
+          "title": "Duyuru & kampanya",
+          "text": "Ana sayfaya kampanya bandı ekleyin, tarihi gelince kalksın."
+        },
+        {
+          "title": "Ziyaret & WhatsApp istatistikleri",
+          "text": "Kaç kişi geldi, kaçı size yazdı; tek ekranda görün."
+        }
+      ],
+      "mock": {
+        "url": "panel.isletmeniz.com",
+        "nav": [
+          "Genel Bakış",
+          "Sayfalar",
+          "Galeri",
+          "Menü & Fiyatlar",
+          "Kampanyalar",
+          "Mesajlar",
+          "Ayarlar"
+        ],
+        "activeNav": 2,
+        "heading": "Galeri",
+        "upload": "Görsel Yükle",
+        "drop": "Fotoğrafları buraya sürükleyin",
+        "stats": [
+          {
+            "label": "Bu ay ziyaret",
+            "value": "1.284"
+          },
+          {
+            "label": "WhatsApp tıklaması",
+            "value": "96"
+          },
+          {
+            "label": "Yeni mesaj",
+            "value": "3"
+          }
+        ],
+        "images": [
+          "Kapak",
+          "Salon",
+          "Ocakbaşı",
+          "Tatlılar",
+          "Ekip",
+          "Teras"
+        ],
+        "coverBadge": "Kapak",
+        "editTitle": "Görseli düzenle",
+        "fieldTitle": "Başlık",
+        "fieldTitleValue": "Ocakbaşı",
+        "fieldAlt": "Açıklama (Google için)",
+        "fieldAltValue": "Odun ateşinde Tekirdağ köftesi",
+        "toggle": "Ana sayfada göster",
+        "save": "Kaydet",
+        "saved": "Değişiklikler yayında"
+      }
     }
   }
 }

@@ -25,20 +25,20 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-// Varsayılan tema dark; light yalnızca kullanıcı toggle ile seçtiyse uygulanır.
-// Boyamadan önce çalışıp açık temada FOUC'u önler. Diller arası geçiş tam sayfa
+// Varsayılan tema light; dark yalnızca kullanıcı toggle ile seçtiyse uygulanır.
+// Boyamadan önce çalışıp koyu temada FOUC'u önler. Diller arası geçiş tam sayfa
 // yüklemesi olduğu için (Header'daki <a>) bu script client'ta asla re-render olmaz.
 const THEME_INIT_CODE = `
   try {
-    if (localStorage.theme === 'light') {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
-    } else {
+    if (localStorage.theme === 'dark') {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
     }
   } catch (_) {
-    document.documentElement.classList.add('dark');
+    document.documentElement.classList.add('light');
   }
 `;
 
