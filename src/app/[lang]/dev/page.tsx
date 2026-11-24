@@ -125,7 +125,7 @@ export default async function Home({ params }: PageParams) {
           <Contact dict={dict.contact} modalDict={dict.contactModal} />
         </Reveal>
       </main>
-      <Footer lang={lang} dict={dict.footer} services={dict.services} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} services={dict.services} />
     </>
   );
 }

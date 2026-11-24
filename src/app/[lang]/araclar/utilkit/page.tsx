@@ -92,7 +92,7 @@ export default async function UtilkitPage({ params }: PageParams) {
           </div>
         </div>
       </main>
-      <Footer lang={lang} dict={dict.footer} services={dict.services} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} services={dict.services} />
     </>
   );
 }

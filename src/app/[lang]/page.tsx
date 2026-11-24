@@ -104,7 +104,7 @@ export default async function Home({ params }: PageParams) {
       <main id="main-content" className="flex-1">
         <ServicesLanding lang={lang} dict={services} />
       </main>
-      <Footer lang={lang} dict={dict.footer} services={services} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} services={services} />
     </>
   );
 }
