@@ -55,7 +55,12 @@ const ghostBtn =
 
 const ASCII: Record<string, string> = { ç: "c", ğ: "g", ı: "i", ö: "o", ş: "s", ü: "u" };
 const toDomain = (name: string) =>
-  name.toLocaleLowerCase("tr").replace(/[çğıöşü]/g, (c) => ASCII[c]).replace(/\s+/g, "") + ".com";
+  name
+    .split(/\s+/)
+    .filter((word) => !word.endsWith(".")) // "Uzm. Dr." gibi unvanlar domain'e girmez
+    .join("")
+    .toLocaleLowerCase("tr")
+    .replace(/[çğıöşü]/g, (c) => ASCII[c]) + ".com";
 
 function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
@@ -203,7 +208,8 @@ export default function ServicesLanding({ lang, dict }: Props) {
             <ul className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {demos.map((demo, i) => {
                 const SectorIcon = demo.icon;
-                const wide = i === 0 || i === demos.length - 1;
+                // 3 sütunlu bento: 0 ve 5 geniş, sondaki CTA da geniş → 4 tam satır.
+                const wide = i === 0 || i === 5;
                 return (
                   <li key={demo.slug} className={wide ? "lg:col-span-2" : ""}>
                     <a
@@ -256,7 +262,7 @@ export default function ServicesLanding({ lang, dict }: Props) {
                   </li>
                 );
               })}
-              <li>
+              <li className="md:col-span-2">
                 <a
                   href={whatsappUrl(dict.work.ctaMessage)}
                   target="_blank"

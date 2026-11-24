@@ -179,3 +179,9 @@ html.dark :focus-visible {
     transform: translate(-50%, -33%) scale(1.2);
   }
 }
+
+/* Demo siteler: her demo --display değişkenine kendi başlık fontunu atar. */
+.demo-display {
+  font-family: var(--display);
+  letter-spacing: var(--display-tracking, -0.02em);
+}
