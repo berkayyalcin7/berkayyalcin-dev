@@ -10,13 +10,35 @@ export const siteConfig = {
   },
   cvUrl: "https://dyqriqtgitmyiytrlwyi.supabase.co/storage/v1/object/public/cv/cv.pdf",
   // Nav etiketleri sözlükten gelir (dict.nav); href'ler dilden bağımsızdır.
+  // Geliştirici portfolyosu (/dev) ve blog/araçlar sayfalarının menüsü:
   nav: [
-    { key: "about", href: "/#hakkimda" },
-    { key: "projects", href: "/#projeler" },
+    { key: "services", href: "/" },
+    { key: "about", href: "/dev#hakkimda" },
+    { key: "projects", href: "/dev#projeler" },
     { key: "tools", href: "/araclar" },
-    { key: "blog", href: "/#blog" },
-    { key: "contact", href: "/#iletisim" },
+    { key: "blog", href: "/dev#blog" },
+    { key: "contact", href: "/dev#iletisim" },
+  ],
+  // Ana sayfa (web hizmetleri) menüsü:
+  servicesNav: [
+    { key: "offer", href: "/#hizmetler" },
+    { key: "work", href: "/#ornekler" },
+    { key: "packages", href: "/#paketler" },
+    { key: "process", href: "/#surec" },
+    { key: "faq", href: "/#sss" },
+    { key: "dev", href: "/dev" },
   ],
 } as const;
 
-export type NavKey = (typeof siteConfig.nav)[number]["key"];
+export type NavItem =
+  | (typeof siteConfig.nav)[number]
+  | (typeof siteConfig.servicesNav)[number];
+export type NavKey = NavItem["key"];
+
+/**
+ * WhatsApp sohbet linki; text verilirse mesaj kutusu önceden doldurulur.
+ * Numara spam botlarından saklanır: link /api/whatsapp üzerinden sunucuda yönlenir.
+ */
+export function whatsappUrl(text?: string): string {
+  return text ? `/api/whatsapp?text=${encodeURIComponent(text)}` : "/api/whatsapp";
+}

@@ -22,7 +22,7 @@ import ViewCounter from "@/components/ViewCounter";
 import ReadingProgress from "@/components/ReadingProgress";
 import type { Metadata } from "next";
 import { getDictionary, hasLocale, buildHeaderDict, locales } from "@/lib/i18n";
-import { localeHref, fill, canonicalPath } from "@/lib/locale-link";
+import { localeHref, fill, canonicalPath, alternatesFor } from "@/lib/locale-link";
 
 export const revalidate = 1800; // Revalidate at most every 30 minutes (ISR)
 
@@ -47,18 +47,11 @@ export async function generateMetadata({ params }: BlogPageProps): Promise<Metad
     title: `${post.title} | Berkay Yalçın - Blog`,
     description: post.excerpt,
     keywords: post.tags ?? undefined,
-    alternates: {
-      canonical: canonicalPath(lang, `/blog/${post.slug}`),
-      languages: {
-        en: `/blog/${post.slug}`,
-        tr: `/tr/blog/${post.slug}`,
-        "x-default": `/blog/${post.slug}`,
-      },
-    },
+    alternates: alternatesFor(lang, `/blog/${post.slug}`),
     openGraph: {
       title: `${post.title} | Berkay Yalçın - Blog`,
       description: post.excerpt,
-      url: `${baseUrl}/blog/${post.slug}`,
+      url: `${baseUrl}${canonicalPath(lang, `/blog/${post.slug}`)}`,
       type: "article",
       publishedTime: post.created_at,
       modifiedTime: post.updated_at || post.created_at,
@@ -377,7 +370,7 @@ export default async function BlogPostPage({ params }: BlogPageProps) {
           )}
         </div>
       </main>
-      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} services={dict.services} />
     </>
   );
 }

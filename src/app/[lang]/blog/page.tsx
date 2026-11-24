@@ -8,7 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
 import { getDictionary, hasLocale, buildHeaderDict } from "@/lib/i18n";
-import { localeHref, canonicalPath } from "@/lib/locale-link";
+import { localeHref, alternatesFor } from "@/lib/locale-link";
 
 export const revalidate = 1800; // Revalidate at most every 30 minutes (ISR)
 
@@ -21,10 +21,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   return {
     title: `${dict.blogPage.metaTitle} | ${siteConfig.name}`,
     description: dict.blogPage.metaDescription,
-    alternates: {
-      canonical: canonicalPath(lang, "/blog"),
-      languages: { en: "/blog", tr: "/tr/blog", "x-default": "/blog" },
-    },
+    alternates: alternatesFor(lang, "/blog"),
   };
 }
 
@@ -42,7 +39,7 @@ export default async function BlogIndexPage({ params }: PageParams) {
       <main id="main-content" className="flex-1 px-6 py-28 relative z-10">
         <div className="mx-auto max-w-5xl">
           <Link
-            href={localeHref(lang, "/#blog")}
+            href={localeHref(lang, "/dev#blog")}
             className="inline-flex items-center gap-2 text-sm text-zinc-500 hover:text-emerald-700 dark:text-zinc-400 dark:hover:text-emerald-400 transition mb-8"
           >
             <HiArrowLeft className="h-4 w-4" />
@@ -84,7 +81,7 @@ export default async function BlogIndexPage({ params }: PageParams) {
           )}
         </div>
       </main>
-      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} services={dict.services} />
     </>
   );
 }

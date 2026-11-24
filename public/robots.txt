@@ -2,6 +2,8 @@
 
 User-agent: *
 Allow: /
+Disallow: /api/
+Disallow: /demo/
 
 # Block AI scrapers & aggregators
 User-agent: GPTBot

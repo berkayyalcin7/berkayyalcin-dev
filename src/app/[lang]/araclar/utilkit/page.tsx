@@ -9,7 +9,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
 import { getDictionary, hasLocale, buildHeaderDict } from "@/lib/i18n";
-import { localeHref } from "@/lib/locale-link";
+import { localeHref, alternatesFor } from "@/lib/locale-link";
 
 type PageParams = { params: Promise<{ lang: string }> };
 
@@ -20,13 +20,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   return {
     title: `utilkit | ${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
     description: dict.utilkit.metaDescription,
-    alternates: {
-      languages: {
-        en: "/araclar/utilkit",
-        tr: "/tr/araclar/utilkit",
-        "x-default": "/araclar/utilkit",
-      },
-    },
+    alternates: alternatesFor(lang, "/araclar/utilkit"),
   };
 }
 
@@ -98,7 +92,7 @@ export default async function UtilkitPage({ params }: PageParams) {
           </div>
         </div>
       </main>
-      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} services={dict.services} />
     </>
   );
 }

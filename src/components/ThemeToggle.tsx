@@ -11,11 +11,11 @@ function subscribe(onChange: () => void) {
 }
 
 function getSnapshot(): "light" | "dark" {
-  return document.documentElement.classList.contains("light") ? "light" : "dark";
+  return document.documentElement.classList.contains("dark") ? "dark" : "light";
 }
 
 function getServerSnapshot(): "light" | "dark" {
-  return "dark"; // SSR'da varsayılan tema
+  return "light"; // SSR'da varsayılan tema
 }
 
 export default function ThemeToggle({ ariaLabel }: { ariaLabel: string }) {

@@ -16,9 +16,9 @@ export default function ThemeSync() {
     try {
       stored = localStorage.getItem("theme");
     } catch {
-      // localStorage erişilemiyorsa varsayılan (dark) geçerli
+      // localStorage erişilemiyorsa varsayılan (light) geçerli
     }
-    const theme = stored === "light" ? "light" : "dark";
+    const theme = stored === "dark" ? "dark" : "light";
     const other = theme === "light" ? "dark" : "light";
     document.documentElement.classList.add(theme);
     document.documentElement.classList.remove(other);

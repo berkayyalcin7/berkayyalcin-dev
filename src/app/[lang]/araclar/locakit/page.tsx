@@ -9,7 +9,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { siteConfig } from "@/lib/site-config";
 import { getDictionary, hasLocale, buildHeaderDict } from "@/lib/i18n";
-import { localeHref } from "@/lib/locale-link";
+import { localeHref, alternatesFor } from "@/lib/locale-link";
 
 type PageParams = { params: Promise<{ lang: string }> };
 
@@ -20,9 +20,7 @@ export async function generateMetadata({ params }: PageParams): Promise<Metadata
   return {
     title: `locakit | ${dict.toolsPage.metaTitle} | ${siteConfig.name}`,
     description: dict.locakit.metaDescription,
-    alternates: {
-      languages: { en: "/araclar/locakit", tr: "/tr/araclar/locakit", "x-default": "/araclar/locakit" },
-    },
+    alternates: alternatesFor(lang, "/araclar/locakit"),
   };
 }
 
@@ -141,7 +139,7 @@ export default async function LocakitPage({ params }: PageParams) {
           </div>
         </div>
       </main>
-      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} />
+      <Footer lang={lang} dict={dict.footer} nav={dict.nav} contact={dict.contact} services={dict.services} />
     </>
   );
 }

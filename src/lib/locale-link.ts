@@ -1,22 +1,25 @@
 // Client bileşenlerinden de import edilebilir (server-only bağımlılığı yok).
 
-/** Varsayılan dil (en) prefix'siz yaşar; diğer diller /{lang} prefix'i alır. */
+/** Varsayılan dil (tr) prefix'siz yaşar; diğer diller /{lang} prefix'i alır. */
 export function localeHref(lang: string, href: string): string {
-  if (lang === "en") return href;
+  if (lang === "tr") return href;
   if (href === "/") return `/${lang}`;
-  // "/#blog" gibi hash linkleri "/tr#blog" olmalı
+  // "/dev#blog" → "/en/dev#blog", "/#x" → "/en#x"
   if (href.startsWith("/#")) return `/${lang}#${href.slice(2)}`;
   return `/${lang}${href}`;
 }
 
-/**
- * metadata.alternates.canonical için mutlak yol. EN prefix'siz kanoniktir; TR
- * /tr prefix'i alır. Coğrafya tabanlı /tr yönlendirmesi (bkz. proxy.ts) iki URL'nin
- * de indekslenebilir olmasına yol açtığından her sayfa kendi kanoniğini bildirir.
- */
+/** metadata.alternates.canonical için mutlak yol. TR prefix'siz kanoniktir; EN /en alır. */
 export function canonicalPath(lang: string, path: string): string {
-  if (lang !== "tr") return path;
-  return path === "/" ? "/tr" : `/tr${path}`;
+  return localeHref(lang, path);
+}
+
+/** Bir sayfanın kanoniği + hreflang alternatifleri. */
+export function alternatesFor(lang: string, path: string) {
+  return {
+    canonical: canonicalPath(lang, path),
+    languages: { tr: path, en: localeHref("en", path), "x-default": path },
+  };
 }
 
 /** Yer tutucuları ({name} vb.) verilen değerlerle değiştirir. */

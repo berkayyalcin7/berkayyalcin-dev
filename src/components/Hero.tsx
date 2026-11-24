@@ -56,13 +56,13 @@ export default function Hero({ lang, dict, profile }: HeroProps) {
 
             <div className="mt-10 flex flex-wrap items-center gap-4">
               <a
-                href={localeHref(lang, "/#blog")}
+                href={localeHref(lang, "/dev#blog")}
                 className="group relative inline-flex items-center justify-center rounded-full bg-gradient-to-r from-emerald-500 to-teal-400 px-7 py-3.5 text-sm font-bold text-black transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-emerald-500/25 active:translate-y-0"
               >
                 {dict.ctaBlog}
               </a>
               <a
-                href={localeHref(lang, "/#iletisim")}
+                href={localeHref(lang, "/dev#iletisim")}
                 className="rounded-full border border-zinc-300 bg-white/50 backdrop-blur-sm px-7 py-3.5 text-sm font-bold text-zinc-800 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-500/50 hover:text-emerald-700 hover:shadow-lg hover:shadow-emerald-500/10 dark:border-white/15 dark:bg-white/[0.03] dark:text-white dark:hover:border-emerald-400/60 dark:hover:text-emerald-400 active:translate-y-0"
               >
                 {dict.ctaContact}

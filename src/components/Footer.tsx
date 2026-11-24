@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaWhatsapp } from "react-icons/fa";
 import { HiEnvelope } from "react-icons/hi2";
-import { siteConfig } from "@/lib/site-config";
+import { siteConfig, whatsappUrl } from "@/lib/site-config";
 import { localeHref } from "@/lib/locale-link";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -10,13 +10,15 @@ type FooterProps = {
   dict: Dictionary["footer"];
   nav: Dictionary["nav"];
   contact: Pick<Dictionary["contact"], "emailLabel" | "githubLabel" | "linkedinLabel">;
+  services: Dictionary["services"];
 };
 
-export default function Footer({ lang, dict, nav, contact }: FooterProps) {
-  const homePath = lang === "en" ? "/" : `/${lang}`;
+export default function Footer({ lang, dict, nav, contact, services }: FooterProps) {
+  const homePath = localeHref(lang, "/");
   const year = new Date().getFullYear();
 
   const socialLinks = [
+    { label: "WhatsApp", href: whatsappUrl(services.whatsappGreeting), icon: FaWhatsapp, external: true },
     { label: contact.emailLabel, href: siteConfig.social.email, icon: HiEnvelope, external: false },
     { label: contact.githubLabel, href: siteConfig.social.github, icon: FaGithub, external: true },
     { label: contact.linkedinLabel, href: siteConfig.social.linkedin, icon: FaLinkedin, external: true },
@@ -47,7 +49,7 @@ export default function Footer({ lang, dict, nav, contact }: FooterProps) {
               </span>
             </div>
             <p className="mt-3 max-w-xs text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-              {dict.tagline}
+              {services.footer.tagline} {dict.tagline}
             </p>
             <div className="mt-5 flex items-center gap-2.5">
               {socialLinks.map(({ label, href, icon: Icon, external }) => (

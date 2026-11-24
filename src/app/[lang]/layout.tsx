@@ -5,9 +5,10 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { notFound } from "next/navigation";
 import { siteConfig } from "@/lib/site-config";
 import { getDictionary, hasLocale, locales } from "@/lib/i18n";
-import { canonicalPath } from "@/lib/locale-link";
+import { alternatesFor } from "@/lib/locale-link";
 import SiteBackground from "@/components/SiteBackground";
 import BackToTop from "@/components/BackToTop";
+import WhatsAppFloat from "@/components/WhatsAppFloat";
 import ThemeSync from "@/components/ThemeSync";
 import "../globals.css";
 
@@ -24,20 +25,20 @@ const geistMono = Geist_Mono({
   display: "swap",
 });
 
-// Varsayılan tema dark; light yalnızca kullanıcı toggle ile seçtiyse uygulanır.
-// Boyamadan önce çalışıp açık temada FOUC'u önler. Diller arası geçiş tam sayfa
+// Varsayılan tema light; dark yalnızca kullanıcı toggle ile seçtiyse uygulanır.
+// Boyamadan önce çalışıp koyu temada FOUC'u önler. Diller arası geçiş tam sayfa
 // yüklemesi olduğu için (Header'daki <a>) bu script client'ta asla re-render olmaz.
 const THEME_INIT_CODE = `
   try {
-    if (localStorage.theme === 'light') {
-      document.documentElement.classList.add('light');
-      document.documentElement.classList.remove('dark');
-    } else {
+    if (localStorage.theme === 'dark') {
       document.documentElement.classList.add('dark');
       document.documentElement.classList.remove('light');
+    } else {
+      document.documentElement.classList.add('light');
+      document.documentElement.classList.remove('dark');
     }
   } catch (_) {
-    document.documentElement.classList.add('dark');
+    document.documentElement.classList.add('light');
   }
 `;
 
@@ -66,10 +67,7 @@ export async function generateMetadata({ params }: LayoutParams): Promise<Metada
     description: dict.meta.siteDescription,
     authors: [{ name: siteConfig.name, url: siteConfig.url }],
     creator: siteConfig.name,
-    alternates: {
-      canonical: canonicalPath(lang, "/"),
-      languages: { en: "/", tr: "/tr", "x-default": "/" },
-    },
+    alternates: alternatesFor(lang, "/"),
     openGraph: {
       title: dict.meta.siteTitle,
       description: dict.meta.siteDescription,
@@ -120,6 +118,7 @@ export default async function RootLayout({
         <SiteBackground />
         {children}
         <BackToTop ariaLabel={dict.backToTop.aria} />
+        <WhatsAppFloat label={dict.services.floatingLabel} greeting={dict.services.whatsappGreeting} />
         <Analytics />
         <SpeedInsights />
       </body>
